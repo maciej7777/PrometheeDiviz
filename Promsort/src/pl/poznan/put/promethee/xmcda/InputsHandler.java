@@ -9,7 +9,6 @@ import org.xmcda.CategoriesValues;
 import org.xmcda.Category;
 import org.xmcda.CategoryProfile;
 import org.xmcda.XMCDA;
-import org.xmcda.v2_2_1.AlternativeValue;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,7 +24,7 @@ public class InputsHandler {
         public Map<String, Double> positiveFlows;
         public Map<String, Double> negativeFlows;
         public Double cutPoint;
-        public Boolean positiveAttitude;
+        public Boolean assignToABetterClass;
         public Map<String, Integer> categoriesRanking;
         public List<CategoryProfile> categoryProfiles;
     }
@@ -46,23 +45,17 @@ public class InputsHandler {
         {
             errors.addError("No alternatives list has been supplied");
         }
-/*        else if ( xmcda.alternatives.size() > 1 )
-        {
-            errors.addError("More than one alternatives list has been supplied");
-        }*/
         else
         {
-            @SuppressWarnings("rawtypes")
             List<Alternative> alternatives = xmcda.alternatives.getActiveAlternatives();
             if ( alternatives.isEmpty() )
                 errors.addError("The alternatives list can not be empty");
         }
 
-		/* Let's check the parameters */
         checkParameters:
         {
             Double cutPoint = null;
-            Boolean positiveAttitude = null;
+            Boolean assignToABetterClass = null;
 
             if ( xmcda.programParametersList.size() > 1 )
             {
@@ -85,7 +78,7 @@ public class InputsHandler {
             final ProgramParameter<?> prgParam2 = xmcda.programParametersList.get(0).get(1);
 
             if ("cutPoint".equals(prgParam1.id())) {
-                if (!"positiveAttitude".equals(prgParam2.id())) {
+                if (!"assignToABetterClass".equals(prgParam2.id())) {
                     errors.addError(String.format("Invalid parameter w/ id '%s'", prgParam2.id()));
                     break checkParameters;
                 }
@@ -96,7 +89,7 @@ public class InputsHandler {
                 }
                 if ( prgParam2.getValues() == null || (prgParam2.getValues() != null && prgParam2.getValues().size() != 1) )
                 {
-                    errors.addError("Parameter positiveAttitude must have a single (numeric) value only");
+                    errors.addError("Parameter assignToABetterClass must have a single (numeric) value only");
                     break checkParameters;
                 }
 
@@ -122,16 +115,16 @@ public class InputsHandler {
                 }
                 try
                 {
-                    positiveAttitude = (Boolean) prgParam2.getValues().get(0).getValue();
-                    if (positiveAttitude == null) {
-                        errors.addError("Invalid value for parameter positiveAttitude, it must be true or false.");
-                        positiveAttitude = null;
+                    assignToABetterClass = (Boolean) prgParam2.getValues().get(0).getValue();
+                    if (assignToABetterClass == null) {
+                        errors.addError("Invalid value for parameter assignToABetterClass, it must be true or false.");
+                        assignToABetterClass = null;
                         break checkParameters;
                     }
                 }
                 catch (Throwable throwable)
                 {
-                    String err = "Invalid value for parameter positiveAttitude, it must be true or false.";
+                    String err = "Invalid value for parameter assignToABetterClass, it must be true or false.";
                     errors.addError(err);
                     cutPoint = null;
                 }
@@ -141,13 +134,13 @@ public class InputsHandler {
                     errors.addError(String.format("Invalid parameter w/ id '%s'", prgParam2.id()));
                     break checkParameters;
                 }
-                if (!"positiveAttitude".equals(prgParam1.id())) {
+                if (!"assignToABetterClass".equals(prgParam1.id())) {
                     errors.addError(String.format("Invalid parameter w/ id '%s'", prgParam1.id()));
                     break checkParameters;
                 }
                 if ( prgParam1.getValues() == null || (prgParam1.getValues() != null && prgParam1.getValues().size() != 1) )
                 {
-                    errors.addError("Parameter positiveAttitude must have a single (boolean) value only");
+                    errors.addError("Parameter assignToABetterClass must have a single (boolean) value only");
                     break checkParameters;
                 }
                 if ( prgParam2.getValues() == null || (prgParam2.getValues() != null && prgParam2.getValues().size() != 1) )
@@ -178,16 +171,16 @@ public class InputsHandler {
                 }
                 try
                 {
-                    positiveAttitude = (Boolean) prgParam1.getValues().get(0).getValue();
-                    if (positiveAttitude == null) {
-                        errors.addError("Invalid value for parameter positiveAttitude, it must be true or false.");
-                        positiveAttitude = null;
+                    assignToABetterClass = (Boolean) prgParam1.getValues().get(0).getValue();
+                    if (assignToABetterClass == null) {
+                        errors.addError("Invalid value for parameter assignToABetterClass, it must be true or false.");
+                        assignToABetterClass = null;
                         break checkParameters;
                     }
                 }
                 catch (Throwable throwable)
                 {
-                    String err = "Invalid value for parameter positiveAttitude, it must be true or false.";
+                    String err = "Invalid value for parameter assignToABetterClass, it must be true or false.";
                     errors.addError(err);
                     cutPoint = null;
                 }
@@ -195,7 +188,7 @@ public class InputsHandler {
             }
 
             inputs.cutPoint = cutPoint;
-            inputs.positiveAttitude = positiveAttitude;
+            inputs.assignToABetterClass = assignToABetterClass;
         }
 
 
@@ -401,95 +394,6 @@ public class InputsHandler {
 
     protected static Inputs extractInputs(Inputs inputs, XMCDA xmcda, ProgramExecutionResult xmcda_execution_results)
     {
-        // already converted to Double in checkInputs()
-        /*PerformanceTable<Double> xmcda_perf_table = (PerformanceTable<Double>) xmcda.performanceTablesList.get(0);
-        // first, get the alternatives & criteria from the performance table
-        for ( Alternative x_alternative: xmcda_perf_table.getAlternatives() )
-            if ( x_alternative.isActive() )
-                inputs.alternatives_ids.add(x_alternative.id());
-        for ( Criterion x_criterion: xmcda_perf_table.getCriteria() )
-            if ( x_criterion.isActive() )
-                criteria_ids.add(x_criterion.id());
-        // Check that we still have active alternatives and criteria
-        if ( inputs.alternatives_ids.size() == 0 )
-            xmcda_execution_results.addError("All alternatives of the performance table are inactive");
-        if ( criteria_ids.size() == 0 )
-            xmcda_execution_results.addError("All criteria of the performance table are inactive");
-        // Last, check that criteria in weights has a non-null intersection with active criteria used in the
-        // performance table
-        if ( inputs.hasWeights )
-        {
-            boolean ok = false;
-            List<String> criteria_ids_in_weights = new ArrayList<>();
-            for ( Criterion c : xmcda.criteriaValuesList.get(0).getCriteria() )
-                criteria_ids_in_weights.add(c.id());
-            List<String> criteria_ids_copy = new ArrayList<>(criteria_ids);
-            for ( String c_id : criteria_ids_copy )
-                if ( ! criteria_ids_in_weights.contains(c_id) )
-                    criteria_ids.remove(c_id);
-            if ( criteria_ids.size() == 0 )
-                xmcda_execution_results.addError("The set of active criteria in perf.table has no common id in the " +
-                        "set of the criteria ids used in the weights");
-        }
-        // At this point there is nothing more we can check or do but abort the execution
-        if ( xmcda_execution_results.isError() )
-            return null;
-        // build performance table
-        inputs.performanceTable = new LinkedHashMap<>();
-        PerformanceTable<Double> x_perf_table = (PerformanceTable<Double>) xmcda.performanceTablesList.get(0);
-        for ( Alternative x_alternative : x_perf_table.getAlternatives() )
-        {
-            if ( ! inputs.alternatives_ids.contains(x_alternative.id()) )
-                continue;
-            for ( Criterion x_criterion : x_perf_table.getCriteria() )
-            {
-                if ( !criteria_ids.contains(x_criterion.id()) )
-                    continue;
-                // Get the value attached to the alternative, create it if necessary
-                Double value = x_perf_table.getValue(x_alternative, x_criterion);
-                inputs.performanceTable.putIfAbsent(x_alternative.id(), new HashMap<>());
-                inputs.performanceTable.get(x_alternative.id()).put(x_criterion.id(), value);
-            }
-        }
-        // build weights
-        inputs.weights = new HashMap<>();
-        if ( inputs.operator == AggregationOperator.WEIGHTED_SUM ||
-                inputs.operator == AggregationOperator.NORMALIZED_WEIGHTED_SUM )
-        {
-            for ( Criterion x_criterion : xmcda_perf_table.getCriteria() )
-            {
-                if ( !criteria_ids.contains(x_criterion.id()) )
-                    continue;
-                Double weight = null;
-                try
-                {
-                    weight = xmcda.criteriaValuesList.get(0).get(x_criterion).get(0).convertToDouble().getValue();
-                }
-                catch (ValueConverters.ConversionException e)
-                {
-                    xmcda_execution_results.addError(Utils.getMessage("Conversion error", e));
-                    return null;
-                }
-                inputs.weights.put(x_criterion.id(), weight);
-            }
-            if ( inputs.operator == AggregationOperator.NORMALIZED_WEIGHTED_SUM )
-            {
-                Double weights_sum = 0.0;
-                for ( Double v : inputs.weights.values() )
-                    weights_sum += v;
-                for ( String criterion_id : inputs.weights.keySet() )
-                    inputs.weights.put(criterion_id, inputs.weights.get(criterion_id) / weights_sum);
-            }
-        }
-        else
-        {
-            // either 'average' or 'sum'
-            for ( String criterion_id : criteria_ids )
-                if ( inputs.operator == AggregationOperator.AVERAGE )
-                    inputs.weights.put(criterion_id, 1.0 / criteria_ids.size());
-                else
-                    inputs.weights.put(criterion_id, 1.0);
-        }*/
         return inputs;
     }
 }

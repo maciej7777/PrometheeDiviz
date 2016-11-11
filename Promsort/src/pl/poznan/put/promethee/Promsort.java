@@ -1,10 +1,6 @@
 package pl.poznan.put.promethee;
 
-import org.xmcda.Alternative;
-import org.xmcda.AlternativeAssignment;
 import org.xmcda.AlternativesAssignments;
-import org.xmcda.Category;
-import org.xmcda.v2_2_1.AlternativeValue;
 import pl.poznan.put.promethee.xmcda.InputsHandler;
 import pl.poznan.put.promethee.xmcda.OutputsHandler;
 
@@ -138,7 +134,7 @@ public class Promsort {
                     finalAssignments.put(unassignedAlternatives.get(i), categoryT1);
                 } else if (dk < inputs.cutPoint) {
                     finalAssignments.put(unassignedAlternatives.get(i), categoryT);
-                } else if (inputs.positiveAttitude) {
+                } else if (inputs.assignToABetterClass) {
                     finalAssignments.put(unassignedAlternatives.get(i), categoryT1);
                 } else {
                     finalAssignments.put(unassignedAlternatives.get(i), categoryT);

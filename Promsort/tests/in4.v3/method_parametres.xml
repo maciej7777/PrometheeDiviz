@@ -8,7 +8,7 @@
 				</value>
 			</values>
 		</parameter>
-		<parameter id="positiveAttitude">
+		<parameter id="assignToABetterClass">
 			<values>
 				<value>
 					<boolean>false</boolean>
