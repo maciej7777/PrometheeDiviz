@@ -55,7 +55,7 @@ public class PromsortXMCDAv3 {
         Map<String, XMCDA> x_results = OutputsHandler.convert(results.firstStepAssignments, results.finalAssignments, executionResult);
 
         //write results
-        final org.xmcda.parsers.xml.xmcda_3_0.XMCDAParser parser = new org.xmcda.parsers.xml.xmcda_3_0.XMCDAParser();
+        final org.xmcda.parsers.xml.xmcda_v3.XMCDAParser parser = new org.xmcda.parsers.xml.xmcda_v3.XMCDAParser();
 
         for ( String key : x_results.keySet() )
         {
