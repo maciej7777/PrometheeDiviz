@@ -38,16 +38,13 @@ public class PromsortXMCDAv2 {
         Utils.loadXMCDAv2(xmcda_v2, new File(indir, "positive_flows.xml"), true, executionResult, "alternativesValues");
         Referenceable.DefaultCreationObserver.currentMarker="negativeFlows";
         Utils.loadXMCDAv2(xmcda_v2, new File(indir, "negative_flows.xml"), true, executionResult, "alternativesValues");
-        Referenceable.DefaultCreationObserver.currentMarker="methodParametres";
+        Referenceable.DefaultCreationObserver.currentMarker="methodParameters";
         Utils.loadXMCDAv2(xmcda_v2, new File(indir, "method_parameters.xml"), true, executionResult, "methodParameters");
 
-        // We have problems with the inputs, its time to stop
         if ( ! (executionResult.isOk() || executionResult.isWarning() ) )
         {
             Utils.writeProgramExecutionResultsAndExit(prgExecResultsFile, executionResult, Utils.XMCDA_VERSION.v2);
-            // previous statement terminates the execution
         }
-        // Convert that to XMCDA v3
         try
         {
             xmcda = XMCDAConverter.convertTo_v3(xmcda_v2);
@@ -58,16 +55,11 @@ public class PromsortXMCDAv2 {
             Utils.writeProgramExecutionResultsAndExit(prgExecResultsFile, executionResult, Utils.XMCDA_VERSION.v2);
             return;
         }
-		/* TODO à partir de là on est un moment en copy/paste de la version v3 */
-        // Let's check the inputs and convert them into our own structures
         final InputsHandler.Inputs inputs = InputsHandler.checkAndExtractInputs(xmcda, executionResult);
         if ( ! ( executionResult.isOk() || executionResult.isWarning() ) || inputs == null )
         {
             Utils.writeProgramExecutionResultsAndExit(prgExecResultsFile, executionResult, Utils.XMCDA_VERSION.v2);
-            // previous statement terminates the execution
         }
-        // Here we know that everything was loaded as expected
-        // Now let's call the calculation method
         final OutputsHandler.Output results ;
         try
         {
@@ -96,7 +88,7 @@ public class PromsortXMCDAv2 {
             {
                 final String err = String.format("Could not convert %s into XMCDA_v2, reason: ", outputName);
                 executionResult.addError(Utils.getMessage(err, t));
-                continue; // try to convert & save as much as we can
+                continue;
             }
             try
             {
@@ -106,12 +98,10 @@ public class PromsortXMCDAv2 {
             {
                 final String err = String.format("Error while writing %s.xml, reason: ", outputName);
                 executionResult.addError(Utils.getMessage(err, t));
-                // Whatever the error is, clean up the file: we do not want to leave an empty or partially-written file
                 outputFile.delete();
             }
         }
         Utils.writeProgramExecutionResultsAndExit(prgExecResultsFile, executionResult, Utils.XMCDA_VERSION.v2);
-        // previous statement terminates the execution
     }
 
 }

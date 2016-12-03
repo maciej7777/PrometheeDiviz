@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:XMCDA xmlns:ns2="http://www.decision-deck.org/2016/XMCDA-2.2.2">
+    <methodMessages>
+        <errorMessage>
+            <text>Unable to read &amp; parse the file alternatives.xml, reason: Validation failed</text>
+        </errorMessage>
+        <errorMessage>
+            <text>Unable to read &amp; parse the file categories.xml, reason: Validation failed</text>
+        </errorMessage>
+        <errorMessage>
+            <text>Unable to read &amp; parse the file categories.xml, reason: Validation failed</text>
+        </errorMessage>
+        <errorMessage>
+            <text>Unable to read &amp; parse the file categories_profiles.xml, reason: Validation failed</text>
+        </errorMessage>
+        <errorMessage>
+            <text>Unable to read &amp; parse the file flows.xml, reason: Validation failed</text>
+        </errorMessage>
+        <errorMessage>
+            <text>Unable to read &amp; parse the file method_parameters.xml, reason: Validation failed</text>
+        </errorMessage>
+    </methodMessages>
+</ns2:XMCDA>

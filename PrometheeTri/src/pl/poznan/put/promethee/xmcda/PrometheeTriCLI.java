@@ -14,12 +14,11 @@ public class PrometheeTriCLI {
         final ArrayList<String> argsList = new ArrayList<String>(Arrays.asList(args));
         if ( argsList.remove("--v2") )
         {
-            System.err.println("Version 2 is still not supported");
-            System.exit(-1);
+            PrometheeTriXMCDAv2.main((String[]) argsList.toArray(new String[]{}));
         }
         else if ( argsList.remove("--v3") )
         {
-            PrometheeTriCLI.main((String[]) argsList.toArray(new String[]{}));
+            PrometheeTriXMCDAv3.main((String[]) argsList.toArray(new String[]{}));
         }
         else
         {
