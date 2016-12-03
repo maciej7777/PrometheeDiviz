@@ -323,11 +323,14 @@ public class InputsHandler {
             errors.addError("More than one positive or negative flows list has been supplied");
         }
 
+        List<String> alternativesProfiles = xmcda.alternatives.getActiveAlternatives().stream().filter(a -> a.getMarker().equals("alternatives")).map(
+                Alternative::id).collect(Collectors.toList());
 
+        /*
         List<String> alternativesProfiles = xmcda.alternatives.getActiveAlternatives().stream().filter(
                 alt -> !alt.id().equals(categoriesProfilesList.get(0).getLowerBound().getAlternative().id()) &&
                         !alt.id().equals(categoriesProfilesList.get(categoriesProfilesList.size() - 1).getUpperBound().getAlternative().id())).map(
-                Alternative::id).collect(Collectors.toList());
+                Alternative::id).collect(Collectors.toList());*/
 
         AlternativesValues positiveFlows = xmcda.alternativesValuesList.get(0);
         if (!positiveFlows.isNumeric()) {
@@ -386,7 +389,7 @@ public class InputsHandler {
                 break;
             }
         }
-        alternativesProfiles.removeAll(profilesIds);
+        /*alternativesProfiles.removeAll(profilesIds);*/
         inputs.alternativesIds = alternativesProfiles;
         inputs.profilesIds = profilesIds;
 
