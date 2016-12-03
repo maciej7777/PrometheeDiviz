@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <program_description xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                      xsi:schemaLocation="http://www.decision-deck.org/2009/XMCDA-2.0.0 http://www.decision-deck.org/ws/_downloads/description.xsd">
-    <program provider="PUT" name="Promsort" displayName="Promsort" version="1.0.0"/>
+    <program provider="PUT" name="FlowSortI" displayName="FlowSortI" version="1.0.0"/>
     <documentation>
-        <description>Computes class assignment for given alternatives using Promsort method.
+        <description>Computes class assignment for given alternatives using FlowSort method based on Promethee I.
         </description>
         <contact><![CDATA[Maciej Uniejewski <maciej.uniejewski@gmail.com>]]></contact>
         <url>https://github.com/maciej7777/PrometheeDiviz</url>
@@ -25,7 +25,7 @@
 
         <input id="input3" name="categories_profiles" displayName="categories_profiles" isoptional="0">
             <documentation>
-                <description>Definitions of boundary profiles which should be used for classes (categories)
+                <description>Definitions of profiles which should be used for classes (categories)
                     representation.
                 </description>
             </documentation>
@@ -34,14 +34,14 @@
 
         <input id="input4" name="negative_flows" displayName="negative_flows" isoptional="0">
             <documentation>
-                <description>Negative flows of given alternatives and boundary profiles.</description>
+                <description>Negative flows of given alternatives and profiles.</description>
             </documentation>
             <xmcda tag="categoriesProfiles"/>
         </input>
 
         <input id="input5" name="positive_flows" displayName="positive_profiles" isoptional="0">
             <documentation>
-                <description>Negative flows of given alternatives and boundary profiles.</description>
+                <description>Negative flows of given alternatives and profiles.</description>
             </documentation>
             <xmcda tag="categoriesProfiles"/>
         </input>
@@ -56,62 +56,40 @@
             <xmcda tag="methodParameters">
                 <![CDATA[
                 <methodParameters>
-                    <parameter name="assignToABetterClass">
+                    <parameter name="ComparisonWithProfiles">
                         <value>
                             <real>%1</real>
                         </value>
                     </parameter>
-                    <parameter name="assignToABetterClass">
-                        <value>
-                            <boolean>%2</boolean>
-                        </value>
-                    </parameter>
-                </methodParameters>
 	        ]]>
             </xmcda>
-            <gui status="preferFile">
-                <entry id="%1" type="real" displayName="cutPoint">
+            <gui status="preferGUI">
+                <entry id="%1" type="enum" displayName="Comparison with profiles:">
                     <documentation>
-                        <description>Parameter used in a second phase of Promsort method. Determines the impact of assigning alternatives to better/worse categories.</description>
+                        <description>Information if we are using central or boundary profiles.</description>
                     </documentation>
-                    <constraint>
-                        <description>The value should be lower or equal to 1.0.</description>
-                        <code>
-                            <![CDATA[ %1 <= 1.0 ]]>
-                        </code>
-                    </constraint>
-                    <constraint>
-                        <description>The value should be higher or equal to -1.0.</description>
-                        <code>
-                            <![CDATA[ %1 => -1.0 ]]>
-                        </code>
-                    </constraint>
-                </entry>
-                <entry id="%2" type="boolean" displayName="assignToABetterClass">
-                    <documentation>
-                        <description>Information if alternative will be assigned to a better class when the assignment is not
-                            clear. Works only if cutPoint does unclear output for alternative.</description>
-                    </documentation>
-                    <defaultValue>true</defaultValue>
+                    <items>
+                        <item id="central">
+                            <description>Central profiles</description>
+                            <value>central</value>
+                        </item>
+                        <item id="bounding">
+                            <description>Boundary profiles</description>
+                            <value>bounding</value>
+                        </item>
+                    </items>
                 </entry>
             </gui>
         </input>
 
-        <output id="output1" name="first_step_assignments" displayName="first_step_assignments">
+        <output id="output1" name="assignments" displayName="assignments">
             <documentation>
-                <description>Assignments made in a first step of Promsort process.</description>
+                <description>Final assignments made in a FlowSort (Promethee I) process.</description>
             </documentation>
             <xmcda tag="alternativesAssignments"/>
         </output>
 
-        <output id="output2" name="final_assignments" displayName="final_assignments">
-            <documentation>
-                <description>Final assignments made in a Promsort process.</description>
-            </documentation>
-            <xmcda tag="alternativesAssignments"/>
-        </output>
-
-        <output id="output3" name="messages" displayName="messages">
+        <output id="output2" name="messages" displayName="messages">
             <documentation>
                 <description>Messages or errors generated by this module.</description>
             </documentation>
