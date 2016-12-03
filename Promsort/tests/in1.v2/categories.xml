@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xmcda:XMCDA xmlns:xmcda='http://www.decision-deck.org/2012/XMCDA-2.2.1'
+        xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+        xsi:schemaLocation='http://www.decision-deck.org/2012/XMCDA-2.2.1 http://www.decision-deck.org/xmcda/_downloads/XMCDA-2.2.1.xsd'>
+    <categories>
+        <category id="C2">
+        </category>
+        <category id="C4">
+        </category>
+        <category id="C1">
+        </category>
+        <category id="C3">
+        </category>
+        <category id="C5">
+        </category>
+    </categories>
+    <categoriesValues>
+        <categoryValue>
+            <categoryID>C1</categoryID>
+            <values>
+                <value>
+                    <integer>1</integer>
+                </value>
+            </values>
+        </categoryValue>
+        <categoryValue>
+            <categoryID>C2</categoryID>
+            <values>
+                <value>
+                    <integer>2</integer>
+                </value>
+            </values>
+        </categoryValue>
+        <categoryValue>
+            <categoryID>C3</categoryID>
+            <values>
+                <value>
+                    <integer>3</integer>
+                </value>
+            </values>
+        </categoryValue>
+        <categoryValue>
+            <categoryID>C4</categoryID>
+            <values>
+                <value>
+                    <integer>4</integer>
+                </value>
+            </values>
+        </categoryValue>
+        <categoryValue>
+            <categoryID>C5</categoryID>
+            <values>
+                <value>
+                    <integer>5</integer>
+                </value>
+            </values>
+        </categoryValue>
+        <categoryValue>
+            <categoryID>C6</categoryID>
+            <values>
+                <value>
+                    <integer>6</integer>
+                </value>
+            </values>
+        </categoryValue>
+    </categoriesValues>
+</xmcda:XMCDA>

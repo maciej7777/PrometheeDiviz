@@ -6,10 +6,9 @@ import org.xmcda.XMCDA;
 import org.xmcda.converters.v2_v3.XMCDAConverter;
 import org.xmcda.parsers.xml.xmcda_v2.XMCDAParser;
 import org.xml.sax.SAXException;
-
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -34,8 +33,6 @@ public class Utils
 	{
 		v2, v3
 	}
-
-
 	/**
 	 * Gathers the arguments for the command line: input and output directories.
 	 * @see #parseCmdLineArguments(String[])
@@ -45,8 +42,6 @@ public class Utils
 		public String inputDirectory;
 		public String outputDirectory;
 	}
-
-
 	/**
 	 * Raised when the command line is invalid
 	 *
@@ -54,13 +49,12 @@ public class Utils
 	 */
 	public static class InvalidCommandLineException extends Exception
 	{
+		private static final long serialVersionUID = 3991185595688176975L;
 		public InvalidCommandLineException(String message)
 		{
 			super(message);
 		}
 	}
-
-
 	/**
 	 * Parses the command-line and search for the input directory (options {@code -i} or {@code --input-directory})
 	 * and for the output directory (options {@code -o} or {@code --output-directory}).
@@ -87,14 +81,11 @@ public class Utils
 			throw new InvalidCommandLineException("Missing parameters");
 		return arguments;
 	}
-
-
 	public static void loadXMCDAv3(XMCDA xmcda, final File file, boolean mandatory,
-                                   ProgramExecutionResult x_execution_results, String ... load_tags)
+								   ProgramExecutionResult x_execution_results, String ... load_tags)
 	{
 		final org.xmcda.parsers.xml.xmcda_v3.XMCDAParser parser = new org.xmcda.parsers.xml.xmcda_v3.XMCDAParser();
 		final String baseFilename = file.getName();
-
 		if ( ! file.exists())
 		{
 			if ( mandatory )
@@ -106,7 +97,6 @@ public class Utils
 				// x_execution_results.addInfo("Optional file %s absent" % basefilename)
 				return;
 		}
-
 		try
 		{
 			parser.readXMCDA(xmcda, file, load_tags);
@@ -117,12 +107,9 @@ public class Utils
 			x_execution_results.addError(getMessage(msg, throwable));
 		}
 	}
-
-
 	public static void loadXMCDAv2(org.xmcda.v2.XMCDA xmcda_v2, File file, boolean mandatory,
-                                   ProgramExecutionResult x_execution_results, String ... load_tags)
+								   ProgramExecutionResult x_execution_results, String ... load_tags)
 	{
-		XMCDAParser parser = new XMCDAParser();
 		final String baseFilename = file.getName();
 		if ( ! file.exists())
 		{
@@ -132,7 +119,7 @@ public class Utils
 		}
 		try
 		{
-			readXMCDAv2_and_update(xmcda_v2, parser, file, load_tags);
+			readXMCDAv2_and_update(xmcda_v2, file, load_tags);
 		}
 		catch (Throwable throwable)
 		{
@@ -140,18 +127,13 @@ public class Utils
 			x_execution_results.addError(getMessage(msg, throwable));
 		}
 	}
-
-
-	public static void readXMCDAv2_and_update(org.xmcda.v2.XMCDA xmcda_v2, XMCDAParser parser, File file,
-                                              String[] load_tags)
-	throws JAXBException, SAXException, IOException
+	public static void readXMCDAv2_and_update(org.xmcda.v2.XMCDA xmcda_v2, File file, String[] load_tags)
+			throws IOException, JAXBException, SAXException
 	{
-		final org.xmcda.v2.XMCDA new_xmcda = parser.readXMCDA(file, load_tags);
-		final List new_content = new_xmcda.getProjectReferenceOrMethodMessagesOrMethodParameters();
+		final org.xmcda.v2.XMCDA new_xmcda = XMCDAParser.readXMCDA(file, load_tags);
+		final List<JAXBElement<?>> new_content = new_xmcda.getProjectReferenceOrMethodMessagesOrMethodParameters();
 		xmcda_v2.getProjectReferenceOrMethodMessagesOrMethodParameters().addAll(new_content);
 	}
-
-
 	/**
 	 * Simply returns {@link Throwable#getMessage() throwable.getMessage()}, or {@code "unknown"} if it is @{code null}.
 	 *
@@ -167,8 +149,6 @@ public class Utils
 			return throwable.getCause().getMessage();
 		return "unknown";
 	}
-
-
 	/**
 	 * Simply return the provided String with {@link #getMessage(Throwable)}.
 	 *
@@ -179,8 +159,6 @@ public class Utils
 	{
 		return message + getMessage(throwable);
 	}
-
-
 	/**
 	 * Writes the XMCDA file containing the information provided to build the XMCDA tag "{@code programExecutionResult}"
 	 * in XMCDA v3, or "{@code methodMessages}" in XMCDA v2.x.
@@ -190,11 +168,10 @@ public class Utils
 	 * @param xmcdaVersion       indicates which {@link XMCDA_VERSION} to use when writing the file
 	 */
 	public static void writeProgramExecutionResults(File prgExecResultsFile, ProgramExecutionResult errors,
-	                                                XMCDA_VERSION xmcdaVersion)
-	throws Throwable
+													XMCDA_VERSION xmcdaVersion)
+			throws Throwable
 	{
 		org.xmcda.parsers.xml.xmcda_v3.XMCDAParser parser = new org.xmcda.parsers.xml.xmcda_v3.XMCDAParser();
-
 		XMCDA prgExecResults = new XMCDA();
 		prgExecResults.programExecutionResultsList.add(errors);
 		switch (xmcdaVersion)
@@ -211,8 +188,6 @@ public class Utils
 				throw new IllegalArgumentException("Unhandled XMCDA version " + xmcdaVersion.toString());
 		}
 	}
-
-
 	/**
 	 * Calls {@link #writeProgramExecutionResults(File, ProgramExecutionResult, XMCDA_VERSION)} then exits. The return status code
 	 * is {@link Status#exitStatus() errors.getStatus().getExitStatus}, or {@link Status#ERROR}'s {@code exitStatus()} in case
@@ -223,7 +198,7 @@ public class Utils
 	 * @param xmcdaVersion
 	 */
 	public static void writeProgramExecutionResultsAndExit(File prgExecResultsFile, ProgramExecutionResult errors,
-	                                                       XMCDA_VERSION xmcdaVersion)
+														   XMCDA_VERSION xmcdaVersion)
 	{
 		try
 		{
@@ -239,5 +214,4 @@ public class Utils
 		}
 		System.exit(errors.getStatus().exitStatus());
 	}
-
 }

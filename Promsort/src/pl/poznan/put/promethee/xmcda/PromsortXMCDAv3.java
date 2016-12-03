@@ -1,6 +1,7 @@
 package pl.poznan.put.promethee.xmcda;
 
 import org.xmcda.ProgramExecutionResult;
+import org.xmcda.Referenceable;
 import org.xmcda.XMCDA;
 import pl.poznan.put.promethee.Promsort;
 
@@ -24,11 +25,26 @@ public class PromsortXMCDAv3 {
 
         final XMCDA xmcda = new XMCDA();
 
-        Map<String, InputFile> files = LoadFiles.initFiles();
+/*        Map<String, InputFile> files = LoadFiles.initFiles();
 
-        for (InputFile file : files.values()) {
+       for (InputFile file : files.values()) {
             Utils.loadXMCDAv3(xmcda, new File(indir, file.filename), file.mandatory, executionResult, file.loadTagV3);
-        }
+        }*/
+
+        Referenceable.DefaultCreationObserver.currentMarker="alternatives";
+        Utils.loadXMCDAv3(xmcda, new File(indir, "alternatives.xml"), true, executionResult, "alternatives");
+        Referenceable.DefaultCreationObserver.currentMarker="categories";
+        Utils.loadXMCDAv3(xmcda, new File(indir, "categories.xml"), true, executionResult, "categories");
+        Referenceable.DefaultCreationObserver.currentMarker="categoriesValues";
+        Utils.loadXMCDAv3(xmcda, new File(indir, "categories.xml"), true, executionResult, "categoriesValues");
+        Referenceable.DefaultCreationObserver.currentMarker="categoriesProfiles";
+        Utils.loadXMCDAv3(xmcda, new File(indir, "categories_profiles.xml"), true, executionResult, "categoriesProfiles");
+        Referenceable.DefaultCreationObserver.currentMarker="positiveFlows";
+        Utils.loadXMCDAv3(xmcda, new File(indir, "positive_flows.xml"), true, executionResult, "alternativesValues");
+        Referenceable.DefaultCreationObserver.currentMarker="negativeFlows";
+        Utils.loadXMCDAv3(xmcda, new File(indir, "negative_flows.xml"), true, executionResult, "alternativesValues");
+        Referenceable.DefaultCreationObserver.currentMarker="methodParameters";
+        Utils.loadXMCDAv3(xmcda, new File(indir, "method_parameters.xml"), true, executionResult, "programParameters");
 
         if ( ! (executionResult.isOk() || executionResult.isWarning() ) ) {
             Utils.writeProgramExecutionResultsAndExit(prgExecResults, executionResult, Utils.XMCDA_VERSION.v3);

@@ -226,7 +226,7 @@ public class InputsHandler {
         if (!categoriesValuesList.isNumeric()) {
             errors.addError("Each of the categories ranks must be integer");
         }
-        
+
         Map<String, Integer> categoriesValues = new LinkedHashMap<String, Integer>();
 
         try {
@@ -269,6 +269,7 @@ public class InputsHandler {
         } catch (Throwable throwable) {
             errors.addError("An error oceured: " + throwable.getMessage() + ". Remember that each rank has to be integer.");
         }
+
 
 
         if ( xmcda.categoriesProfilesList.size() == 0 )
