@@ -195,7 +195,9 @@ public class InputsHandler {
         }
 
 
-        List<String> alternativesProfiles = xmcda.alternatives.getActiveAlternatives().stream().map(
+/*        List<String> alternativesProfiles = xmcda.alternatives.getActiveAlternatives().stream().map(
+                Alternative::id).collect(Collectors.toList());*/
+        List<String> alternativesProfiles = xmcda.alternatives.getActiveAlternatives().stream().filter(a -> a.getMarker().equals("alternatives")).map(
                 Alternative::id).collect(Collectors.toList());
 
         AlternativesValues flows = xmcda.alternativesValuesList.get(0);
@@ -227,7 +229,7 @@ public class InputsHandler {
             }
         }
 
-        alternativesProfiles.removeAll(profilesIds);
+        /*alternativesProfiles.removeAll(profilesIds);*/
         inputs.alternativesIds = alternativesProfiles;
         inputs.profilesIds = profilesIds;
 

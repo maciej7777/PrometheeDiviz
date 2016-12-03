@@ -36,7 +36,7 @@ public class PrometheeTriXMCDAv2 {
             Utils.loadXMCDAv2(xmcda_v2, new File(indir, "categories_profiles.xml"), true, executionResult, "categoriesProfiles");
             Referenceable.DefaultCreationObserver.currentMarker="flows";
             Utils.loadXMCDAv2(xmcda_v2, new File(indir, "flows.xml"), true, executionResult, "alternativesValues");
-            Referenceable.DefaultCreationObserver.currentMarker="methodParametres";
+            Referenceable.DefaultCreationObserver.currentMarker="methodParameters";
             Utils.loadXMCDAv2(xmcda_v2, new File(indir, "method_parameters.xml"), true, executionResult, "methodParameters");
 
             if ( ! (executionResult.isOk() || executionResult.isWarning() ) )
