@@ -20,6 +20,7 @@
             <documentation>
                 <description>Definitions of classes and their ranks</description>
             </documentation>
+            <xmcda tag="categories"/>
             <xmcda tag="categoriesValues"/>
         </input>
 
