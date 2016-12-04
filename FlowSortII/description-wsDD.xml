@@ -18,8 +18,9 @@
 
         <input id="input2" name="categories" displayName="categories" isoptional="0">
             <documentation>
-                <description>Definitions of classes and their ranks</description>
+                <description>Definitions of classes and their ranks.</description>
             </documentation>
+            <xmcda tag="categories"/>
             <xmcda tag="categoriesValues"/>
         </input>
 
