@@ -224,7 +224,8 @@ public class InputsHandler {
         }
 
 
-        List<String> alternativesProfiles;
+        List<String> alternativesProfiles = xmcda.alternatives.getActiveAlternatives().stream().filter(a -> a.getMarker().equals("alternatives")).map(
+                Alternative::id).collect(Collectors.toList());
         List<String> profilesIds;
 
         if (inputs.profilesType.toString().toUpperCase().equals("BOUNDING")) {
@@ -260,10 +261,11 @@ public class InputsHandler {
                 }
             }
 
-            alternativesProfiles = xmcda.alternatives.getActiveAlternatives().stream().filter(
+/*            alternativesProfiles = xmcda.alternatives.getActiveAlternatives().stream().filter(
                     alt -> !alt.id().equals(categoriesProfilesList.get(0).getLowerBound().getAlternative().id()) &&
                             !alt.id().equals(categoriesProfilesList.get(categoriesProfilesList.size() - 1).getUpperBound().getAlternative().id())).map(
-                    Alternative::id).collect(Collectors.toList());
+                    Alternative::id).collect(Collectors.toList());*/
+
 
         } else if (inputs.profilesType.toString().toUpperCase().equals("CENTRAL")) {
             List<CategoryProfile> categoriesProfilesList = new ArrayList<>();
@@ -293,8 +295,8 @@ public class InputsHandler {
             for (int i = 0; i < categoriesProfilesList.size(); i++) {
                 profilesIds.add(categoriesProfilesList.get(i).getCentralProfile().getAlternative().id());
             }
-            alternativesProfiles = xmcda.alternatives.getActiveAlternatives().stream().map(
-                    Alternative::id).collect(Collectors.toList());
+/*            alternativesProfiles = xmcda.alternatives.getActiveAlternatives().stream().map(
+                    Alternative::id).collect(Collectors.toList());*/
         } else {
             return null;
         }
@@ -369,7 +371,7 @@ public class InputsHandler {
                 break;
             }
         }
-        alternativesProfiles.removeAll(profilesIds);
+        /*alternativesProfiles.removeAll(profilesIds);*/
         inputs.alternativesIds = alternativesProfiles;
         inputs.profilesIds = profilesIds;
 

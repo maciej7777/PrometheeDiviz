@@ -12,7 +12,7 @@ public class FlowSortICLI {
         final ArrayList<String> argsList = new ArrayList<String>(Arrays.asList(args));
         if ( argsList.remove("--v2") )
         {
-            throw new UnsupportedOperationException("Not supported yet!");
+            FlowSortIXMCDAv2.main((String[]) argsList.toArray(new String[]{}));
         }
         else if ( argsList.remove("--v3") )
         {
