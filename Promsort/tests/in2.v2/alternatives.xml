@@ -3,7 +3,7 @@
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns:xmcda="http://www.decision-deck.org/2016/XMCDA-2.2.2"
 		xsi:schemaLocation="http://www.decision-deck.org/2016/XMCDA-2.2.2 http://www.decision-deck.org/xmcda/_downloads/XMCDA-2.2.2.xsd">
-	<alternatives id="alternatives1" name="alternatives1 name" mcdaConcept="alternatives1 mcdaConcept">
+<alternatives id="alternatives1" name="alternatives1 name" mcdaConcept="alternatives1 mcdaConcept">
 		<alternative id="a1">
 			<type>real</type>
 			<active>true</active>
