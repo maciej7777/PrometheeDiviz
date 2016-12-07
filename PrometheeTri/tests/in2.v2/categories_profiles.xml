@@ -4,27 +4,27 @@
 		xmlns:xmcda="http://www.decision-deck.org/2016/XMCDA-2.2.2"
 		xsi:schemaLocation="http://www.decision-deck.org/2016/XMCDA-2.2.2 http://www.decision-deck.org/xmcda/_downloads/XMCDA-2.2.2.xsd">	<categoriesProfiles>
 		<categoryProfile>
-			<alternativeID>C1</alternativeID>
+			<alternativeID>b1</alternativeID>
 			<central>
-				<categoryID>b1</categoryID>
+				<categoryID>C1</categoryID>
 			</central>
 		</categoryProfile>
 		<categoryProfile>
-			<alternativeID>C2</alternativeID>
+			<alternativeID>b2</alternativeID>
 			<central>
-				<categoryID>b2</categoryID>
+				<categoryID>C2</categoryID>
 			</central>
 		</categoryProfile>
 		<categoryProfile>
-			<alternativeID>C3</alternativeID>
+			<alternativeID>b3</alternativeID>
 			<central>
-				<categoryID>b3</categoryID>
+				<categoryID>C3</categoryID>
 			</central>
 		</categoryProfile>
 		<categoryProfile>
-			<alternativeID>C4</alternativeID>
+			<alternativeID>b4</alternativeID>
 			<central>
-				<categoryID>b4</categoryID>
+				<categoryID>C4</categoryID>
 			</central>
 		</categoryProfile>
 	</categoriesProfiles>

@@ -30,9 +30,7 @@ public class OutputsHandler {
     {
         switch(outputName)
         {
-            case "final_assignments":
-                return "alternativesAssignments";
-            case "first_step_assignments":
+            case "assignments":
                 return "alternativesAssignments";
             case "messages":
                 return "methodMessages";
