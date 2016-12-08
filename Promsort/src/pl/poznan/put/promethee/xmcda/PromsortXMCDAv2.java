@@ -4,7 +4,7 @@ import org.xmcda.ProgramExecutionResult;
 import org.xmcda.Referenceable;
 import org.xmcda.converters.v2_v3.XMCDAConverter;
 import org.xmcda.parsers.xml.xmcda_v2.XMCDAParser;
-import org.xmcda.v2.XMCDA;
+
 import pl.poznan.put.promethee.Promsort;
 
 import java.io.File;
@@ -14,6 +14,32 @@ import java.util.Map;
  * Created by Maciej Uniejewski on 2016-11-02.
  */
 public class PromsortXMCDAv2 {
+    private static final ProgramExecutionResult executionResult = new ProgramExecutionResult();
+
+    /**
+     * Loads, converts and inserts the content of the XMCDA v2 {@code file} into {@code xmcda_v3}.
+     * Updates {@link #executionResult} if an error occurs.
+     *
+     * @param file the XMCDA v2 file to be loaded
+     * @param marker the marker to use, see {@link Referenceable.DefaultCreationObserver#currentMarker}
+     * @param xmcda_v3 the object into which the content of {@file} is inserted
+     * @param v2_tags_only the list of XMCDA v2 tags to be loaded
+     */
+    private static void convertToV3AndMark(File file, String marker, org.xmcda.XMCDA xmcda_v3,
+                                           String ... v2_tags_only)
+    {
+        final org.xmcda.v2.XMCDA xmcda_v2 = new org.xmcda.v2.XMCDA();
+        Referenceable.DefaultCreationObserver.currentMarker=marker;
+        Utils.loadXMCDAv2(xmcda_v2, file, true, executionResult, v2_tags_only);
+        try
+        {
+            XMCDAConverter.convertTo_v3(xmcda_v2, xmcda_v3);
+        }
+        catch (Throwable t)
+        {
+            executionResult.addError(Utils.getMessage("Could not convert "+file.getPath()+" to XMCDA v3, reason: ", t));
+        }
+    }
 
     public static void main(String[] args) throws Utils.InvalidCommandLineException
     {
@@ -21,40 +47,22 @@ public class PromsortXMCDAv2 {
         final String indir = params.inputDirectory;
         final String outdir = params.outputDirectory;
         final File prgExecResultsFile = new File(outdir, "messages.xml");
-        final ProgramExecutionResult executionResult = new ProgramExecutionResult();
 
-        final org.xmcda.XMCDA xmcda;
-        org.xmcda.v2.XMCDA xmcda_v2 = new org.xmcda.v2.XMCDA();
+        final org.xmcda.XMCDA xmcda = new org.xmcda.XMCDA();
 
-        Referenceable.DefaultCreationObserver.currentMarker="alternatives";
-        Utils.loadXMCDAv2(xmcda_v2, new File(indir, "alternatives.xml"), true, executionResult, "alternatives");
-        Referenceable.DefaultCreationObserver.currentMarker="categories";
-        Utils.loadXMCDAv2(xmcda_v2, new File(indir, "categories.xml"), true, executionResult, "categories");
-        Referenceable.DefaultCreationObserver.currentMarker="categoriesValues";
-        Utils.loadXMCDAv2(xmcda_v2, new File(indir, "categories.xml"), true, executionResult, "categoriesValues");
-        Referenceable.DefaultCreationObserver.currentMarker="categoriesProfiles";
-        Utils.loadXMCDAv2(xmcda_v2, new File(indir, "categories_profiles.xml"), true, executionResult, "categoriesProfiles");
-        Referenceable.DefaultCreationObserver.currentMarker="positiveFlows";
-        Utils.loadXMCDAv2(xmcda_v2, new File(indir, "positive_flows.xml"), true, executionResult, "alternativesValues");
-        Referenceable.DefaultCreationObserver.currentMarker="negativeFlows";
-        Utils.loadXMCDAv2(xmcda_v2, new File(indir, "negative_flows.xml"), true, executionResult, "alternativesValues");
-        Referenceable.DefaultCreationObserver.currentMarker="methodParameters";
-        Utils.loadXMCDAv2(xmcda_v2, new File(indir, "method_parameters.xml"), true, executionResult, "methodParameters");
+        convertToV3AndMark(new File(indir,  "alternatives.xml"), "alternatives", xmcda, "alternatives");
+        convertToV3AndMark(new File(indir,  "categories.xml"), "categories", xmcda, "categories");
+        convertToV3AndMark(new File(indir,  "categories.xml"), "categoriesValues", xmcda, "categoriesValues");
+        convertToV3AndMark(new File(indir,  "categories_profiles.xml"), "categoriesProfiles", xmcda, "categoriesProfiles");
+        convertToV3AndMark(new File(indir,  "positive_flows.xml"), "positiveFlows", xmcda, "alternativesValues");
+        convertToV3AndMark(new File(indir,  "negative_flows.xml"), "negativeFlows", xmcda, "alternativesValues");
+        convertToV3AndMark(new File(indir,  "method_parameters.xml"), "methodParameters", xmcda, "methodParameters");
 
         if ( ! (executionResult.isOk() || executionResult.isWarning() ) )
         {
             Utils.writeProgramExecutionResultsAndExit(prgExecResultsFile, executionResult, Utils.XMCDA_VERSION.v2);
         }
-        try
-        {
-            xmcda = XMCDAConverter.convertTo_v3(xmcda_v2);
-        }
-        catch (Throwable t)
-        {
-            executionResult.addError(Utils.getMessage("Could not convert inputs to XMCDA v3, reason: ", t));
-            Utils.writeProgramExecutionResultsAndExit(prgExecResultsFile, executionResult, Utils.XMCDA_VERSION.v2);
-            return;
-        }
+
         final InputsHandler.Inputs inputs = InputsHandler.checkAndExtractInputs(xmcda, executionResult);
         if ( ! ( executionResult.isOk() || executionResult.isWarning() ) || inputs == null )
         {
