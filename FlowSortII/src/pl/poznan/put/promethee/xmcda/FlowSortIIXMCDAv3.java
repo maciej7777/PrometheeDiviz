@@ -25,12 +25,6 @@ public class FlowSortIIXMCDAv3 {
 
         final XMCDA xmcda = new XMCDA();
 
-/*        Map<String, InputFile> files = LoadFiles.initFiles();
-
-        for (InputFile file : files.values()) {
-            Utils.loadXMCDAv3(xmcda, new File(indir, file.filename), file.mandatory, executionResult, file.loadTagV3);
-        }*/
-
         Referenceable.DefaultCreationObserver.currentMarker="alternatives";
         Utils.loadXMCDAv3(xmcda, new File(indir, "alternatives.xml"), true, executionResult, "alternatives");
         Referenceable.DefaultCreationObserver.currentMarker="categories";
