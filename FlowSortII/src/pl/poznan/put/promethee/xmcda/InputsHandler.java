@@ -253,11 +253,17 @@ public class InputsHandler {
 
             profilesIds = new ArrayList<>();
             for (int i = 0; i < categoriesProfilesList.size() - 1; i++) {
-                profilesIds.add(categoriesProfilesList.get(i).getUpperBound().getAlternative().id());
-                if (!categoriesProfilesList.get(i).getUpperBound().getAlternative().id().equals(categoriesProfilesList.get(i + 1).getLowerBound().getAlternative().id())) {
-                    errors.addError("Each two closest categories have to be separated by same boundary profile.");
+                if (categoriesProfilesList.get(i).getUpperBound() != null && categoriesProfilesList.get(i + 1).getLowerBound() != null) {
+                    profilesIds.add(categoriesProfilesList.get(i).getUpperBound().getAlternative().id());
+                    if (!categoriesProfilesList.get(i).getUpperBound().getAlternative().id().equals(categoriesProfilesList.get(i + 1).getLowerBound().getAlternative().id())) {
+                        errors.addError("Each two closest categories have to be separated by same boundary profile.");
+                        break;
+                    }
+                } else {
+                    errors.addError("There are some missing categories in categories_profiles.xml file.");
                     break;
                 }
+
             }
 
 /*            alternativesProfiles = xmcda.alternatives.getActiveAlternatives().stream().filter(
