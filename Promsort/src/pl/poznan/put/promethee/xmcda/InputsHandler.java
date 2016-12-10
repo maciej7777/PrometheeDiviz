@@ -126,7 +126,7 @@ public class InputsHandler {
                 {
                     String err = "Invalid value for parameter assignToABetterClass, it must be true or false.";
                     errors.addError(err);
-                    cutPoint = null;
+                    assignToABetterClass = null;
                 }
 
             } else {
