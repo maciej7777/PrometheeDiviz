@@ -110,7 +110,7 @@ public class InputsHandler {
             }
             if ( prgParam.getValues() == null || (prgParam.getValues() != null && prgParam.getValues().size() != 1) )
             {
-                errors.addError("Parameter operator must have a single (label) value only");
+                errors.addError("Parameter ComparisonWithProfiles must have a single (label) value only");
                 break check_parameters;
             }
             try
@@ -141,10 +141,6 @@ public class InputsHandler {
         {
             errors.addError("No categories list has been supplied");
         }
-/*        else if ( xmcda.categories.size() > 1 )
-        {
-            errors.addError("More than one categories list has been supplied");
-        }*/
         else
         {
             @SuppressWarnings("rawtypes")
