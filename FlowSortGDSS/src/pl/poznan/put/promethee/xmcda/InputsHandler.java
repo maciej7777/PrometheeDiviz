@@ -310,7 +310,7 @@ public class InputsHandler {
     }
 
     protected static void checkAndExtractBoundaryProfilesIds(ProgramExecutionResult errors, List<CategoryProfile> categoriesProfilesList, List<String> profilesIds, int i) {
-        for (int j = 0; j < categoriesProfilesList.size() - 2; j++) {
+        for (int j = 0; j < categoriesProfilesList.size() - 1; j++) {
             if (categoriesProfilesList.get(j).getUpperBound() != null && categoriesProfilesList.get(j + 1).getLowerBound() != null) {
                 profilesIds.add(categoriesProfilesList.get(j).getUpperBound().getAlternative().id());
                 if (!categoriesProfilesList.get(j).getUpperBound().getAlternative().id().equals(categoriesProfilesList.get(j + 1).getLowerBound().getAlternative().id())) {
