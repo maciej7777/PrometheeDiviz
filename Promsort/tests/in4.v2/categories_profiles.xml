@@ -7,9 +7,9 @@
 		<categoryProfile>
 			<alternativeID>b0</alternativeID>
 			<limits>
-				<lowerCategory>
+				<upperCategory>
 					<categoryID>C1</categoryID>
-				</lowerCategory>
+				</upperCategory>
 			</limits>
 		</categoryProfile>
 		<categoryProfile>
