@@ -1,7 +1,6 @@
 package pl.poznan.put.promethee.xmcda;
 
 import org.xmcda.*;
-import org.xmcda.utils.ValueConverters;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -17,7 +16,8 @@ public class InputsHandler {
         public List<String> criteriaIds;
         public Map<String, Integer> categoriesRanking;
         public List<List<String>> profilesIds;
-        public List<Map<String, Double>> flows;
+        public List<Map<String, Double>> alternativesFlows;
+        public Map<String, Double> alternativesFlowsAverage;
         public List<List<CategoryProfile>> categoryProfiles;
         public ComparisonWithProfiles profilesType;
         public List<Double> decisionMakersWages;
@@ -77,6 +77,7 @@ public class InputsHandler {
         checkAndExtractProfilesPerformance(inputs, xmcda, errors);
         checkDominanceCondition(inputs, errors);
         checkAndExtractAlternativesFlows(inputs, xmcda, errors);
+        extractFlowsAverage(inputs);
 
         return inputs;
     }
@@ -449,10 +450,10 @@ public class InputsHandler {
     protected static void checkAndExtractAlternativesFlows(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
         if (xmcda.alternativesValuesList.size() < 2 || xmcda.alternativesValuesList.size() > 10)
         {
-            errors.addError("You need to provide 2 - 10 flows lists.");
+            errors.addError("You need to provide 2 - 10 alternativesFlows lists.");
         }
 
-        inputs.flows = new ArrayList<>();
+        inputs.alternativesFlows = new ArrayList<>();
 
         for (int i = 0; i < inputs.decisionMakers; i++) {
             AlternativesValues flows = xmcda.alternativesValuesList.get(i);
@@ -480,11 +481,27 @@ public class InputsHandler {
                     }
                 }
                 if (!found) {
-                    errors.addError("There are some missing values in flows.");
+                    errors.addError("There are some missing values in alternativesFlows.");
                     return;
                 }
             }
-            inputs.flows.add(tmpFlows);
+            inputs.alternativesFlows.add(tmpFlows);
+        }
+    }
+
+    protected static void extractFlowsAverage(Inputs inputs) {
+
+        inputs.alternativesFlowsAverage = new LinkedHashMap<>();
+
+        for (int i = 0; i < inputs.alternativesIds.size(); i++) {
+            double sum = 0.0;
+
+            for (int j = 0; j < inputs.alternativesFlows.size(); j++) {
+                sum += inputs.alternativesFlows.get(j).get(inputs.alternativesIds.get(i));
+            }
+
+            sum = sum / inputs.alternativesFlows.size();
+            inputs.alternativesFlowsAverage.put(inputs.alternativesIds.get(i), sum);
         }
     }
 }
