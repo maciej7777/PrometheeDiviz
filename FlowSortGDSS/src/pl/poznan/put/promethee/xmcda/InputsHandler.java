@@ -75,7 +75,8 @@ public class InputsHandler {
         checkAndExtractCriteria(inputs, xmcda, errors);
         checkAndExtractCriteriaPreferencesDirection(inputs, xmcda, errors);
         checkAndExtractProfilesPerformance(inputs, xmcda, errors);
-        checkDominanceCondition(inputs, xmcda, errors);
+        checkDominanceCondition(inputs, errors);
+        checkAndExtractAlternativesFlows(inputs, xmcda, errors);
 
         return inputs;
     }
@@ -233,11 +234,13 @@ public class InputsHandler {
     protected static void checkAndExtractNumberOfDecisionMakers(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
         int perfTables = xmcda.performanceTablesList.size();
         int categProfiles = xmcda.categoriesProfilesList.size();
+        int flows = xmcda.alternativesValuesList.size();
         int decisionMakers = 0;
 
-        if (perfTables != categProfiles) {
+        if (perfTables != categProfiles || perfTables != flows) {
             String err = "Invalid number of files for some of decision makers. Each decision maker need to provide his own categories profiles and performance table list.";
             errors.addError(err);
+            return;
         } else {
             decisionMakers = perfTables;
         }
@@ -295,7 +298,7 @@ public class InputsHandler {
             }
             inputs.profilesIds.add(profilesIds);
         }
-        checkForProfilesDuplicates(inputs, xmcda, errors);
+        checkForProfilesDuplicates(inputs, errors);
     }
 
     protected static void checkAndExtractCentralProfilesIds(ProgramExecutionResult errors, List<CategoryProfile> categoriesProfilesList, List<String> profilesIds, int i) {
@@ -324,7 +327,7 @@ public class InputsHandler {
         }
     }
 
-    protected static void checkForProfilesDuplicates(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+    protected static void checkForProfilesDuplicates(Inputs inputs, ProgramExecutionResult errors) {
         HashSet<String> testDuplicates = new HashSet<>();
         for (int i = 0; i < inputs.profilesIds.size(); i++) {
             testDuplicates.addAll(inputs.profilesIds.get(i));
@@ -419,7 +422,7 @@ public class InputsHandler {
 
     }
 
-    protected static void checkDominanceCondition(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+    protected static void checkDominanceCondition(Inputs inputs, ProgramExecutionResult errors) {
         for (int i = 0; i < inputs.profilesIds.size(); i++) {
             for (int j = 0; j < inputs.profilesIds.get(i).size() - 1; j++) {
                 for (int criterionIterator = 0; criterionIterator < inputs.criteriaIds.size(); criterionIterator++) {
@@ -440,6 +443,48 @@ public class InputsHandler {
 
                 }
             }
+        }
+    }
+
+    protected static void checkAndExtractAlternativesFlows(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+        if (xmcda.alternativesValuesList.size() < 2 || xmcda.alternativesValuesList.size() > 10)
+        {
+            errors.addError("You need to provide 2 - 10 flows lists.");
+        }
+
+        inputs.flows = new ArrayList<>();
+
+        for (int i = 0; i < inputs.decisionMakers; i++) {
+            AlternativesValues flows = xmcda.alternativesValuesList.get(i);
+            if (!flows.isNumeric()) {
+                errors.addError("Each flow must have numeric type");
+            }
+
+            Map<String, Double> tmpFlows = new LinkedHashMap<>();
+
+            try {
+                Map<Alternative, LabelledQValues<Double>> flowsMap = flows;
+                for (Map.Entry<Alternative, LabelledQValues<Double>> flow : flowsMap.entrySet()) {
+                    Double tmpValue = flow.getValue().get(0).convertToDouble().getValue();
+                    tmpFlows.put(flow.getKey().id(), tmpValue);
+                }
+            } catch (Throwable throwable) {
+                errors.addError("An error occurred: " + throwable.getMessage() + ". Each flow must have numeric type.");
+            }
+
+            for (int j = 0; j < inputs.alternativesIds.size(); j++) {
+                boolean found = false;
+                for (Object alt : flows.getAlternatives()) {
+                    if (((Alternative) alt).id().equals(inputs.alternativesIds.get(j))) {
+                        found = true;
+                    }
+                }
+                if (!found) {
+                    errors.addError("There are some missing values in flows.");
+                    return;
+                }
+            }
+            inputs.flows.add(tmpFlows);
         }
     }
 }

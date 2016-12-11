@@ -42,15 +42,26 @@ public class FlowSortGDSSv3 {
         Utils.loadXMCDAv3(xmcda, new File(indir, "categories_profiles1.xml"), true, executionResult, "categoriesProfiles");
         Referenceable.DefaultCreationObserver.currentMarker="categoriesProfiles2";
         Utils.loadXMCDAv3(xmcda, new File(indir, "categories_profiles2.xml"), true, executionResult, "categoriesProfiles");
+
         Referenceable.DefaultCreationObserver.currentMarker="performanceTable1";
         Utils.loadXMCDAv3(xmcda, new File(indir, "performance_table1.xml"), true, executionResult, "performanceTable");
         Referenceable.DefaultCreationObserver.currentMarker="performanceTable2";
         Utils.loadXMCDAv3(xmcda, new File(indir, "performance_table2.xml"), true, executionResult, "performanceTable");
+
+        Referenceable.DefaultCreationObserver.currentMarker="flows1";
+        Utils.loadXMCDAv3(xmcda, new File(indir, "flows1.xml"), true, executionResult, "alternativesValues");
+        Referenceable.DefaultCreationObserver.currentMarker="flows2";
+        Utils.loadXMCDAv3(xmcda, new File(indir, "flows2.xml"), true, executionResult, "alternativesValues");
+
+
+
         for (int i = 3; i <= 10; i++) {
             Referenceable.DefaultCreationObserver.currentMarker="categoriesProfiles"+i;
             Utils.loadXMCDAv3(xmcda, new File(indir, "categories_profiles"+i+".xml"), false, executionResult, "categoriesProfiles");
             Referenceable.DefaultCreationObserver.currentMarker="performanceTable"+i;
             Utils.loadXMCDAv3(xmcda, new File(indir, "performance_table"+i+".xml"), false, executionResult, "performanceTable");
+            Referenceable.DefaultCreationObserver.currentMarker="flows"+i;
+            Utils.loadXMCDAv3(xmcda, new File(indir, "flows"+i+".xml"), false, executionResult, "alternativesValues");
         }
 
 
