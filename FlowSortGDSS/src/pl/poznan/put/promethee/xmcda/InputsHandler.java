@@ -1,6 +1,7 @@
 package pl.poznan.put.promethee.xmcda;
 
 import org.xmcda.*;
+import org.xmcda.utils.ValueConverters;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -22,7 +23,8 @@ public class InputsHandler {
         public List<Double> decisionMakersWages;
         public Boolean assignToABetterClass;
         public Integer decisionMakers;
-        HashMap<String, String> criteriaPreferencesDirection;
+        public HashMap<String, String> criteriaPreferencesDirection;
+        public List<Map<String, Map<String, Double>>> profilesPerformance;
     }
 
     public enum ComparisonWithProfiles {
@@ -30,7 +32,7 @@ public class InputsHandler {
         BOUNDING("bounding");
         private String label;
 
-        private ComparisonWithProfiles(String operatorLabel) {
+        ComparisonWithProfiles(String operatorLabel) {
             label = operatorLabel;
         }
 
@@ -72,6 +74,8 @@ public class InputsHandler {
         checkAndExtractProfilesIds(inputs, xmcda, errors);
         checkAndExtractCriteria(inputs, xmcda, errors);
         checkAndExtractCriteriaPreferencesDirection(inputs, xmcda, errors);
+        checkAndExtractProfilesPerformance(inputs, xmcda, errors);
+        checkDominanceCondition(inputs, xmcda, errors);
 
         return inputs;
     }
@@ -256,6 +260,7 @@ public class InputsHandler {
             errors.addError("You can not supply more then 10 categories profiles list");
         }
 
+        inputs.categoryProfiles = new ArrayList<>();
         for (int i = 0; i < inputs.decisionMakers; i++) {
             List<CategoryProfile> categoriesProfilesList = new ArrayList<>();
             CategoriesProfiles categoriesProfiles = xmcda.categoriesProfilesList.get(i);
@@ -279,6 +284,8 @@ public class InputsHandler {
                     return Integer.compare(inputs.categoriesRanking.get(left.getCategory().id()), inputs.categoriesRanking.get(right.getCategory().id()));
                 }
             });
+
+            inputs.categoryProfiles.add(categoriesProfilesList);
 
             List<String> profilesIds = new ArrayList<>();
             if (inputs.profilesType.toString().toUpperCase().equals("BOUNDING")) {
@@ -354,6 +361,85 @@ public class InputsHandler {
             @SuppressWarnings("unchecked")
             QuantitativeScale<String> scale = (QuantitativeScale<String>) criteriaDirection.get(criterion).get(0);
             inputs.criteriaPreferencesDirection.put(criterion.id(), scale.getPreferenceDirection().name());
+        }
+    }
+
+    protected static void checkAndExtractProfilesPerformance(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+        if (inputs.profilesIds == null || inputs.profilesIds.size() == 0 || inputs.profilesIds.get(0).size() == 0) {
+            return;
+        }
+        if (xmcda.performanceTablesList.size() < 2 || xmcda.performanceTablesList.size() > 10) {
+            errors.addError("You need to provide 2 - 10 profile performances lists.");
+            return;
+        }
+
+        inputs.profilesPerformance = new ArrayList<>();
+        for (int i = 0; i < xmcda.performanceTablesList.size(); i++) {
+            @SuppressWarnings("rawtypes")
+            PerformanceTable p = xmcda.performanceTablesList.get(i);
+
+            if (p.hasMissingValues()) {
+                errors.addError("The performance table has missing values.");
+                return;
+            }
+            if (!p.isNumeric()) {
+                errors.addError("The performance table must contain numeric values only");
+                return;
+            }
+
+            try {
+                @SuppressWarnings("unchecked")
+                PerformanceTable<Double> perfTable = p.asDouble();
+                xmcda.performanceTablesList.set(0, perfTable);
+            } catch (Exception e) {
+                final String msg = "Error when converting the performance table's value to Double, reason:";
+                errors.addError(Utils.getMessage(msg, e));
+                return;
+            }
+
+            @SuppressWarnings("unchecked")
+            PerformanceTable<Double> profilesPerformance = (PerformanceTable<Double>) xmcda.performanceTablesList.get(i);
+            Map<String, Map<String, Double>> profilesPerformanceMap = new LinkedHashMap<>();
+            for (Alternative alternative : profilesPerformance.getAlternatives()) {
+                if (!inputs.profilesIds.get(i).contains(alternative.id())) {
+                    continue;
+                }
+                for (Criterion criterion : profilesPerformance.getCriteria()) {
+                    if (!inputs.criteriaIds.contains(criterion.id())) {
+                        continue;
+                    }
+
+                    Double value = profilesPerformance.getValue(alternative, criterion);
+                    profilesPerformanceMap.putIfAbsent(alternative.id(), new LinkedHashMap<>());
+                    profilesPerformanceMap.get(alternative.id()).put(criterion.id(), value);
+                }
+            }
+            inputs.profilesPerformance.add(profilesPerformanceMap);
+        }
+
+    }
+
+    protected static void checkDominanceCondition(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+        for (int i = 0; i < inputs.profilesIds.size(); i++) {
+            for (int j = 0; j < inputs.profilesIds.get(i).size() - 1; j++) {
+                for (int criterionIterator = 0; criterionIterator < inputs.criteriaIds.size(); criterionIterator++) {
+                    int multiplier = 1;
+                    if (inputs.criteriaPreferencesDirection.get(inputs.criteriaIds.get(criterionIterator)).toUpperCase().equals("MIN")) {
+                        multiplier = -1;
+                    }
+
+                    Double currentPerformance = inputs.profilesPerformance.get(i).get(inputs.profilesIds.get(i).get(j)).get(inputs.criteriaIds.get(criterionIterator));
+                    Double nextElementPerformance = inputs.profilesPerformance.get(i).get(inputs.profilesIds.get(i).get(j + 1)).get(inputs.criteriaIds.get(criterionIterator));
+                    Double anotherDecisionMakerNextElementPerformance = inputs.profilesPerformance.get((i + 1) % inputs.profilesIds.size()).get(inputs.profilesIds.get((i + 1)% inputs.profilesIds.size()).get(j + 1)).get(inputs.criteriaIds.get(criterionIterator));
+
+                    if (currentPerformance * multiplier >= nextElementPerformance * multiplier || currentPerformance * multiplier >= anotherDecisionMakerNextElementPerformance * multiplier) {
+                        errors.addError("Dominance condition is not respected.");
+                        return;
+                    }
+
+
+                }
+            }
         }
     }
 }

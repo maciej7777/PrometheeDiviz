@@ -8,7 +8,7 @@
                 <criterionID>cr1</criterionID>
                 <values>
                     <value>
-                        <real>10.0</real>
+                        <real>11.0</real>
                     </value>
                 </values>
             </performance>
@@ -16,7 +16,7 @@
                 <criterionID>cr2</criterionID>
                 <values>
                     <value>
-                        <real>100.0</real>
+                        <real>99.0</real>
                     </value>
                 </values>
             </performance>
@@ -27,7 +27,7 @@
                 <criterionID>cr1</criterionID>
                 <values>
                     <value>
-                        <real>2.0</real>
+                        <real>13.0</real>
                     </value>
                 </values>
             </performance>
@@ -35,7 +35,7 @@
                 <criterionID>cr2</criterionID>
                 <values>
                     <value>
-                        <real>80.0</real>
+                        <real>87.0</real>
                     </value>
                 </values>
             </performance>
@@ -46,7 +46,7 @@
                 <criterionID>cr1</criterionID>
                 <values>
                     <value>
-                        <real>12.0</real>
+                        <real>15.0</real>
                     </value>
                 </values>
             </performance>
@@ -54,7 +54,7 @@
                 <criterionID>cr2</criterionID>
                 <values>
                     <value>
-                        <real>80.0</real>
+                        <real>50.0</real>
                     </value>
                 </values>
             </performance>

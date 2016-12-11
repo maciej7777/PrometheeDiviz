@@ -16,32 +16,13 @@
                 <criterionID>cr2</criterionID>
                 <values>
                     <value>
-                        <real>100.0</real>
+                        <real>110.0</real>
                     </value>
                 </values>
             </performance>
         </alternativePerformances>
         <alternativePerformances>
             <alternativeID>b2d3</alternativeID>
-            <performance>
-                <criterionID>cr1</criterionID>
-                <values>
-                    <value>
-                        <real>2.0</real>
-                    </value>
-                </values>
-            </performance>
-            <performance>
-                <criterionID>cr2</criterionID>
-                <values>
-                    <value>
-                        <real>80.0</real>
-                    </value>
-                </values>
-            </performance>
-        </alternativePerformances>
-        <alternativePerformances>
-            <alternativeID>b3d3</alternativeID>
             <performance>
                 <criterionID>cr1</criterionID>
                 <values>
@@ -54,7 +35,26 @@
                 <criterionID>cr2</criterionID>
                 <values>
                     <value>
-                        <real>80.0</real>
+                        <real>90.0</real>
+                    </value>
+                </values>
+            </performance>
+        </alternativePerformances>
+        <alternativePerformances>
+            <alternativeID>b3d3</alternativeID>
+            <performance>
+                <criterionID>cr1</criterionID>
+                <values>
+                    <value>
+                        <real>17.0</real>
+                    </value>
+                </values>
+            </performance>
+            <performance>
+                <criterionID>cr2</criterionID>
+                <values>
+                    <value>
+                        <real>20.0</real>
                     </value>
                 </values>
             </performance>
