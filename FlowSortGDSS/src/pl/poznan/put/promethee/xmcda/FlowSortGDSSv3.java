@@ -37,6 +37,9 @@ public class FlowSortGDSSv3 {
         Referenceable.DefaultCreationObserver.currentMarker="criteriaScales";
         Utils.loadXMCDAv3(xmcda, new File(indir, "criteria.xml"), true, executionResult, "criteriaScales");
 
+        Referenceable.DefaultCreationObserver.currentMarker="profilesFlows";
+        Utils.loadXMCDAv3(xmcda, new File(indir, "profilesFlows.xml"), true, executionResult, "alternativesValues");
+
 
         Referenceable.DefaultCreationObserver.currentMarker="categoriesProfiles1";
         Utils.loadXMCDAv3(xmcda, new File(indir, "categories_profiles1.xml"), true, executionResult, "categoriesProfiles");
@@ -52,8 +55,6 @@ public class FlowSortGDSSv3 {
         Utils.loadXMCDAv3(xmcda, new File(indir, "flows1.xml"), true, executionResult, "alternativesValues");
         Referenceable.DefaultCreationObserver.currentMarker="flows2";
         Utils.loadXMCDAv3(xmcda, new File(indir, "flows2.xml"), true, executionResult, "alternativesValues");
-
-
 
         for (int i = 3; i <= 10; i++) {
             Referenceable.DefaultCreationObserver.currentMarker="categoriesProfiles"+i;

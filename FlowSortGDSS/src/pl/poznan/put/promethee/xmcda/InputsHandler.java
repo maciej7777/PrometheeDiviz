@@ -25,6 +25,7 @@ public class InputsHandler {
         public Integer decisionMakers;
         public HashMap<String, String> criteriaPreferencesDirection;
         public List<Map<String, Map<String, Double>>> profilesPerformance;
+        public Map<String, Double> profilesFlows;
     }
 
     public enum ComparisonWithProfiles {
@@ -78,6 +79,7 @@ public class InputsHandler {
         checkDominanceCondition(inputs, errors);
         checkAndExtractAlternativesFlows(inputs, xmcda, errors);
         extractFlowsAverage(inputs);
+        checkAndExtractProfilesFlows(inputs, xmcda, errors);
 
         return inputs;
     }
@@ -235,7 +237,7 @@ public class InputsHandler {
     protected static void checkAndExtractNumberOfDecisionMakers(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
         int perfTables = xmcda.performanceTablesList.size();
         int categProfiles = xmcda.categoriesProfilesList.size();
-        int flows = xmcda.alternativesValuesList.size();
+        int flows = xmcda.alternativesValuesList.size() - 1;
         int decisionMakers = 0;
 
         if (perfTables != categProfiles || perfTables != flows) {
@@ -433,30 +435,32 @@ public class InputsHandler {
                     }
 
                     Double currentPerformance = inputs.profilesPerformance.get(i).get(inputs.profilesIds.get(i).get(j)).get(inputs.criteriaIds.get(criterionIterator));
-                    Double nextElementPerformance = inputs.profilesPerformance.get(i).get(inputs.profilesIds.get(i).get(j + 1)).get(inputs.criteriaIds.get(criterionIterator));
-                    Double anotherDecisionMakerNextElementPerformance = inputs.profilesPerformance.get((i + 1) % inputs.profilesIds.size()).get(inputs.profilesIds.get((i + 1)% inputs.profilesIds.size()).get(j + 1)).get(inputs.criteriaIds.get(criterionIterator));
 
-                    if (currentPerformance * multiplier >= nextElementPerformance * multiplier || currentPerformance * multiplier >= anotherDecisionMakerNextElementPerformance * multiplier) {
-                        errors.addError("Dominance condition is not respected.");
-                        return;
+                    for (int z = 0; z < inputs.profilesIds.size(); z++) {
+                        if (z != i) {
+                            Double tempPerformance = inputs.profilesPerformance.get(z).get(inputs.profilesIds.get(z).get(j + 1)).get(inputs.criteriaIds.get(criterionIterator));
+
+                            if (currentPerformance * multiplier >= tempPerformance * multiplier ) {
+                                errors.addError("Dominance condition is not respected.");
+                                return;
+                            }
+                        }
                     }
-
-
                 }
             }
         }
     }
 
     protected static void checkAndExtractAlternativesFlows(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
-        if (xmcda.alternativesValuesList.size() < 2 || xmcda.alternativesValuesList.size() > 10)
+        if (xmcda.alternativesValuesList.size() < 3 || xmcda.alternativesValuesList.size() > 11)
         {
-            errors.addError("You need to provide 2 - 10 alternativesFlows lists.");
+            errors.addError("You need to provide 2 - 10 alternatives flows lists.");
         }
 
         inputs.alternativesFlows = new ArrayList<>();
 
         for (int i = 0; i < inputs.decisionMakers; i++) {
-            AlternativesValues flows = xmcda.alternativesValuesList.get(i);
+            AlternativesValues flows = xmcda.alternativesValuesList.get(i+1);
             if (!flows.isNumeric()) {
                 errors.addError("Each flow must have numeric type");
             }
@@ -503,5 +507,46 @@ public class InputsHandler {
             sum = sum / inputs.alternativesFlows.size();
             inputs.alternativesFlowsAverage.put(inputs.alternativesIds.get(i), sum);
         }
+    }
+
+    protected static void checkAndExtractProfilesFlows(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+        if (xmcda.alternativesValuesList.size() < 1 || xmcda.alternativesValuesList.size() > 11)
+        {
+            errors.addError("You need to provide 1 profiles flows lists.");
+        }
+
+        AlternativesValues flows = xmcda.alternativesValuesList.get(0);
+
+        if (!flows.isNumeric()) {
+            errors.addError("Each flow must have numeric type");
+        }
+
+        Map<String, Double> tmpFlows = new LinkedHashMap<>();
+
+        try {
+            Map<Alternative, LabelledQValues<Double>> flowsMap = flows;
+            for (Map.Entry<Alternative, LabelledQValues<Double>> flow : flowsMap.entrySet()) {
+                Double tmpValue = flow.getValue().get(0).convertToDouble().getValue();
+                tmpFlows.put(flow.getKey().id(), tmpValue);
+            }
+        } catch (Throwable throwable) {
+            errors.addError("An error occurred: " + throwable.getMessage() + ". Each flow must have numeric type.");
+        }
+
+        for (int j = 0; j < inputs.profilesIds.size(); j++) {
+            for (int k = 0; k < inputs.profilesIds.get(j).size(); k++) {
+                boolean found = false;
+                for (Object alt : flows.getAlternatives()) {
+                    if (((Alternative) alt).id().equals(inputs.profilesIds.get(j).get(k))) {
+                        found = true;
+                    }
+                }
+                if (!found) {
+                    errors.addError("There are some missing values in profiles flows.");
+                    return;
+                }
+            }
+        }
+        inputs.profilesFlows = tmpFlows;
     }
 }
