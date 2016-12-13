@@ -17,5 +17,75 @@
                 </value>
             </values>
         </parameter>
+		<parameter id="decisionMaker1">
+			<values>
+				<value>
+					<real>0.4</real>
+				</value>
+			</values>
+		</parameter>
+		<parameter id="decisionMaker2">
+			<values>
+				<value>
+					<real>0.3</real>
+				</value>
+			</values>
+		</parameter>
+		<parameter id="decisionMaker3">
+			<values>
+				<value>
+					<real>0.3</real>
+				</value>
+			</values>
+		</parameter>
+		<parameter id="decisionMaker4">
+			<values>
+				<value>
+					<real>0.0</real>
+				</value>
+			</values>
+		</parameter>
+		<parameter id="decisionMaker5">
+			<values>
+				<value>
+					<real>0.0</real>
+				</value>
+			</values>
+		</parameter>
+		<parameter id="decisionMaker6">
+			<values>
+				<value>
+					<real>0.0</real>
+				</value>
+			</values>
+		</parameter>
+		<parameter id="decisionMaker7">
+			<values>
+				<value>
+					<real>0.0</real>
+				</value>
+			</values>
+		</parameter>
+		<parameter id="decisionMaker8">
+			<values>
+				<value>
+					<real>0.0</real>
+				</value>
+			</values>
+		</parameter>
+		<parameter id="decisionMaker9">
+			<values>
+				<value>
+					<real>0.0</real>
+				</value>
+			</values>
+		</parameter>
+		<parameter id="decisionMaker10">
+			<values>
+				<value>
+					<real>0.0</real>
+				</value>
+			</values>
+		</parameter>
 	</programParameters>
 </xmcda:XMCDA>

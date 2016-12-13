@@ -171,13 +171,14 @@ public class InputsHandler {
             errors.addError("No programParameter found");
             return;
         }
-        if (xmcda.programParametersList.get(0).size() != 2) {
-            errors.addError("Parameters' list must contain exactly two elements");
+        if (xmcda.programParametersList.get(0).size() != 12) {
+            errors.addError("Parameters' list must contain exactly twelve elements");
             return;
         }
 
         checkAndExtractProfilesType(inputs, xmcda, errors);
         checkAndExtractAssignToABetterClass(inputs, xmcda, errors);
+        checkAndExtractDecisionMakersWeights(inputs, xmcda, errors);
     }
 
     protected static void checkAndExtractProfilesType(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
@@ -230,6 +231,37 @@ public class InputsHandler {
         } catch (Throwable throwable) {
             String err = "Invalid value for parameter assignToABetterClass, it must be true or false.";
             errors.addError(err);
+        }
+    }
+
+    protected static void checkAndExtractDecisionMakersWeights(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+
+        inputs.decisionMakersWages = new ArrayList<>();
+
+        for (int i = 1; i <= 10; i++) {
+            Double weight;
+
+            final ProgramParameter<?> tmpPrgParam = xmcda.programParametersList.get(0).get(i+1);
+            if (!("decisionMaker"+i).toUpperCase().equals(tmpPrgParam.id().toUpperCase())) {
+                errors.addError(String.format("Invalid parameter w/ id '%s'", tmpPrgParam.id()));
+                return;
+            }
+            if (tmpPrgParam.getValues() == null || (tmpPrgParam.getValues() != null && tmpPrgParam.getValues().size() != 1)) {
+                errors.addError("Parameter decisionMaker" + i +" must have a single (real) value only");
+                return;
+            }
+
+            try {
+                weight = (Double) tmpPrgParam.getValues().get(0).getValue();
+                if (weight == null) {
+                    errors.addError("Invalid value for parameter decisionMaker" + i +", it must be a real number.");
+                    return;
+                }
+                inputs.decisionMakersWages.add(weight);
+            } catch (Throwable throwable) {
+                String err = "Invalid value for parameter decisionMaker" + i +", it must be a real number.";
+                errors.addError(err);
+            }
         }
     }
 
