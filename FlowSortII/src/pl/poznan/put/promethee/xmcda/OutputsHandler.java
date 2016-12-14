@@ -33,7 +33,7 @@ public class OutputsHandler {
         switch(outputName)
         {
             case "assignments":
-                return "alternativesAssignments";
+                return "alternativesAffectations";
             case "messages":
                 return "methodMessages";
             default:
