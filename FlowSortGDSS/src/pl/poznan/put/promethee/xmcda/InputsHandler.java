@@ -1,6 +1,18 @@
 package pl.poznan.put.promethee.xmcda;
 
 import org.xmcda.*;
+import org.xmcda.Alternative;
+import org.xmcda.AlternativesMatrix;
+import org.xmcda.AlternativesValues;
+import org.xmcda.Categories;
+import org.xmcda.CategoriesProfiles;
+import org.xmcda.CategoriesValues;
+import org.xmcda.Category;
+import org.xmcda.CategoryProfile;
+import org.xmcda.Criterion;
+import org.xmcda.PerformanceTable;
+import org.xmcda.XMCDA;
+import org.xmcda.utils.Coord;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -26,6 +38,7 @@ public class InputsHandler {
         public HashMap<String, String> criteriaPreferencesDirection;
         public List<Map<String, Map<String, Double>>> profilesPerformance;
         public Map<String, Double> profilesFlows;
+        public List<Map<String, Map<String, Double>>> preferences;
     }
 
     public enum ComparisonWithProfiles {
@@ -80,6 +93,7 @@ public class InputsHandler {
         checkAndExtractAlternativesFlows(inputs, xmcda, errors);
         extractFlowsAverage(inputs);
         checkAndExtractProfilesFlows(inputs, xmcda, errors);
+        checkAndExtractPreferences(inputs, xmcda, errors);
 
         return inputs;
     }
@@ -241,41 +255,40 @@ public class InputsHandler {
         for (int i = 1; i <= 10; i++) {
             Double weight;
 
-            final ProgramParameter<?> tmpPrgParam = xmcda.programParametersList.get(0).get(i+1);
-            if (!("decisionMaker"+i).toUpperCase().equals(tmpPrgParam.id().toUpperCase())) {
+            final ProgramParameter<?> tmpPrgParam = xmcda.programParametersList.get(0).get(i + 1);
+            if (!("decisionMaker" + i).toUpperCase().equals(tmpPrgParam.id().toUpperCase())) {
                 errors.addError(String.format("Invalid parameter w/ id '%s'", tmpPrgParam.id()));
                 return;
             }
             if (tmpPrgParam.getValues() == null || (tmpPrgParam.getValues() != null && tmpPrgParam.getValues().size() != 1)) {
-                errors.addError("Parameter decisionMaker" + i +" must have a single (real) value only");
+                errors.addError("Parameter decisionMaker" + i + " must have a single (real) value only");
                 return;
             }
 
             try {
                 weight = (Double) tmpPrgParam.getValues().get(0).getValue();
                 if (weight == null) {
-                    errors.addError("Invalid value for parameter decisionMaker" + i +", it must be a real number.");
+                    errors.addError("Invalid value for parameter decisionMaker" + i + ", it must be a real number.");
                     return;
                 }
                 inputs.decisionMakersWages.add(weight);
             } catch (Throwable throwable) {
-                String err = "Invalid value for parameter decisionMaker" + i +", it must be a real number.";
+                String err = "Invalid value for parameter decisionMaker" + i + ", it must be a real number.";
                 errors.addError(err);
             }
         }
     }
 
-    //TODO check number of decision makers in each input!
     protected static void checkAndExtractNumberOfDecisionMakers(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
         int perfTables = xmcda.performanceTablesList.size();
         int categProfiles = xmcda.categoriesProfilesList.size();
         int flows = xmcda.alternativesValuesList.size() - 1;
+        int preferences = xmcda.alternativesMatricesList.size();
         int decisionMakers = 0;
 
-        if (perfTables != categProfiles || perfTables != flows) {
-            String err = "Invalid number of files for some of decision makers. Each decision maker need to provide his own categories profiles and performance table list.";
+        if (perfTables != categProfiles || perfTables != flows || perfTables != preferences) {
+            String err = "Invalid number of files for some of decision makers. Each decision maker need to provide his own categories profiles, performance table, flows and preferences lists.";
             errors.addError(err);
-            return;
         } else {
             decisionMakers = perfTables;
         }
@@ -283,6 +296,7 @@ public class InputsHandler {
         if (decisionMakers < 2 || decisionMakers > 10) {
             String err = "Invalid number of decision makers. You have to provide files for 2 - 10 decision makers.";
             errors.addError(err);
+            return;
         }
 
         inputs.decisionMakers = decisionMakers;
@@ -472,7 +486,7 @@ public class InputsHandler {
                         if (z != i) {
                             Double tempPerformance = inputs.profilesPerformance.get(z).get(inputs.profilesIds.get(z).get(j + 1)).get(inputs.criteriaIds.get(criterionIterator));
 
-                            if (currentPerformance * multiplier >= tempPerformance * multiplier ) {
+                            if (currentPerformance * multiplier >= tempPerformance * multiplier) {
                                 errors.addError("Dominance condition is not respected.");
                                 return;
                             }
@@ -484,15 +498,14 @@ public class InputsHandler {
     }
 
     protected static void checkAndExtractAlternativesFlows(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
-        if (xmcda.alternativesValuesList.size() < 3 || xmcda.alternativesValuesList.size() > 11)
-        {
+        if (xmcda.alternativesValuesList.size() < 3 || xmcda.alternativesValuesList.size() > 11) {
             errors.addError("You need to provide 2 - 10 alternatives flows lists.");
         }
 
         inputs.alternativesFlows = new ArrayList<>();
 
         for (int i = 0; i < inputs.decisionMakers; i++) {
-            AlternativesValues flows = xmcda.alternativesValuesList.get(i+1);
+            AlternativesValues flows = xmcda.alternativesValuesList.get(i + 1);
             if (!flows.isNumeric()) {
                 errors.addError("Each flow must have numeric type");
             }
@@ -542,8 +555,7 @@ public class InputsHandler {
     }
 
     protected static void checkAndExtractProfilesFlows(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
-        if (xmcda.alternativesValuesList.size() < 1 || xmcda.alternativesValuesList.size() > 11)
-        {
+        if (xmcda.alternativesValuesList.size() < 1 || xmcda.alternativesValuesList.size() > 11) {
             errors.addError("You need to provide 1 profiles flows lists.");
         }
 
@@ -580,5 +592,44 @@ public class InputsHandler {
             }
         }
         inputs.profilesFlows = tmpFlows;
+    }
+
+    protected static void checkAndExtractPreferences(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+        if (xmcda.alternativesMatricesList.size() < 2 || xmcda.alternativesMatricesList.size() > 10) {
+            errors.addError("You need to provide 2 to 10 preferences lists.");
+            return;
+        }
+
+        inputs.preferences = new ArrayList<>();
+
+        for (int i = 0; i < xmcda.alternativesMatricesList.size(); i++) {
+
+            if (xmcda.alternativesMatricesList.get(i).isEmpty()) {
+                errors.addError("Preferences list number " + (i + 1) + " is empty.");
+                return;
+            }
+
+            AlternativesMatrix<Double> matrix = (AlternativesMatrix<Double>) xmcda.alternativesMatricesList.get(i);
+            Map<String, Map<String, Double>> tmpPreferences = new LinkedHashMap<>();
+
+            for (Coord<Alternative, Alternative> coord : matrix.keySet()) {
+                String x = coord.x.id();
+                String y = coord.y.id();
+                Double value = matrix.get(coord).get(0).getValue().doubleValue();
+                tmpPreferences.putIfAbsent(x, new HashMap<>());
+                tmpPreferences.get(x).put(y, value);
+            }
+
+            for (String alternativeId : inputs.alternativesIds) {
+                for (String profileId : inputs.profilesIds.get(i)) {
+                    if (tmpPreferences.get(alternativeId) == null || tmpPreferences.get(alternativeId).get(profileId) == null || tmpPreferences.get(profileId) == null || tmpPreferences.get(profileId).get(alternativeId) == null) {
+                        errors.addError("Preference between " + alternativeId + " and " + profileId + " is missing for decision maker " + (i + 1) + ".");
+                    }
+                }
+            }
+
+            inputs.preferences.add(tmpPreferences);
+        }
+
     }
 }

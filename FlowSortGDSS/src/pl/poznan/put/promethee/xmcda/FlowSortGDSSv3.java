@@ -56,13 +56,20 @@ public class FlowSortGDSSv3 {
         Referenceable.DefaultCreationObserver.currentMarker="flows2";
         Utils.loadXMCDAv3(xmcda, new File(indir, "flows2.xml"), true, executionResult, "alternativesValues");
 
+        Referenceable.DefaultCreationObserver.currentMarker="preferences1";
+        Utils.loadXMCDAv3(xmcda, new File(indir, "preferences1.xml"), true, executionResult, "alternativesMatrix");
+        Referenceable.DefaultCreationObserver.currentMarker="preferences2";
+        Utils.loadXMCDAv3(xmcda, new File(indir, "preferences2.xml"), true, executionResult, "alternativesMatrix");
+
         for (int i = 3; i <= 10; i++) {
-            Referenceable.DefaultCreationObserver.currentMarker="categoriesProfiles"+i;
-            Utils.loadXMCDAv3(xmcda, new File(indir, "categories_profiles"+i+".xml"), false, executionResult, "categoriesProfiles");
-            Referenceable.DefaultCreationObserver.currentMarker="performanceTable"+i;
-            Utils.loadXMCDAv3(xmcda, new File(indir, "performance_table"+i+".xml"), false, executionResult, "performanceTable");
-            Referenceable.DefaultCreationObserver.currentMarker="flows"+i;
-            Utils.loadXMCDAv3(xmcda, new File(indir, "flows"+i+".xml"), false, executionResult, "alternativesValues");
+            Referenceable.DefaultCreationObserver.currentMarker="categoriesProfiles" + i;
+            Utils.loadXMCDAv3(xmcda, new File(indir, "categories_profiles" + i + ".xml"), false, executionResult, "categoriesProfiles");
+            Referenceable.DefaultCreationObserver.currentMarker="performanceTable" + i;
+            Utils.loadXMCDAv3(xmcda, new File(indir, "performance_table" + i + ".xml"), false, executionResult, "performanceTable");
+            Referenceable.DefaultCreationObserver.currentMarker="flows" + i;
+            Utils.loadXMCDAv3(xmcda, new File(indir, "flows" + i + ".xml"), false, executionResult, "alternativesValues");
+            Referenceable.DefaultCreationObserver.currentMarker="preferences" + i;
+            Utils.loadXMCDAv3(xmcda, new File(indir, "preferences" + i + ".xml"), false, executionResult, "alternativesMatrix");
         }
 
 
