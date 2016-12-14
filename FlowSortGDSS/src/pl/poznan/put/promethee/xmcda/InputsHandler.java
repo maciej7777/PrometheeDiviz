@@ -112,15 +112,17 @@ public class InputsHandler {
     }
 
     protected static void checkAndExtractCategories(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
-        Categories categoriesList = xmcda.categories;
         if (xmcda.categories.size() == 0) {
-            errors.addError("No categories list has been supplied");
-        } else {
+            errors.addError("No categories has been supplied.");
+        } else if (xmcda.categories.size() == 1) {
+            errors.addError("You should supply at least 2 categories.");
+        }
+        else {
             List<String> categories = xmcda.categories.getActiveCategories().stream().filter(a -> a.getMarker().equals("categories")).map(
                     Category::id).collect(Collectors.toList());
             inputs.categoriesIds = categories;
             if (categories.isEmpty())
-                errors.addError("The category list can not be empty");
+                errors.addError("The category list can not be empty.");
         }
     }
 
@@ -609,26 +611,31 @@ public class InputsHandler {
                 return;
             }
 
-            AlternativesMatrix<Double> matrix = (AlternativesMatrix<Double>) xmcda.alternativesMatricesList.get(i);
-            Map<String, Map<String, Double>> tmpPreferences = new LinkedHashMap<>();
+            try {
+                AlternativesMatrix<Double> matrix = (AlternativesMatrix<Double>) xmcda.alternativesMatricesList.get(i);
+                Map<String, Map<String, Double>> tmpPreferences = new LinkedHashMap<>();
 
-            for (Coord<Alternative, Alternative> coord : matrix.keySet()) {
-                String x = coord.x.id();
-                String y = coord.y.id();
-                Double value = matrix.get(coord).get(0).getValue().doubleValue();
-                tmpPreferences.putIfAbsent(x, new HashMap<>());
-                tmpPreferences.get(x).put(y, value);
-            }
+                for (Coord<Alternative, Alternative> coord : matrix.keySet()) {
+                    String x = coord.x.id();
+                    String y = coord.y.id();
+                    Double value = matrix.get(coord).get(0).getValue().doubleValue();
+                    tmpPreferences.putIfAbsent(x, new HashMap<>());
+                    tmpPreferences.get(x).put(y, value);
+                }
 
-            for (String alternativeId : inputs.alternativesIds) {
-                for (String profileId : inputs.profilesIds.get(i)) {
-                    if (tmpPreferences.get(alternativeId) == null || tmpPreferences.get(alternativeId).get(profileId) == null || tmpPreferences.get(profileId) == null || tmpPreferences.get(profileId).get(alternativeId) == null) {
-                        errors.addError("Preference between " + alternativeId + " and " + profileId + " is missing for decision maker " + (i + 1) + ".");
+                for (String alternativeId : inputs.alternativesIds) {
+                    for (String profileId : inputs.profilesIds.get(i)) {
+                        if (tmpPreferences.get(alternativeId) == null || tmpPreferences.get(alternativeId).get(profileId) == null || tmpPreferences.get(profileId) == null || tmpPreferences.get(profileId).get(alternativeId) == null) {
+                            errors.addError("Preference between " + alternativeId + " and " + profileId + " is missing for decision maker " + (i + 1) + ".");
+                        }
                     }
                 }
-            }
 
-            inputs.preferences.add(tmpPreferences);
+                inputs.preferences.add(tmpPreferences);
+            } catch (Exception e) {
+                errors.addError("There was en exception during processing preferences. Remember that each preference need to be a double number.");
+                return;
+            }
         }
 
     }
