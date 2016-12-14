@@ -3,15 +3,27 @@
     <alternativesAffectations>
         <alternativeAffectation>
             <alternativeID>a1</alternativeID>
-            <categoryID>C2</categoryID>
-        </alternativeAffectation>
-        <alternativeAffectation>
-            <alternativeID>a3</alternativeID>
-            <categoryID>C3</categoryID>
+            <categoryID>C4</categoryID>
         </alternativeAffectation>
         <alternativeAffectation>
             <alternativeID>a2</alternativeID>
+            <categoryID>C1</categoryID>
+        </alternativeAffectation>
+        <alternativeAffectation>
+            <alternativeID>a3</alternativeID>
+            <categoryID>C4</categoryID>
+        </alternativeAffectation>
+        <alternativeAffectation>
+            <alternativeID>a4</alternativeID>
+            <categoryID>C3</categoryID>
+        </alternativeAffectation>
+        <alternativeAffectation>
+            <alternativeID>a5</alternativeID>
             <categoryID>C2</categoryID>
+        </alternativeAffectation>
+        <alternativeAffectation>
+            <alternativeID>a6</alternativeID>
+            <categoryID>C6</categoryID>
         </alternativeAffectation>
     </alternativesAffectations>
 </ns2:XMCDA>
