@@ -95,7 +95,7 @@ public class FlowSortGDSSv3 {
         }
 
         //convert results
-        Map<String, XMCDA> x_results = OutputsHandler.convert(results.assignments, executionResult);
+        Map<String, XMCDA> x_results = OutputsHandler.convert(results.firstStepAssignments, results.assignments, executionResult);
 
         //write results
         final org.xmcda.parsers.xml.xmcda_v3.XMCDAParser parser = new org.xmcda.parsers.xml.xmcda_v3.XMCDAParser();

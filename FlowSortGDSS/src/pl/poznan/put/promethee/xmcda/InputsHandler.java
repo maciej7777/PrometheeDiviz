@@ -39,6 +39,7 @@ public class InputsHandler {
         public List<Map<String, Map<String, Double>>> profilesPerformance;
         public Map<String, Double> profilesFlows;
         public List<Map<String, Map<String, Double>>> preferences;
+        public Map<String, Map<String, Double>> profilesSummaryFlows;
     }
 
     public enum ComparisonWithProfiles {
