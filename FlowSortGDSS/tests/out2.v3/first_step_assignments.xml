@@ -6,10 +6,10 @@
 			<alternativeID>a1</alternativeID>
 			<categoriesInterval>
 				<lowerBound>
-					<categoryID>C1</categoryID>
+					<categoryID>C4</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C1</categoryID>
+					<categoryID>C4</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>

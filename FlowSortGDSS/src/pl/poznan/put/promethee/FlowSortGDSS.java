@@ -66,8 +66,8 @@ public class FlowSortGDSS {
                     }
                 }
                 if (decisionMakerClassNumber == null) {
-                    if (inputs.alternativesFlowsAverage.get(alternativeId) > inputs.profilesSummaryFlows.get(inputs.profilesIds.get(decisionMaker).get(0)).get(alternativeId)) {
-                        decisionMakerClassNumber = 0;
+                    if (inputs.alternativesFlowsAverage.get(alternativeId) > inputs.profilesSummaryFlows.get(inputs.profilesIds.get(decisionMaker).get(inputs.profilesIds.get(decisionMaker).size()-1)).get(alternativeId)) {
+                        decisionMakerClassNumber = inputs.profilesIds.get(decisionMaker).size();
                     }
                 }
                 if (firstClassNumber == null) {
