@@ -315,6 +315,10 @@ public class InputsHandler {
             errors.addError("You can not supply more then 10 categories profiles list");
         }
 
+        if (inputs.decisionMakers == null) {
+            return;
+        }
+
         inputs.categoryProfiles = new ArrayList<>();
         for (int i = 0; i < inputs.decisionMakers; i++) {
             List<CategoryProfile> categoriesProfilesList = new ArrayList<>();
@@ -506,6 +510,10 @@ public class InputsHandler {
         }
 
         inputs.alternativesFlows = new ArrayList<>();
+
+        if (inputs.decisionMakers == null) {
+            return;
+        }
 
         for (int i = 0; i < inputs.decisionMakers; i++) {
             AlternativesValues flows = xmcda.alternativesValuesList.get(i + 1);
