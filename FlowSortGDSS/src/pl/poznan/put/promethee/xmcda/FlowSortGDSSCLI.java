@@ -8,9 +8,13 @@ import java.util.Arrays;
  */
 public class FlowSortGDSSCLI {
 
+    private FlowSortGDSSCLI() {
+
+    }
+
     public static void main(String[] args) throws Exception
     {
-        final ArrayList<String> argsList = new ArrayList<String>(Arrays.asList(args));
+        final ArrayList<String> argsList = new ArrayList<>(Arrays.asList(args));
         if ( argsList.remove("--v2") )
         {
             FlowSortGDSSv2.main((String[]) argsList.toArray(new String[]{}));
