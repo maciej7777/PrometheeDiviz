@@ -37,8 +37,8 @@ public class FlowSortGDSSv3 {
         Referenceable.DefaultCreationObserver.currentMarker="criteriaScales";
         Utils.loadXMCDAv3(xmcda, new File(indir, "criteria.xml"), true, executionResult, "criteriaScales");
 
-        Referenceable.DefaultCreationObserver.currentMarker="profilesFlows";
-        Utils.loadXMCDAv3(xmcda, new File(indir, "profilesFlows.xml"), true, executionResult, "alternativesValues");
+        Referenceable.DefaultCreationObserver.currentMarker="profiles_flows";
+        Utils.loadXMCDAv3(xmcda, new File(indir, "profiles_flows.xml"), true, executionResult, "alternativesValues");
 
 
         Referenceable.DefaultCreationObserver.currentMarker="categoriesProfiles1";

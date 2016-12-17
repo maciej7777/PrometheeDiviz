@@ -52,7 +52,7 @@ public class FlowSortGDSSv2 {
         convertToV3AndMark(xmcda, new File(indir, "method_parameters.xml"), true, "methodParameters", "methodParameters");
         convertToV3AndMark(xmcda, new File(indir, "criteria.xml"), true, "criteria", "criteria");
         convertToV3AndMark(xmcda, new File(indir, "criteria.xml"), true, "criteriaScales", "criteriaScales");
-        convertToV3AndMark(xmcda, new File(indir, "profilesFlows.xml"), true, "profilesFlows", "alternativesValues");
+        convertToV3AndMark(xmcda, new File(indir, "profiles_flows.xml"), true, "profiles_flows", "alternativesValues");
 
         convertToV3AndMark(xmcda, new File(indir, "categories_profiles1.xml"), true, "categoriesProfiles1", "categoriesProfiles");
         convertToV3AndMark(xmcda, new File(indir, "categories_profiles2.xml"), true, "categoriesProfiles2", "categoriesProfiles");

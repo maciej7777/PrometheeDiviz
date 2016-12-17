@@ -4,7 +4,7 @@
         xmlns:xmcda="http://www.decision-deck.org/2016/XMCDA-2.2.2"
         xsi:schemaLocation="http://www.decision-deck.org/2016/XMCDA-2.2.2 http://www.decision-deck.org/xmcda/_downloads/XMCDA-2.2.2.xsd">
     <methodParameters>
-        <parameter id="ComparisonWithProfiles">
+        <parameter id="comparisonWithProfiles">
             <value>
                 <label>central</label>
             </value>

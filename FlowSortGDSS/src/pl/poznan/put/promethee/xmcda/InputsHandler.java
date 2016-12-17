@@ -67,7 +67,7 @@ public class InputsHandler {
                 if (op.toString().equals(operatorLabel))
                     return op;
             }
-            throw new IllegalArgumentException("No enum ComparisonWithProfiles with label " + operatorLabel);
+            throw new IllegalArgumentException("No enum comparisonWithProfiles with label " + operatorLabel);
         }
     }
 
@@ -202,12 +202,12 @@ public class InputsHandler {
         ComparisonWithProfiles profilesType;
 
         final ProgramParameter<?> prgParam = xmcda.programParametersList.get(0).get(0);
-        if (!"ComparisonWithProfiles".toUpperCase().equals(prgParam.id().toUpperCase())) {
+        if (!"comparisonWithProfiles".toUpperCase().equals(prgParam.id().toUpperCase())) {
             errors.addError(String.format("Invalid parameter w/ id '%s'", prgParam.id()));
             return;
         }
         if (prgParam.getValues() == null || (prgParam.getValues() != null && prgParam.getValues().size() != 1)) {
-            errors.addError("Parameter ComparisonWithProfiles must have a single (label) value only");
+            errors.addError("Parameter comparisonWithProfiles must have a single (label) value only");
             return;
         }
         try {
@@ -218,7 +218,7 @@ public class InputsHandler {
             for (ComparisonWithProfiles op : ComparisonWithProfiles.values()) {
                 valid_values.append(op.getLabel()).append(", ");
             }
-            String err = "Invalid value for parameter ComparisonWithProfiles, it must be a label, ";
+            String err = "Invalid value for parameter comparisonWithProfiles, it must be a label, ";
             err += "possible values are: " + valid_values.substring(0, valid_values.length() - 2);
             errors.addError(err);
             profilesType = null;
