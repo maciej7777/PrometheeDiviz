@@ -95,7 +95,7 @@ public class FlowSortGDSSv2 {
             return;
         }
 
-        final Map<String, XMCDA> x_results = OutputsHandler.convert(results.firstStepAssignments, results.assignments, executionResult);
+        final Map<String, XMCDA> x_results = OutputsHandler.convert(results.getFirstStepAssignments(), results.getAssignments());
 
         org.xmcda.v2.XMCDA results_v2;
         for ( String outputName : x_results.keySet() )

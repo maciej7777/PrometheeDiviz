@@ -3,7 +3,6 @@ package pl.poznan.put.promethee.xmcda;
 import org.xmcda.*;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -11,20 +10,43 @@ import java.util.Map;
  */
 public class OutputsHandler {
 
+    private static final String FINAL_ASSIGNMENTS = "final_assignments";
+    private static final String FIRST_STEP_ASSIGNMENTS = "first_step_assignments";
+    private static final String MESSAGES = "messages";
+
+    private OutputsHandler() {
+        throw new IllegalAccessError("Utility class");
+    }
+
     public static class Output{
-        public Map<String, String> assignments;
-        public Map<String, Map<String, String>> firstStepAssignments;
+        private Map<String, String> assignments;
+        private Map<String, Map<String, String>> firstStepAssignments;
+
+        public Map<String, String> getAssignments() {
+            return assignments;
+        }
+
+        public void setAssignments(Map<String, String> assignments) {
+            this.assignments = assignments;
+        }
+
+        public Map<String, Map<String, String>> getFirstStepAssignments() {
+            return firstStepAssignments;
+        }
+
+        public void setFirstStepAssignments(Map<String, Map<String, String>> firstStepAssignments) {
+            this.firstStepAssignments = firstStepAssignments;
+        }
     }
 
     public static final String xmcdaV3Tag(String outputName)
     {
         switch(outputName)
         {
-            case "final_assignments":
+            case FINAL_ASSIGNMENTS:
+            case FIRST_STEP_ASSIGNMENTS:
                 return "alternativesAssignments";
-            case "first_step_assignments":
-                return "alternativesAssignments";
-            case "messages":
+            case MESSAGES:
                 return "programExecutionResult";
             default:
                 throw new IllegalArgumentException(String.format("Unknown output name '%s'",outputName));
@@ -35,53 +57,51 @@ public class OutputsHandler {
     {
         switch(outputName)
         {
-            case "final_assignments":
+            case FINAL_ASSIGNMENTS:
+            case FIRST_STEP_ASSIGNMENTS:
                 return "alternativesAffectations";
-            case "first_step_assignments":
-                return "alternativesAffectations";
-            case "messages":
+            case MESSAGES:
                 return "methodMessages";
             default:
                 throw new IllegalArgumentException(String.format("Unknown output name '%s'",outputName));
         }
     }
 
-    public static Map<String, XMCDA> convert(Map<String, Map<String, String>> firstStepAssignments, Map<String, String> finalAssignments, ProgramExecutionResult executionResult)
+    public static Map<String, XMCDA> convert(Map<String, Map<String, String>> firstStepAssignments, Map<String, String> finalAssignments)
     {
-        final HashMap<String, XMCDA> x_results = new HashMap<>();
+        final HashMap<String, XMCDA> results = new HashMap<>();
 
         XMCDA finalAssignmentsXmcdaObject = new XMCDA();
         XMCDA firstStepAssignmentsXmcdaObject = new XMCDA();
         AlternativesAssignments  finalAlternativeAssignments = new AlternativesAssignments();
         AlternativesAssignments firstStepAlternativeAssignments = new AlternativesAssignments();
 
-        for (String alternativeId : finalAssignments.keySet()) {
+        for (Map.Entry<String, String> alternativeEntry : finalAssignments.entrySet()) {
             AlternativeAssignment tmpAssignment = new AlternativeAssignment();
-            tmpAssignment.setAlternative(new Alternative(alternativeId));
-            tmpAssignment.setCategory(new Category(finalAssignments.get(alternativeId)));
+            tmpAssignment.setAlternative(new Alternative(alternativeEntry.getKey()));
+            tmpAssignment.setCategory(new Category(alternativeEntry.getValue()));
             finalAlternativeAssignments.add(tmpAssignment);
         }
 
-        for (String alternativeId : firstStepAssignments.keySet()) {
+        for (Map.Entry<String, Map<String, String>> alternativeEntry : firstStepAssignments.entrySet()) {
             AlternativeAssignment tmpAssignment = new AlternativeAssignment();
-            tmpAssignment.setAlternative(new Alternative(alternativeId));
+            tmpAssignment.setAlternative(new Alternative(alternativeEntry.getKey()));
 
             CategoriesInterval tmpInterval = new CategoriesInterval();
-            tmpInterval.setLowerBound(new Category(firstStepAssignments.get(alternativeId).get("LOWER")));
-            tmpInterval.setUpperBound(new Category(firstStepAssignments.get(alternativeId).get("UPPER")));
+            tmpInterval.setLowerBound(new Category(alternativeEntry.getValue().get("LOWER")));
+            tmpInterval.setUpperBound(new Category(alternativeEntry.getValue().get("UPPER")));
 
             tmpAssignment.setCategoryInterval(tmpInterval);
 
             firstStepAlternativeAssignments.add(tmpAssignment);
         }
 
-
         finalAssignmentsXmcdaObject.alternativesAssignmentsList.add(finalAlternativeAssignments);
         firstStepAssignmentsXmcdaObject.alternativesAssignmentsList.add(firstStepAlternativeAssignments);
 
-        x_results.put("final_assignments", finalAssignmentsXmcdaObject);
-        x_results.put("first_step_assignments", firstStepAssignmentsXmcdaObject);
+        results.put("final_assignments", finalAssignmentsXmcdaObject);
+        results.put("first_step_assignments", firstStepAssignmentsXmcdaObject);
 
-        return x_results;
+        return results;
     }
 }

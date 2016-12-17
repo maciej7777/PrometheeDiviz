@@ -10,12 +10,19 @@ import java.util.*;
  */
 public class FlowSortGDSS {
 
+    private static final String LOWER = "LOWER";
+    private static final String UPPER = "UPPER";
+
+    private FlowSortGDSS() {
+        throw new IllegalAccessError("Utility class");
+    }
+
     public static OutputsHandler.Output sort(InputsHandler.Inputs inputs) {
 
         countProfilesSummaryFlows(inputs);
         OutputsHandler.Output output = new OutputsHandler.Output();
 
-        if (inputs.profilesType.toString().toLowerCase().equals("bounding")) {
+        if ("bounding".equalsIgnoreCase(inputs.profilesType.toString())) {
             sortWithLimitingProfiles(inputs, output);
         } else {
             sortWithCentralProfiles(inputs, output);
@@ -60,17 +67,13 @@ public class FlowSortGDSS {
                 Integer decisionMakerClassNumber = null;
                 for (int profile = 0; profile < inputs.profilesIds.get(decisionMaker).size(); profile++) {
                     String profilesId = inputs.profilesIds.get(decisionMaker).get(profile);
-                    if (inputs.alternativesFlowsAverage.get(alternativeId) <= inputs.profilesSummaryFlows.get(profilesId).get(alternativeId)) {
-                        if (decisionMakerClassNumber == null) {
-                            decisionMakerClassNumber = profile;
-                            break;
-                        }
+                    if (inputs.alternativesFlowsAverage.get(alternativeId) <= inputs.profilesSummaryFlows.get(profilesId).get(alternativeId) && decisionMakerClassNumber == null) {
+                        decisionMakerClassNumber = profile;
+                        break;
                     }
                 }
-                if (decisionMakerClassNumber == null) {
-                    if (inputs.alternativesFlowsAverage.get(alternativeId) > inputs.profilesSummaryFlows.get(inputs.profilesIds.get(decisionMaker).get(inputs.profilesIds.get(decisionMaker).size()-1)).get(alternativeId)) {
-                        decisionMakerClassNumber = inputs.profilesIds.get(decisionMaker).size();
-                    }
+                if (decisionMakerClassNumber == null && inputs.alternativesFlowsAverage.get(alternativeId) > inputs.profilesSummaryFlows.get(inputs.profilesIds.get(decisionMaker).get(inputs.profilesIds.get(decisionMaker).size() - 1)).get(alternativeId)) {
+                    decisionMakerClassNumber = inputs.profilesIds.get(decisionMaker).size();
                 }
                 if (firstClassNumber == null) {
                     firstClassNumber = decisionMakerClassNumber;
@@ -87,15 +90,15 @@ public class FlowSortGDSS {
                 String classId = inputs.categoryProfiles.get(0).get(firstClassNumber).getCategory().id();
                 assignments.put(alternativeId, classId);
                 Map<String, String> interval = new LinkedHashMap<>();
-                interval.put("LOWER",classId);
-                interval.put("UPPER", classId);
+                interval.put(LOWER,classId);
+                interval.put(UPPER, classId);
                 firstStepAssignments.put(alternativeId, interval);
             } else {
                 String leftClassId = inputs.categoryProfiles.get(0).get(Math.min(firstClassNumber, secondClassNumber)).getCategory().id();
                 String rightClassId = inputs.categoryProfiles.get(0).get(Math.max(firstClassNumber, secondClassNumber)).getCategory().id();
                 Map<String, String> interval = new LinkedHashMap<>();
-                interval.put("LOWER",leftClassId);
-                interval.put("UPPER", rightClassId);
+                interval.put(LOWER,leftClassId);
+                interval.put(UPPER, rightClassId);
                 firstStepAssignments.put(alternativeId, interval);
 
                 Double profileK;
@@ -122,8 +125,8 @@ public class FlowSortGDSS {
                 }
             }
         }
-        output.assignments = assignments;
-        output.firstStepAssignments = firstStepAssignments;
+        output.setAssignments(assignments);
+        output.setFirstStepAssignments(firstStepAssignments);
     }
 
     private static double countDkForLimitingProfiles(String alternativeId, Integer profile, Set<Integer> decisionMakers, InputsHandler.Inputs inputs) {
@@ -174,7 +177,7 @@ public class FlowSortGDSS {
                 if (firstClassNumber == null) {
                     firstClassNumber = nearestCalss;
                     firstClassDecisionMakers.add(decisionMaker);
-                } else if (firstClassNumber.intValue() != nearestCalss.intValue()) {
+                } else if (nearestCalss != null && firstClassNumber.intValue() != nearestCalss.intValue()) {
                     secondClassNumber = nearestCalss;
                     secondClassDecisionMakers.add(decisionMaker);
                 } else {
@@ -185,15 +188,15 @@ public class FlowSortGDSS {
                 String classId = inputs.categoryProfiles.get(0).get(firstClassNumber).getCategory().id();
                 assignments.put(alternativeId, classId);
                 Map<String, String> interval = new LinkedHashMap<>();
-                interval.put("LOWER",classId);
-                interval.put("UPPER", classId);
+                interval.put(LOWER,classId);
+                interval.put(UPPER, classId);
                 firstStepAssignments.put(alternativeId, interval);
             } else {
                 String leftClassId = inputs.categoryProfiles.get(0).get(Math.min(firstClassNumber, secondClassNumber)).getCategory().id();
                 String rightClassId = inputs.categoryProfiles.get(0).get(Math.max(firstClassNumber, secondClassNumber)).getCategory().id();
                 Map<String, String> interval = new LinkedHashMap<>();
-                interval.put("LOWER",leftClassId);
-                interval.put("UPPER", rightClassId);
+                interval.put(LOWER,leftClassId);
+                interval.put(UPPER, rightClassId);
                 firstStepAssignments.put(alternativeId, interval);
 
                 Double profileK;
@@ -220,8 +223,8 @@ public class FlowSortGDSS {
                 }
             }
         }
-        output.assignments = assignments;
-        output.firstStepAssignments = firstStepAssignments;
+        output.setAssignments(assignments);
+        output.setFirstStepAssignments(firstStepAssignments);
     }
 
     private static double countDkForCentralProfiles(String alternativeId, Integer profile, Set<Integer> decisionMakers, InputsHandler.Inputs inputs) {
