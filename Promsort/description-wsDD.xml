@@ -37,14 +37,14 @@
             <documentation>
                 <description>Negative flows of given alternatives and boundary profiles.</description>
             </documentation>
-            <xmcda tag="categoriesProfiles"/>
+            <xmcda tag="alternativesValues"/>
         </input>
 
         <input id="input5" name="positive_flows" displayName="positive_profiles" isoptional="0">
             <documentation>
                 <description>Negative flows of given alternatives and boundary profiles.</description>
             </documentation>
-            <xmcda tag="categoriesProfiles"/>
+            <xmcda tag="alternativesValues"/>
         </input>
 
         <input id="input6" name="method_parameters" displayName="method_parameters"
@@ -57,7 +57,7 @@
             <xmcda tag="methodParameters">
                 <![CDATA[
                 <methodParameters>
-                    <parameter name="assignToABetterClass">
+                    <parameter name="cutPoint">
                         <value>
                             <real>%1</real>
                         </value>
