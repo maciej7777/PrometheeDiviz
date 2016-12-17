@@ -4,7 +4,6 @@ import org.xmcda.*;
 import org.xmcda.Alternative;
 import org.xmcda.AlternativesMatrix;
 import org.xmcda.AlternativesValues;
-import org.xmcda.Categories;
 import org.xmcda.CategoriesProfiles;
 import org.xmcda.CategoriesValues;
 import org.xmcda.Category;
@@ -214,12 +213,12 @@ public class InputsHandler {
             final String operatorValue = (String) prgParam.getValues().get(0).getValue();
             profilesType = ComparisonWithProfiles.fromString(operatorValue);
         } catch (Throwable throwable) {
-            StringBuffer valid_values = new StringBuffer();
+            StringBuilder validValues = new StringBuilder();
             for (ComparisonWithProfiles op : ComparisonWithProfiles.values()) {
-                valid_values.append(op.getLabel()).append(", ");
+                validValues.append(op.getLabel()).append(", ");
             }
             String err = "Invalid value for parameter comparisonWithProfiles, it must be a label, ";
-            err += "possible values are: " + valid_values.substring(0, valid_values.length() - 2);
+            err += "possible values are: " + validValues.substring(0, validValues.length() - 2);
             errors.addError(err);
             profilesType = null;
         }
@@ -339,6 +338,7 @@ public class InputsHandler {
             }
 
             Collections.sort(categoriesProfilesList, new Comparator<CategoryProfile>() {
+                @Override
                 public int compare(CategoryProfile left, CategoryProfile right) {
                     return Integer.compare(inputs.categoriesRanking.get(left.getCategory().id()), inputs.categoriesRanking.get(right.getCategory().id()));
                 }
@@ -529,8 +529,8 @@ public class InputsHandler {
                     Double tmpValue = flow.getValue().get(0).convertToDouble().getValue();
                     tmpFlows.put(flow.getKey().id(), tmpValue);
                 }
-            } catch (Throwable throwable) {
-                errors.addError("An error occurred: " + throwable.getMessage() + ". Each flow must have numeric type.");
+            } catch (Exception exception) {
+                errors.addError("An error occurred: " + exception.getMessage() + ". Each flow must have numeric type.");
             }
 
             for (int j = 0; j < inputs.alternativesIds.size(); j++) {
@@ -584,8 +584,8 @@ public class InputsHandler {
                 Double tmpValue = flow.getValue().get(0).convertToDouble().getValue();
                 tmpFlows.put(flow.getKey().id(), tmpValue);
             }
-        } catch (Throwable throwable) {
-            errors.addError("An error occurred: " + throwable.getMessage() + ". Each flow must have numeric type.");
+        } catch (Exception exception) {
+            errors.addError("An error occurred: " + exception.getMessage() + ". Each flow must have numeric type.");
         }
 
         for (int j = 0; j < inputs.profilesIds.size(); j++) {
@@ -642,7 +642,7 @@ public class InputsHandler {
 
                 inputs.preferences.add(tmpPreferences);
             } catch (Exception e) {
-                errors.addError("There was en exception during processing preferences. Remember that each preference need to be a double number.");
+                errors.addError("There was en exception during processing preferences: " + e.getMessage() + ". Remember that each preference need to be a double number.");
                 return;
             }
         }
