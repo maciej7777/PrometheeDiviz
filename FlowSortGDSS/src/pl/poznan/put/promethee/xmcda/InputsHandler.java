@@ -34,7 +34,7 @@ public class InputsHandler {
         public List<Double> decisionMakersWages;
         public Boolean assignToABetterClass;
         public Integer decisionMakers;
-        public HashMap<String, String> criteriaPreferencesDirection;
+        public Map<String, String> criteriaPreferencesDirection;
         public List<Map<String, Map<String, Double>>> profilesPerformance;
         public Map<String, Double> profilesFlows;
         public List<Map<String, Map<String, Double>>> preferences;
@@ -70,9 +70,9 @@ public class InputsHandler {
         }
     }
 
-    static public Inputs checkAndExtractInputs(XMCDA xmcda, ProgramExecutionResult xmcda_exec_results) {
-        Inputs inputsDict = checkInputs(xmcda, xmcda_exec_results);
-        if (xmcda_exec_results.isError())
+    public static Inputs checkAndExtractInputs(XMCDA xmcda, ProgramExecutionResult xmcdaExecResults) {
+        Inputs inputsDict = checkInputs(xmcda, xmcdaExecResults);
+        if (xmcdaExecResults.isError())
             return null;
         return inputsDict;
     }
@@ -99,12 +99,12 @@ public class InputsHandler {
     }
 
     protected static void checkAndExtractAlternatives(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
-        if (xmcda.alternatives.size() == 0) {
+        if (xmcda.alternatives.isEmpty()) {
             errors.addError("No alternatives list has been supplied");
         } else {
-            List<String> alternativesIds = xmcda.alternatives.getActiveAlternatives().stream().filter(a -> a.getMarker().equals("alternatives")).map(
+            List<String> alternativesIds = xmcda.alternatives.getActiveAlternatives().stream().filter(a -> "alternatives".equals(a.getMarker())).map(
                     Alternative::id).collect(Collectors.toList());
-            if (alternativesIds.size() < 1)
+            if (alternativesIds.isEmpty())
                 errors.addError("The alternatives list can not be empty");
 
             inputs.alternativesIds = alternativesIds;
@@ -112,13 +112,13 @@ public class InputsHandler {
     }
 
     protected static void checkAndExtractCategories(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
-        if (xmcda.categories.size() == 0) {
+        if (xmcda.categories.isEmpty()) {
             errors.addError("No categories has been supplied.");
         } else if (xmcda.categories.size() == 1) {
             errors.addError("You should supply at least 2 categories.");
         }
         else {
-            List<String> categories = xmcda.categories.getActiveCategories().stream().filter(a -> a.getMarker().equals("categories")).map(
+            List<String> categories = xmcda.categories.getActiveCategories().stream().filter(a -> "categories".equals(a.getMarker())).map(
                     Category::id).collect(Collectors.toList());
             inputs.categoriesIds = categories;
             if (categories.isEmpty())
@@ -127,7 +127,7 @@ public class InputsHandler {
     }
 
     protected static void checkCategoriesRanking(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
-        if (xmcda.categoriesValuesList.size() == 0) {
+        if (xmcda.categoriesValuesList.isEmpty()) {
             errors.addError("No categories values list has been supplied");
         } else if (xmcda.categoriesValuesList.size() > 1) {
             errors.addError("More than one categories values list has been supplied");
@@ -136,7 +136,7 @@ public class InputsHandler {
         if (!categoriesValuesList.isNumeric()) {
             errors.addError("Each of the categories ranks must be integer");
         }
-        Map<String, Integer> categoriesValues = new LinkedHashMap<String, Integer>();
+        Map<String, Integer> categoriesValues = new LinkedHashMap<>();
         try {
             CategoriesValues<Integer> categoriesValuesClass = categoriesValuesList.convertTo(Integer.class);
             xmcda.categoriesValuesList.set(0, categoriesValuesClass);
@@ -172,8 +172,8 @@ public class InputsHandler {
             }
 
             inputs.categoriesRanking = categoriesValues;
-        } catch (Throwable throwable) {
-            errors.addError("An error oceured: " + throwable.getMessage() + ". Remember that each rank has to be integer.");
+        } catch (Exception e) {
+            errors.addError("An error occurred: " + e + ". Remember that each rank has to be integer.");
         }
     }
 
@@ -183,7 +183,7 @@ public class InputsHandler {
             errors.addError("Only one programParameter is expected");
             return;
         }
-        if (xmcda.programParametersList.size() == 0) {
+        if (xmcda.programParametersList.isEmpty()) {
             errors.addError("No programParameter found");
             return;
         }
@@ -201,7 +201,7 @@ public class InputsHandler {
         ComparisonWithProfiles profilesType;
 
         final ProgramParameter<?> prgParam = xmcda.programParametersList.get(0).get(0);
-        if (!"comparisonWithProfiles".toUpperCase().equals(prgParam.id().toUpperCase())) {
+        if (!"comparisonWithProfiles".equalsIgnoreCase(prgParam.id())) {
             errors.addError(String.format("Invalid parameter w/ id '%s'", prgParam.id()));
             return;
         }
@@ -212,7 +212,7 @@ public class InputsHandler {
         try {
             final String operatorValue = (String) prgParam.getValues().get(0).getValue();
             profilesType = ComparisonWithProfiles.fromString(operatorValue);
-        } catch (Throwable throwable) {
+        } catch (Exception exception) {
             StringBuilder validValues = new StringBuilder();
             for (ComparisonWithProfiles op : ComparisonWithProfiles.values()) {
                 validValues.append(op.getLabel()).append(", ");
@@ -229,7 +229,7 @@ public class InputsHandler {
         Boolean assignToABetterClass;
 
         final ProgramParameter<?> prgParam2 = xmcda.programParametersList.get(0).get(1);
-        if (!"assignToABetterClass".toUpperCase().equals(prgParam2.id().toUpperCase())) {
+        if (!"assignToABetterClass".equalsIgnoreCase(prgParam2.id())) {
             errors.addError(String.format("Invalid parameter w/ id '%s'", prgParam2.id()));
             return;
         }
@@ -244,7 +244,7 @@ public class InputsHandler {
                 return;
             }
             inputs.assignToABetterClass = assignToABetterClass;
-        } catch (Throwable throwable) {
+        } catch (Exception exception) {
             String err = "Invalid value for parameter assignToABetterClass, it must be true or false.";
             errors.addError(err);
         }
@@ -258,7 +258,7 @@ public class InputsHandler {
             Double weight;
 
             final ProgramParameter<?> tmpPrgParam = xmcda.programParametersList.get(0).get(i + 1);
-            if (!("decisionMaker" + i).toUpperCase().equals(tmpPrgParam.id().toUpperCase())) {
+            if (!("decisionMaker" + i).equalsIgnoreCase(tmpPrgParam.id())) {
                 errors.addError(String.format("Invalid parameter w/ id '%s'", tmpPrgParam.id()));
                 return;
             }
@@ -274,7 +274,7 @@ public class InputsHandler {
                     return;
                 }
                 inputs.decisionMakersWages.add(weight);
-            } catch (Throwable throwable) {
+            } catch (Exception exception) {
                 String err = "Invalid value for parameter decisionMaker" + i + ", it must be a real number.";
                 errors.addError(err);
             }
@@ -307,7 +307,7 @@ public class InputsHandler {
     protected static void checkAndExtractProfilesIds(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
         inputs.profilesIds = new ArrayList<>();
 
-        if (xmcda.categoriesProfilesList.size() == 0) {
+        if (xmcda.categoriesProfilesList.isEmpty()) {
             errors.addError("No categories profiles list has been supplied");
         }
         if (xmcda.categoriesProfilesList.size() > 10) {
@@ -329,7 +329,7 @@ public class InputsHandler {
 
             for (Object profile : categoriesProfiles) {
                 CategoryProfile tmpProfile = (CategoryProfile) profile;
-                if (!tmpProfile.getType().name().equals(inputs.profilesType.toString().toUpperCase())) {
+                if (!tmpProfile.getType().name().equalsIgnoreCase(inputs.profilesType.toString())) {
                     errors.addError("There is a problem with categories rank list or categories profiles list for decision maker" + (i + 1) + ". Every decision maker need to provide profiles for categories witch are boundary or central. Profiles type need to be same for all decision makers and equal to setting in program parameters input.");
                     return;
                 } else {
@@ -337,19 +337,14 @@ public class InputsHandler {
                 }
             }
 
-            Collections.sort(categoriesProfilesList, new Comparator<CategoryProfile>() {
-                @Override
-                public int compare(CategoryProfile left, CategoryProfile right) {
-                    return Integer.compare(inputs.categoriesRanking.get(left.getCategory().id()), inputs.categoriesRanking.get(right.getCategory().id()));
-                }
-            });
+            Collections.sort(categoriesProfilesList, (left, right) -> Integer.compare(inputs.categoriesRanking.get(left.getCategory().id()), inputs.categoriesRanking.get(right.getCategory().id())));
 
             inputs.categoryProfiles.add(categoriesProfilesList);
 
             List<String> profilesIds = new ArrayList<>();
-            if (inputs.profilesType.toString().toUpperCase().equals("BOUNDING")) {
+            if ("BOUNDING".equalsIgnoreCase(inputs.profilesType.toString())) {
                 checkAndExtractBoundaryProfilesIds(errors, categoriesProfilesList, profilesIds, i);
-            } else if (inputs.profilesType.toString().toUpperCase().equals("CENTRAL")) {
+            } else if ("CENTRAL".equalsIgnoreCase(inputs.profilesType.toString())) {
                 checkAndExtractCentralProfilesIds(errors, categoriesProfilesList, profilesIds, i);
             }
             inputs.profilesIds.add(profilesIds);
@@ -395,16 +390,16 @@ public class InputsHandler {
     }
 
     protected static void checkAndExtractCriteria(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
-        if (xmcda.criteria.getActiveCriteria().size() < 1) {
+        if (xmcda.criteria.getActiveCriteria().isEmpty()) {
             errors.addError("You need to provide a not empty criteria list.");
             return;
         }
-        inputs.criteriaIds = xmcda.criteria.getActiveCriteria().stream().filter(a -> a.getMarker().equals("criteria")).map(
+        inputs.criteriaIds = xmcda.criteria.getActiveCriteria().stream().filter(a -> "criteria".equals(a.getMarker())).map(
                 Criterion::id).collect(Collectors.toList());
     }
 
     protected static void checkAndExtractCriteriaPreferencesDirection(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
-        if (inputs.criteriaIds == null || inputs.criteriaIds.size() < 1) {
+        if (inputs.criteriaIds == null || inputs.criteriaIds.isEmpty()) {
             return;
         }
 
@@ -415,16 +410,16 @@ public class InputsHandler {
 
         inputs.criteriaPreferencesDirection = new HashMap<>();
 
-        CriteriaScales criteriaDirection = (CriteriaScales) xmcda.criteriaScalesList.get(0);
-        for (Criterion criterion : criteriaDirection.keySet()) {
+        CriteriaScales criteriaDirection = xmcda.criteriaScalesList.get(0);
+        for (Map.Entry<Criterion, CriterionScales> criterionEntry : criteriaDirection.entrySet()) {
             @SuppressWarnings("unchecked")
-            QuantitativeScale<String> scale = (QuantitativeScale<String>) criteriaDirection.get(criterion).get(0);
-            inputs.criteriaPreferencesDirection.put(criterion.id(), scale.getPreferenceDirection().name());
+            QuantitativeScale<String> scale = (QuantitativeScale<String>) criterionEntry.getValue().get(0);
+            inputs.criteriaPreferencesDirection.put(criterionEntry.getKey().id(), scale.getPreferenceDirection().name());
         }
     }
 
     protected static void checkAndExtractProfilesPerformance(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
-        if (inputs.profilesIds == null || inputs.profilesIds.size() == 0 || inputs.profilesIds.get(0).size() == 0) {
+        if (inputs.profilesIds == null || inputs.profilesIds.isEmpty() || inputs.profilesIds.get(0).isEmpty()) {
             return;
         }
         if (xmcda.performanceTablesList.size() < 2 || xmcda.performanceTablesList.size() > 10) {
@@ -483,7 +478,7 @@ public class InputsHandler {
             for (int j = 0; j < inputs.profilesIds.get(i).size() - 1; j++) {
                 for (int criterionIterator = 0; criterionIterator < inputs.criteriaIds.size(); criterionIterator++) {
                     int multiplier = 1;
-                    if (inputs.criteriaPreferencesDirection.get(inputs.criteriaIds.get(criterionIterator)).toUpperCase().equals("MIN")) {
+                    if ("MIN".equalsIgnoreCase(inputs.criteriaPreferencesDirection.get(inputs.criteriaIds.get(criterionIterator)))) {
                         multiplier = -1;
                     }
 
@@ -566,7 +561,7 @@ public class InputsHandler {
     }
 
     protected static void checkAndExtractProfilesFlows(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
-        if (xmcda.alternativesValuesList.size() < 1 || xmcda.alternativesValuesList.size() > 11) {
+        if (xmcda.alternativesValuesList.isEmpty() || xmcda.alternativesValuesList.size() > 11) {
             errors.addError("You need to provide 1 profiles flows lists.");
         }
 
@@ -624,10 +619,10 @@ public class InputsHandler {
                 AlternativesMatrix<Double> matrix = (AlternativesMatrix<Double>) xmcda.alternativesMatricesList.get(i);
                 Map<String, Map<String, Double>> tmpPreferences = new LinkedHashMap<>();
 
-                for (Coord<Alternative, Alternative> coord : matrix.keySet()) {
-                    String x = coord.x.id();
-                    String y = coord.y.id();
-                    Double value = matrix.get(coord).get(0).getValue().doubleValue();
+                for (Map.Entry<Coord<Alternative, Alternative>, QualifiedValues<Double>> coordEntry : matrix.entrySet()) {
+                    String x = coordEntry.getKey().x.id();
+                    String y = coordEntry.getKey().y.id();
+                    double value = coordEntry.getValue().get(0).getValue().doubleValue();
                     tmpPreferences.putIfAbsent(x, new HashMap<>());
                     tmpPreferences.get(x).put(y, value);
                 }

@@ -141,7 +141,7 @@ public class FlowSortGDSSv3 {
 
         //convert results
         Map<String, XMCDA> resultsMap = OutputsHandler.convert(results.getFirstStepAssignments(), results.getAssignments());
-        
+
         handleResults(outdir, resultsMap, executionResult);
         Utils.writeProgramExecutionResultsAndExit(prgExecResults, executionResult, Utils.XMCDA_VERSION.v3);
     }
