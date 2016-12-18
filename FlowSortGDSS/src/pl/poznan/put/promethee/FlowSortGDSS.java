@@ -105,17 +105,17 @@ public class FlowSortGDSS {
                 Double profileK1;
 
                 if (firstClassNumber.intValue() < secondClassNumber.intValue()) {
-                    profileK = countDkForLimitingProfiles(alternativeId, firstClassNumber, firstClassDecisionMakers, inputs);
-                    profileK1 = countDk1ForLimitingProfiles(alternativeId, secondClassNumber, secondClassDecisionMakers, inputs);
-                } else {
-                    profileK = countDkForLimitingProfiles(alternativeId, secondClassNumber, secondClassDecisionMakers, inputs);
+                    profileK = countDkForLimitingProfiles(alternativeId, firstClassNumber, secondClassDecisionMakers, inputs);
                     profileK1 = countDk1ForLimitingProfiles(alternativeId, firstClassNumber, firstClassDecisionMakers, inputs);
+                } else {
+                    profileK = countDkForLimitingProfiles(alternativeId, firstClassNumber, firstClassDecisionMakers, inputs);
+                    profileK1 = countDk1ForLimitingProfiles(alternativeId, firstClassNumber, secondClassDecisionMakers, inputs);
                 }
 
                 if (profileK1 - profileK > 0) {
-                    assignments.put(alternativeId, rightClassId);
-                } else if (profileK1 - profileK < 0) {
                     assignments.put(alternativeId, leftClassId);
+                } else if (profileK1 - profileK < 0) {
+                    assignments.put(alternativeId, rightClassId);
                 } else {
                     if (inputs.assignToABetterClass) {
                         assignments.put(alternativeId, rightClassId);
@@ -162,23 +162,23 @@ public class FlowSortGDSS {
             Set<Integer> secondClassDecisionMakers = new HashSet<>();
             String alternativeId = inputs.alternativesIds.get(i);
             for (int decisionMaker = 0; decisionMaker < inputs.profilesIds.size(); decisionMaker++) {
-                Integer nearestCalss = null;
+                Integer nearestClass = null;
                 double distance = 0.0;
                 for (int profile = 0; profile < inputs.profilesIds.get(decisionMaker).size(); profile++) {
                     String profilesId = inputs.profilesIds.get(decisionMaker).get(profile);
                     double tmpDist = Math.abs(inputs.profilesSummaryFlows.get(profilesId).get(alternativeId) - inputs.alternativesFlowsAverage.get(alternativeId));
 
-                    if (tmpDist < distance || nearestCalss == null) {
-                        nearestCalss = profile;
+                    if (tmpDist < distance || nearestClass == null) {
+                        nearestClass = profile;
                         distance = tmpDist;
                     }
                 }
 
                 if (firstClassNumber == null) {
-                    firstClassNumber = nearestCalss;
+                    firstClassNumber = nearestClass;
                     firstClassDecisionMakers.add(decisionMaker);
-                } else if (nearestCalss != null && firstClassNumber.intValue() != nearestCalss.intValue()) {
-                    secondClassNumber = nearestCalss;
+                } else if (nearestClass != null && firstClassNumber.intValue() != nearestClass.intValue()) {
+                    secondClassNumber = nearestClass;
                     secondClassDecisionMakers.add(decisionMaker);
                 } else {
                     firstClassDecisionMakers.add(decisionMaker);
@@ -211,9 +211,9 @@ public class FlowSortGDSS {
                 }
 
                 if (profileK1 - profileK > 0) {
-                    assignments.put(alternativeId, rightClassId);
-                } else if (profileK - profileK1 < 0) {
                     assignments.put(alternativeId, leftClassId);
+                } else if (profileK1 - profileK < 0) {
+                    assignments.put(alternativeId, rightClassId);
                 } else {
                     if (inputs.assignToABetterClass) {
                         assignments.put(alternativeId, rightClassId);
