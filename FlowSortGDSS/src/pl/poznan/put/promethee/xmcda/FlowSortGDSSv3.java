@@ -13,38 +13,29 @@ import java.util.Map;
  */
 public class FlowSortGDSSv3 {
 
+    //Tags (+ some markers which are also tags)
     private static final String ALTERNATIVES = "alternatives";
+    private static final String ALTERNATIVES_VALUES = "alternativesValues";
+    private static final String ALTERNATIVES_MATRIX = "alternativesMatrix";
     private static final String CATEGORIES = "categories";
+    private static final String CATEGORIES_PROFILES = "categoriesProfiles";
     private static final String CATEGORIES_VALUES = "categoriesValues";
     private static final String CRITERIA = "criteria";
     private static final String CRITERIA_SCALES = "criteriaScales";
-    private static final String ALTERNATIVES_VALUES = "alternativesValues";
-    private static final String CATEGORIES_PROFILES = "categoriesProfiles";
     private static final String PERFORMANCE_TABLE = "performanceTable";
-    private static final String ALTERNATIVES_MATRIX = "alternativesMatrix";
+    private static final String PROGRAM_PARAMETERS = "programParameters";
+
+    //Markers
     private static final String FLOWS = "flows";
     private static final String PREFERENCES = "preferences";
     private static final String PROFILES_FLOWS = "profiles_flows";
     private static final String METHOD_PARAMETERS = "methodParameters";
-    private static final String PROGRAM_PARAMETERS = "programParameters";
-
 
     private FlowSortGDSSv3() {
 
     }
 
-    public static void main(String[] args) throws Utils.InvalidCommandLineException {
-        final Utils.Arguments params = Utils.parseCmdLineArguments(args);
-
-        final String indir = params.inputDirectory;
-        final String outdir = params.outputDirectory;
-
-        final File prgExecResults = new File(outdir, "messages.xml");
-
-        final ProgramExecutionResult executionResult = new ProgramExecutionResult();
-
-        final XMCDA xmcda = new XMCDA();
-
+    private static void readFiles(XMCDA xmcda, String indir, ProgramExecutionResult executionResult) {
         Referenceable.DefaultCreationObserver.currentMarker = ALTERNATIVES;
         Utils.loadXMCDAv3(xmcda, new File(indir, "alternatives.xml"), true, executionResult, ALTERNATIVES);
         Referenceable.DefaultCreationObserver.currentMarker = CATEGORIES;
@@ -90,6 +81,42 @@ public class FlowSortGDSSv3 {
             Referenceable.DefaultCreationObserver.currentMarker = PREFERENCES + i;
             Utils.loadXMCDAv3(xmcda, new File(indir, "preferences" + i + ".xml"), false, executionResult, ALTERNATIVES_MATRIX);
         }
+    }
+
+    private static void handleResults(String outdir, Map<String, XMCDA> resultsMap, ProgramExecutionResult executionResult) {
+        //write results
+        final org.xmcda.parsers.xml.xmcda_v3.XMCDAParser parser = new org.xmcda.parsers.xml.xmcda_v3.XMCDAParser();
+
+        for ( Map.Entry<String, XMCDA> entry : resultsMap.entrySet() )
+        {
+            File outputFile = new File(outdir, String.format("%s.xml", entry.getKey()));
+            try
+            {
+                parser.writeXMCDA(entry.getValue(), outputFile, OutputsHandler.xmcdaV3Tag(entry.getKey()));
+            }
+            catch (Exception exception)
+            {
+                final String err = String.format("Error while writing %s.xml, reason: ", entry.getKey());
+                executionResult.addError(Utils.getMessage(err, exception));
+                // Whatever the error is, clean up the file: we do not want to leave an empty or partially-written file
+                outputFile.delete();
+            }
+        }
+    }
+
+    public static void main(String[] args) throws Utils.InvalidCommandLineException {
+        final Utils.Arguments params = Utils.parseCmdLineArguments(args);
+
+        final String indir = params.inputDirectory;
+        final String outdir = params.outputDirectory;
+
+        final File prgExecResults = new File(outdir, "messages.xml");
+
+        final ProgramExecutionResult executionResult = new ProgramExecutionResult();
+
+        final XMCDA xmcda = new XMCDA();
+
+        readFiles(xmcda, indir, executionResult);
 
         if ( ! (executionResult.isOk() || executionResult.isWarning() ) ) {
             Utils.writeProgramExecutionResultsAndExit(prgExecResults, executionResult, Utils.XMCDA_VERSION.v3);
@@ -114,26 +141,8 @@ public class FlowSortGDSSv3 {
 
         //convert results
         Map<String, XMCDA> resultsMap = OutputsHandler.convert(results.getFirstStepAssignments(), results.getAssignments());
-
-        //write results
-        final org.xmcda.parsers.xml.xmcda_v3.XMCDAParser parser = new org.xmcda.parsers.xml.xmcda_v3.XMCDAParser();
-
-        for ( Map.Entry<String, XMCDA> entry : resultsMap.entrySet() )
-        {
-            File outputFile = new File(outdir, String.format("%s.xml", entry.getKey()));
-            try
-            {
-                parser.writeXMCDA(entry.getValue(), outputFile, OutputsHandler.xmcdaV3Tag(entry.getKey()));
-            }
-            catch (Exception exception)
-            {
-                final String err = String.format("Error while writing %s.xml, reason: ", entry.getKey());
-                executionResult.addError(Utils.getMessage(err, exception));
-                // Whatever the error is, clean up the file: we do not want to leave an empty or partially-written file
-                outputFile.delete();
-            }
-        }
-
+        
+        handleResults(outdir, resultsMap, executionResult);
         Utils.writeProgramExecutionResultsAndExit(prgExecResults, executionResult, Utils.XMCDA_VERSION.v3);
     }
 }

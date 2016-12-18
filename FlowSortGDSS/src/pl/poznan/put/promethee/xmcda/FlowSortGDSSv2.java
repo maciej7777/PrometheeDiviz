@@ -15,26 +15,107 @@ import java.util.Map;
  */
 public class FlowSortGDSSv2 {
 
+    //Tags (+ some markers which are also tags)
+    private static final String ALTERNATIVES = "alternatives";
+    private static final String ALTERNATIVES_COMPARISONS = "alternativesComparisons";
+    private static final String ALTERNATIVES_VALUES = "alternativesValues";
+    private static final String CATEGORIES = "categories";
+    private static final String CATEGORIES_PROFILES = "categoriesProfiles";
+    private static final String CATEGORIES_VALUES = "categoriesValues";
+    private static final String CRITERIA = "criteria";
+    private static final String CRITERIA_SCALES = "criteriaScales";
+    private static final String METHOD_PARAMETERS = "methodParameters";
+    private static final String PERFORMANCE_TABLE = "performanceTable";
+
+    //Markers
+    private static final String FLOWS = "flows";
+    private static final String PREFERENCES = "preferences";
+    private static final String PROFILES_FLOWS = "profilesFlows";
+
+
     private static final ProgramExecutionResult executionResult = new ProgramExecutionResult();
 
+    private FlowSortGDSSv2() {
+        
+    }
+
     /**
-     * Loads, converts and inserts the content of the XMCDA v2 {@code file} into {@code xmcda_v3}.
+     * Loads, converts and inserts the content of the XMCDA v2 {@code file} into {@code xmcdaV3}.
      * Updates {@link #executionResult} if an error occurs.
      *
      * @param file         the XMCDA v2 file to be loaded
      * @param marker       the marker to use, see {@link Referenceable.DefaultCreationObserver#currentMarker}
-     * @param xmcda_v3     the object into which the content of {@file} is inserted
-     * @param v2_tags_only the list of XMCDA v2 tags to be loaded
+     * @param xmcdaV3     the object into which the content of {@file} is inserted
+     * @param v2TagsOnly the list of XMCDA v2 tags to be loaded
      */
-    private static void convertToV3AndMark(org.xmcda.XMCDA xmcda_v3, File file, boolean isMandatory, String marker,
-                                           String... v2_tags_only) {
-        final org.xmcda.v2.XMCDA xmcda_v2 = new org.xmcda.v2.XMCDA();
+    private static void convertToV3AndMark(org.xmcda.XMCDA xmcdaV3, File file, boolean isMandatory, String marker,
+                                           String... v2TagsOnly) {
+        final org.xmcda.v2.XMCDA xmcdaV2 = new org.xmcda.v2.XMCDA();
         Referenceable.DefaultCreationObserver.currentMarker = marker;
-        Utils.loadXMCDAv2(xmcda_v2, file, isMandatory, executionResult, v2_tags_only);
+        Utils.loadXMCDAv2(xmcdaV2, file, isMandatory, executionResult, v2TagsOnly);
         try {
-            XMCDAConverter.convertTo_v3(xmcda_v2, xmcda_v3);
-        } catch (Throwable t) {
-            executionResult.addError(Utils.getMessage("Could not convert " + file.getPath() + " to XMCDA v3, reason: ", t));
+            XMCDAConverter.convertTo_v3(xmcdaV2, xmcdaV3);
+        } catch (Exception e) {
+            executionResult.addError(Utils.getMessage("Could not convert " + file.getPath() + " to XMCDA v3, reason: ", e));
+        }
+    }
+
+    private static void readFiles(XMCDA xmcda, String indir) {
+        convertToV3AndMark(xmcda, new File(indir, "alternatives.xml"), true, ALTERNATIVES, ALTERNATIVES);
+        convertToV3AndMark(xmcda, new File(indir, "categories.xml"), true, CATEGORIES, CATEGORIES);
+        convertToV3AndMark(xmcda, new File(indir, "categories.xml"), true, CATEGORIES_VALUES, CATEGORIES_VALUES);
+        convertToV3AndMark(xmcda, new File(indir, "method_parameters.xml"), true, METHOD_PARAMETERS, METHOD_PARAMETERS);
+        convertToV3AndMark(xmcda, new File(indir, "criteria.xml"), true, CRITERIA, CRITERIA);
+        convertToV3AndMark(xmcda, new File(indir, "criteria.xml"), true, CRITERIA_SCALES, CRITERIA_SCALES);
+        convertToV3AndMark(xmcda, new File(indir, "profiles_flows.xml"), true, PROFILES_FLOWS, ALTERNATIVES_VALUES);
+
+        convertToV3AndMark(xmcda, new File(indir, "categories_profiles1.xml"), true, CATEGORIES_PROFILES + 1, CATEGORIES_PROFILES);
+        convertToV3AndMark(xmcda, new File(indir, "categories_profiles2.xml"), true, CATEGORIES_PROFILES + 2, CATEGORIES_PROFILES);
+
+        convertToV3AndMark(xmcda, new File(indir, "performance_table1.xml"), true, PERFORMANCE_TABLE + 1, PERFORMANCE_TABLE);
+        convertToV3AndMark(xmcda, new File(indir, "performance_table2.xml"), true, PERFORMANCE_TABLE + 2, PERFORMANCE_TABLE);
+
+        convertToV3AndMark(xmcda, new File(indir, "flows1.xml"), true, FLOWS + 1, ALTERNATIVES_VALUES);
+        convertToV3AndMark(xmcda, new File(indir, "flows2.xml"), true, FLOWS + 2, ALTERNATIVES_VALUES);
+
+        convertToV3AndMark(xmcda, new File(indir, "preferences1.xml"), true, PREFERENCES + 1, ALTERNATIVES_COMPARISONS);
+        convertToV3AndMark(xmcda, new File(indir, "preferences2.xml"), true, PREFERENCES + 2, ALTERNATIVES_COMPARISONS);
+
+        for (int i = 3; i <= 10; i++) {
+            convertToV3AndMark(xmcda, new File(indir, "categories_profiles" + i + ".xml"), false, CATEGORIES_PROFILES + i, CATEGORIES_PROFILES);
+            convertToV3AndMark(xmcda, new File(indir, "performance_table" + i + ".xml"), false, PERFORMANCE_TABLE + i, PERFORMANCE_TABLE);
+            convertToV3AndMark(xmcda, new File(indir, "flows" + i + ".xml"), false, FLOWS + i, ALTERNATIVES_VALUES);
+            convertToV3AndMark(xmcda, new File(indir, "preferences" + i + ".xml"), false, PREFERENCES + i, ALTERNATIVES_COMPARISONS);
+        }
+    }
+
+    private static void handleResults(String outdir, Map<String, XMCDA> resultsMap) {
+        org.xmcda.v2.XMCDA resultsV2;
+        for ( Map.Entry<String, XMCDA> outputNameEntry : resultsMap.entrySet() )
+        {
+            File outputFile = new File(outdir, String.format("%s.xml", outputNameEntry.getKey()));
+            try
+            {
+                resultsV2 = XMCDAConverter.convertTo_v2(outputNameEntry.getValue());
+                if ( resultsV2 == null )
+                    throw new IllegalStateException("Conversion from v3 to v2 returned a null value");
+            }
+            catch (Exception e)
+            {
+                final String err = String.format("Could not convert %s into XMCDA_v2, reason: ", outputNameEntry.getKey());
+                executionResult.addError(Utils.getMessage(err, e));
+                continue;
+            }
+            try
+            {
+                XMCDAParser.writeXMCDA(resultsV2, outputFile, OutputsHandler.xmcdaV2Tag(outputNameEntry.getKey()));
+            }
+            catch (Exception e)
+            {
+                final String err = String.format("Error while writing %s.xml, reason: ", outputNameEntry.getKey());
+                executionResult.addError(Utils.getMessage(err, e));
+                outputFile.delete();
+            }
         }
     }
 
@@ -46,32 +127,7 @@ public class FlowSortGDSSv2 {
 
         final org.xmcda.XMCDA xmcda = new org.xmcda.XMCDA();
 
-        convertToV3AndMark(xmcda, new File(indir, "alternatives.xml"), true, "alternatives", "alternatives");
-        convertToV3AndMark(xmcda, new File(indir, "categories.xml"), true, "categories", "categories");
-        convertToV3AndMark(xmcda, new File(indir, "categories.xml"), true, "categoriesValues", "categoriesValues");
-        convertToV3AndMark(xmcda, new File(indir, "method_parameters.xml"), true, "methodParameters", "methodParameters");
-        convertToV3AndMark(xmcda, new File(indir, "criteria.xml"), true, "criteria", "criteria");
-        convertToV3AndMark(xmcda, new File(indir, "criteria.xml"), true, "criteriaScales", "criteriaScales");
-        convertToV3AndMark(xmcda, new File(indir, "profiles_flows.xml"), true, "profiles_flows", "alternativesValues");
-
-        convertToV3AndMark(xmcda, new File(indir, "categories_profiles1.xml"), true, "categoriesProfiles1", "categoriesProfiles");
-        convertToV3AndMark(xmcda, new File(indir, "categories_profiles2.xml"), true, "categoriesProfiles2", "categoriesProfiles");
-
-        convertToV3AndMark(xmcda, new File(indir, "performance_table1.xml"), true, "performanceTable1", "performanceTable");
-        convertToV3AndMark(xmcda, new File(indir, "performance_table2.xml"), true, "performanceTable2", "performanceTable");
-
-        convertToV3AndMark(xmcda, new File(indir, "flows1.xml"), true, "flows1", "alternativesValues");
-        convertToV3AndMark(xmcda, new File(indir, "flows2.xml"), true, "flows2", "alternativesValues");
-
-        convertToV3AndMark(xmcda, new File(indir, "preferences1.xml"), true, "preferences1", "alternativesComparisons");
-        convertToV3AndMark(xmcda, new File(indir, "preferences2.xml"), true, "preferences2", "alternativesComparisons");
-
-        for (int i = 3; i <= 10; i++) {
-            convertToV3AndMark(xmcda, new File(indir, "categories_profiles" + i + ".xml"), false, "categoriesProfiles" + i, "categoriesProfiles");
-            convertToV3AndMark(xmcda, new File(indir, "performance_table" + i + ".xml"), false, "performanceTable" + i, "performanceTable");
-            convertToV3AndMark(xmcda, new File(indir, "flows" + i + ".xml"), false, "flows" + i, "alternativesValues");
-            convertToV3AndMark(xmcda, new File(indir, "preferences" + i + ".xml"), false, "preferences" + i, "alternativesComparisons");
-        }
+        readFiles(xmcda, indir);
 
         if ( ! (executionResult.isOk() || executionResult.isWarning() ) )
         {
@@ -88,42 +144,16 @@ public class FlowSortGDSSv2 {
         {
             results = FlowSortGDSS.sort(inputs);
         }
-        catch (Throwable t)
+        catch (Exception e)
         {
-            executionResult.addError(Utils.getMessage("The calculation could not be performed, reason: ", t));
+            executionResult.addError(Utils.getMessage("The calculation could not be performed, reason: ", e));
             Utils.writeProgramExecutionResultsAndExit(prgExecResultsFile, executionResult, Utils.XMCDA_VERSION.v2);
             return;
         }
 
-        final Map<String, XMCDA> x_results = OutputsHandler.convert(results.getFirstStepAssignments(), results.getAssignments());
+        final Map<String, XMCDA> resultsMap = OutputsHandler.convert(results.getFirstStepAssignments(), results.getAssignments());
 
-        org.xmcda.v2.XMCDA results_v2;
-        for ( String outputName : x_results.keySet() )
-        {
-            File outputFile = new File(outdir, String.format("%s.xml", outputName));
-            try
-            {
-                results_v2 = XMCDAConverter.convertTo_v2(x_results.get(outputName));
-                if ( results_v2 == null )
-                    throw new IllegalStateException("Conversion from v3 to v2 returned a null value");
-            }
-            catch (Throwable t)
-            {
-                final String err = String.format("Could not convert %s into XMCDA_v2, reason: ", outputName);
-                executionResult.addError(Utils.getMessage(err, t));
-                continue;
-            }
-            try
-            {
-                XMCDAParser.writeXMCDA(results_v2, outputFile, OutputsHandler.xmcdaV2Tag(outputName));
-            }
-            catch (Throwable t)
-            {
-                final String err = String.format("Error while writing %s.xml, reason: ", outputName);
-                executionResult.addError(Utils.getMessage(err, t));
-                outputFile.delete();
-            }
-        }
+        handleResults(outdir, resultsMap);
         Utils.writeProgramExecutionResultsAndExit(prgExecResultsFile, executionResult, Utils.XMCDA_VERSION.v2);
     }
 }
