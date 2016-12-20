@@ -98,7 +98,6 @@
                 <description>Criteria to consider and their scales</description>
             </documentation>
             <xmcda tag="criteria"/>
-            <xmcda tag="criteriaScales"/>
         </input>
 
         <input id="input14" name="flows1" displayName="flows_1" isoptional="0">
@@ -464,70 +463,70 @@
             <documentation>
                 <description>The preference matrix computed for profiles and alternatives given by decision maker 1.</description>
             </documentation>
-            <xmcda tag="alternativesMatrix"/>
+            <xmcda tag="alternativesComparisons"/>
         </input>
 
         <input id="input36" name="preferences2" displayName="preferences_2" isoptional="0">
             <documentation>
                 <description>The preference matrix computed for profiles and alternatives given by decision maker 2.</description>
             </documentation>
-            <xmcda tag="alternativesMatrix"/>
+            <xmcda tag="alternativesComparisons"/>
         </input>
 
         <input id="input37" name="preferences3" displayName="preferences_3" isoptional="1">
             <documentation>
                 <description>The preference matrix computed for profiles and alternatives given by decision maker 3.</description>
             </documentation>
-            <xmcda tag="alternativesMatrix"/>
+            <xmcda tag="alternativesComparisons"/>
         </input>
 
         <input id="input38" name="preferences4" displayName="preferences_4" isoptional="1">
             <documentation>
                 <description>The preference matrix computed for profiles and alternatives given by decision maker 4.</description>
             </documentation>
-            <xmcda tag="alternativesMatrix"/>
+            <xmcda tag="alternativesComparisons"/>
         </input>
 
         <input id="input39" name="preferences5" displayName="preferences_5" isoptional="1">
             <documentation>
                 <description>The preference matrix computed for profiles and alternatives given by decision maker 5.</description>
             </documentation>
-            <xmcda tag="alternativesMatrix"/>
+            <xmcda tag="alternativesComparisons"/>
         </input>
 
         <input id="input40" name="preferences6" displayName="preferences_6" isoptional="1">
             <documentation>
                 <description>The preference matrix computed for profiles and alternatives given by decision maker 6.</description>
             </documentation>
-            <xmcda tag="alternativesMatrix"/>
+            <xmcda tag="alternativesComparisons"/>
         </input>
 
         <input id="input41" name="preferences7" displayName="preferences_7" isoptional="1">
             <documentation>
                 <description>The preference matrix computed for profiles and alternatives given by decision maker 7.</description>
             </documentation>
-            <xmcda tag="alternativesMatrix"/>
+            <xmcda tag="alternativesComparisons"/>
         </input>
 
         <input id="input42" name="preferences8" displayName="preferences_8" isoptional="1">
             <documentation>
                 <description>The preference matrix computed for profiles and alternatives given by decision maker 8.</description>
             </documentation>
-            <xmcda tag="alternativesMatrix"/>
+            <xmcda tag="alternativesComparisons"/>
         </input>
 
         <input id="input43" name="preferences9" displayName="preferences_9" isoptional="1">
             <documentation>
                 <description>The preference matrix computed for profiles and alternatives given by decision maker 9.</description>
             </documentation>
-            <xmcda tag="alternativesMatrix"/>
+            <xmcda tag="alternativesComparisons"/>
         </input>
 
         <input id="input44" name="preferences10" displayName="preferences_10" isoptional="1">
             <documentation>
                 <description>The preference matrix computed for profiles and alternatives given by decision maker 10.</description>
             </documentation>
-            <xmcda tag="alternativesMatrix"/>
+            <xmcda tag="alternativesComparisons"/>
         </input>
 
         <input id="input45" name="profiles_flows" displayName="profiles_flows" isoptional="0">
@@ -541,14 +540,14 @@
             <documentation>
                 <description>Assignments made in a first step of FlowSortGDSS process. They shows for which alternatives decision makers were not able to make an unanimous assignment.</description>
             </documentation>
-            <xmcda tag="alternativesAssignments"/>
+            <xmcda tag="alternativesAffectations"/>
         </output>
 
         <output id="output2" name="final_assignments" displayName="final_assignments">
             <documentation>
                 <description>Final assignments made in a FlowSortGDSS process.</description>
             </documentation>
-            <xmcda tag="alternativesAssignments"/>
+            <xmcda tag="alternativesAffectations"/>
         </output>
 
         <output id="output3" name="messages" displayName="messages">
