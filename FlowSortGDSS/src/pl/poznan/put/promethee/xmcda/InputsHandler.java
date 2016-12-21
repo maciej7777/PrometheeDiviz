@@ -116,8 +116,7 @@ public class InputsHandler {
             errors.addError("No categories has been supplied.");
         } else if (xmcda.categories.size() == 1) {
             errors.addError("You should supply at least 2 categories.");
-        }
-        else {
+        } else {
             List<String> categories = xmcda.categories.getActiveCategories().stream().filter(a -> "categories".equals(a.getMarker())).map(
                     Category::id).collect(Collectors.toList());
             inputs.categoriesIds = categories;
@@ -141,7 +140,7 @@ public class InputsHandler {
             CategoriesValues<Integer> categoriesValuesClass = categoriesValuesList.convertTo(Integer.class);
             xmcda.categoriesValuesList.set(0, categoriesValuesClass);
 
-            int min = 100;
+            int min = Integer.MAX_VALUE;
             int max = -1;
 
             for (Map.Entry<Category, LabelledQValues<Integer>> a : categoriesValuesClass.entrySet()) {
@@ -188,7 +187,7 @@ public class InputsHandler {
             return;
         }
         if (xmcda.programParametersList.get(0).size() != 12) {
-            errors.addError("Parameters' list must contain exactly twelve elements");
+            errors.addError("Parameter's list must contain exactly twelve elements");
             return;
         }
 
@@ -323,21 +322,24 @@ public class InputsHandler {
             List<CategoryProfile> categoriesProfilesList = new ArrayList<>();
             CategoriesProfiles categoriesProfiles = xmcda.categoriesProfilesList.get(i);
             if (inputs.categoriesRanking.size() != categoriesProfiles.size()) {
-                errors.addError("There is a problem with categories rank list or categories profiles list for decision maker" + (i + 1) + ". Each category has to be added to categories profiles list or each decision maker and to global categories ranks list.");
+                errors.addError("There is a problem with categories rank list or categories profiles list for decision maker"
+                        + (i + 1) + ". Each category has to be added to categories profiles list or each decision maker and to global categories ranks list.");
                 return;
             }
 
             for (Object profile : categoriesProfiles) {
                 CategoryProfile tmpProfile = (CategoryProfile) profile;
                 if (!tmpProfile.getType().name().equalsIgnoreCase(inputs.profilesType.toString())) {
-                    errors.addError("There is a problem with categories rank list or categories profiles list for decision maker" + (i + 1) + ". Every decision maker need to provide profiles for categories witch are boundary or central. Profiles type need to be same for all decision makers and equal to setting in program parameters input.");
+                    errors.addError("There is a problem with categories rank list or categories profiles list for decision maker"
+                            + (i + 1) + ". Every decision maker need to provide profiles for categories witch are boundary or central. Profiles type need to be same for all decision makers and equal to setting in program parameters input.");
                     return;
                 } else {
                     categoriesProfilesList.add(tmpProfile);
                 }
             }
 
-            Collections.sort(categoriesProfilesList, (left, right) -> Integer.compare(inputs.categoriesRanking.get(left.getCategory().id()), inputs.categoriesRanking.get(right.getCategory().id())));
+            Collections.sort(categoriesProfilesList, (left, right) -> Integer.compare(
+                    inputs.categoriesRanking.get(left.getCategory().id()), inputs.categoriesRanking.get(right.getCategory().id())));
 
             inputs.categoryProfiles.add(categoriesProfilesList);
 
@@ -352,7 +354,8 @@ public class InputsHandler {
         checkForProfilesDuplicates(inputs, errors);
     }
 
-    protected static void checkAndExtractCentralProfilesIds(ProgramExecutionResult errors, List<CategoryProfile> categoriesProfilesList, List<String> profilesIds, int i) {
+    protected static void checkAndExtractCentralProfilesIds(ProgramExecutionResult errors, List<CategoryProfile> categoriesProfilesList,
+                                                            List<String> profilesIds, int i) {
         for (int j = 0; j < categoriesProfilesList.size(); j++) {
             if (categoriesProfilesList.get(j).getCentralProfile() != null) {
                 profilesIds.add(categoriesProfilesList.get(j).getCentralProfile().getAlternative().id());
@@ -363,7 +366,8 @@ public class InputsHandler {
         }
     }
 
-    protected static void checkAndExtractBoundaryProfilesIds(ProgramExecutionResult errors, List<CategoryProfile> categoriesProfilesList, List<String> profilesIds, int i) {
+    protected static void checkAndExtractBoundaryProfilesIds(ProgramExecutionResult errors, List<CategoryProfile> categoriesProfilesList,
+                                                             List<String> profilesIds, int i) {
         for (int j = 0; j < categoriesProfilesList.size() - 1; j++) {
             if (categoriesProfilesList.get(j).getUpperBound() != null && categoriesProfilesList.get(j + 1).getLowerBound() != null) {
                 profilesIds.add(categoriesProfilesList.get(j).getUpperBound().getAlternative().id());
@@ -378,6 +382,13 @@ public class InputsHandler {
         }
     }
 
+    /**
+     * Checks if there are duplicates in profiles id's supplied by different decision makers. Each decision maker should
+     * have his (her) own id for each profile.
+     *
+     * @param inputs Inputs read by module
+     * @param errors Object with all error messages connected to reading data
+     */
     protected static void checkForProfilesDuplicates(Inputs inputs, ProgramExecutionResult errors) {
         HashSet<String> testDuplicates = new HashSet<>();
         for (int i = 0; i < inputs.profilesIds.size(); i++) {
@@ -482,11 +493,13 @@ public class InputsHandler {
                         multiplier = -1;
                     }
 
-                    Double currentPerformance = inputs.profilesPerformance.get(i).get(inputs.profilesIds.get(i).get(j)).get(inputs.criteriaIds.get(criterionIterator));
+                    Double currentPerformance = inputs.profilesPerformance.get(i).get(inputs.profilesIds.get(i).get(j)).get(
+                            inputs.criteriaIds.get(criterionIterator));
 
                     for (int z = 0; z < inputs.profilesIds.size(); z++) {
                         if (z != i) {
-                            Double tempPerformance = inputs.profilesPerformance.get(z).get(inputs.profilesIds.get(z).get(j + 1)).get(inputs.criteriaIds.get(criterionIterator));
+                            Double tempPerformance = inputs.profilesPerformance.get(z).get(inputs.profilesIds.get(z).get(j + 1)).get(
+                                    inputs.criteriaIds.get(criterionIterator));
 
                             if (currentPerformance * multiplier >= tempPerformance * multiplier) {
                                 errors.addError("Dominance condition is not respected.");
@@ -629,15 +642,18 @@ public class InputsHandler {
 
                 for (String alternativeId : inputs.alternativesIds) {
                     for (String profileId : inputs.profilesIds.get(i)) {
-                        if (tmpPreferences.get(alternativeId) == null || tmpPreferences.get(alternativeId).get(profileId) == null || tmpPreferences.get(profileId) == null || tmpPreferences.get(profileId).get(alternativeId) == null) {
-                            errors.addError("Preference between " + alternativeId + " and " + profileId + " is missing for decision maker " + (i + 1) + ".");
+                        if (tmpPreferences.get(alternativeId) == null || tmpPreferences.get(alternativeId).get(profileId) == null
+                                || tmpPreferences.get(profileId) == null || tmpPreferences.get(profileId).get(alternativeId) == null) {
+                            errors.addError("Preference between " + alternativeId + " and " + profileId +
+                                    " is missing for decision maker " + (i + 1) + ".");
                         }
                     }
                 }
 
                 inputs.preferences.add(tmpPreferences);
             } catch (Exception e) {
-                errors.addError("There was en exception during processing preferences: " + e.getMessage() + ". Remember that each preference need to be a double number.");
+                errors.addError("There was en exception during processing preferences: " + e.getMessage() +
+                        ". Remember that each preference need to be a double number.");
                 return;
             }
         }
