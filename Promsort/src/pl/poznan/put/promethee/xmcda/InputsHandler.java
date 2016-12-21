@@ -55,6 +55,7 @@ public class InputsHandler {
         checkAndExtractAlternativesFlows(inputs, xmcda, errors);
         checkAndExtractCriteria(inputs, xmcda, errors);
         checkAndExtractProfilesPerformance(inputs, xmcda, errors);
+        checkDominanceProperty(inputs, errors);
 
         return inputs;
     }
@@ -486,6 +487,36 @@ public class InputsHandler {
                 Double value = profilesPerformance.getValue(alternative, criterion);
                 inputs.profilesPerformance.putIfAbsent(alternative.id(), new LinkedHashMap<>());
                 inputs.profilesPerformance.get(alternative.id()).put(criterion.id(), value);
+            }
+        }
+    }
+
+    protected static void checkDominanceProperty(Inputs inputs, ProgramExecutionResult errors) {
+
+        for (String criterionId : inputs.criteriaIds) {
+            for (int i = 0; i < inputs.profilesIds.size() - 1; i++) {
+                String profileId = inputs.profilesIds.get(i);
+                String nextProfileId = inputs.profilesIds.get(i + 1);
+
+                Map<String, Double> firstProfilePerformance = inputs.profilesPerformance.get(profileId);
+                Map<String, Double> secondProfilePerformance = inputs.profilesPerformance.get(nextProfileId);
+                Double preferenceThreshold = inputs.criteriaPreferenceThresholds.get(criterionId);
+                String preferenceDirection = inputs.criteriaPreferencesDirection.get(criterionId);
+                if (firstProfilePerformance == null || secondProfilePerformance == null || preferenceThreshold == null || preferenceDirection == null) {
+                    errors.addError("There was a problem when checking profiles preferences. Profiles need to fulfill the dominance condition on each criterion.");
+                    return;
+                }
+                Double firstProfileCriterionPerformance = firstProfilePerformance.get(criterionId);
+                Double secondProfileCriterionPerformance = secondProfilePerformance.get(criterionId);
+                if (firstProfileCriterionPerformance == null || secondProfileCriterionPerformance == null) {
+                    errors.addError("There was a problem when checking profiles preferences. Profiles need to fulfill the dominance condition on each criterion.");
+                    return;
+                }
+                if (("max".equalsIgnoreCase(preferenceDirection) && firstProfileCriterionPerformance + preferenceThreshold > secondProfileCriterionPerformance) ||
+                        ("min".equalsIgnoreCase(preferenceDirection) && firstProfileCriterionPerformance - preferenceThreshold < secondProfileCriterionPerformance)) {
+                    errors.addError("Profiles need to fulfill the dominance condition on each criterion.");
+                    return;
+                }
             }
         }
     }
