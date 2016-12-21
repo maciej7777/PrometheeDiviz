@@ -31,6 +31,9 @@ public class InputsHandler {
         public Boolean assignToABetterClass;
         public Map<String, Integer> categoriesRanking;
         public List<CategoryProfile> categoryProfiles;
+        public List<String> criteriaIds;
+        public Map<String, String> criteriaPreferencesDirection;
+        public Map<String, Double> criteriaPreferenceThresholds;
     }
 
     public static Inputs checkAndExtractInputs(XMCDA xmcda, ProgramExecutionResult xmcdaExecResults) {
@@ -49,6 +52,7 @@ public class InputsHandler {
         checkCategoriesRanking(inputs, xmcda, errors);
         checkAndExtractProfilesIds(inputs, xmcda, errors);
         checkAndExtractAlternativesFlows(inputs, xmcda, errors);
+        checkAndExtractCriteria(inputs, xmcda, errors);
 
         return inputs;
     }
@@ -365,6 +369,69 @@ public class InputsHandler {
             if (!found) {
                 errors.addError("There are some missing values in negative flows.");
                 return;
+            }
+        }
+    }
+    protected static void checkAndExtractCriteria(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+        if (xmcda.criteria.getActiveCriteria().isEmpty()) {
+            errors.addError("You need to provide a not empty criteria list.");
+            return;
+        }
+        inputs.criteriaIds = xmcda.criteria.getActiveCriteria().stream().filter(a -> "criteria".equals(a.getMarker())).map(
+                Criterion::id).collect(Collectors.toList());
+
+        checkAndExtractCriteriaPreferencesDirection(inputs, xmcda, errors);
+        checkAndExtractCriteriaPreferenceThresholds(inputs, xmcda, errors);
+    }
+
+    protected static void checkAndExtractCriteriaPreferencesDirection(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+        if (inputs.criteriaIds == null || inputs.criteriaIds.isEmpty()) {
+            return;
+        }
+
+        if (xmcda.criteriaScalesList.size() != 1) {
+            errors.addError("You need to provide one not empty criteria scales list.");
+            return;
+        }
+
+        inputs.criteriaPreferencesDirection = new HashMap<>();
+
+        CriteriaScales criteriaDirection = xmcda.criteriaScalesList.get(0);
+        for (Map.Entry<Criterion, CriterionScales> criterionEntry : criteriaDirection.entrySet()) {
+            try {
+                @SuppressWarnings("unchecked")
+                QuantitativeScale<String> scale = (QuantitativeScale<String>) criterionEntry.getValue().get(0);
+                inputs.criteriaPreferencesDirection.put(criterionEntry.getKey().id(), scale.getPreferenceDirection().name());
+            } catch (Exception e) {
+                errors.addError("Each criterion scale must be a label \"min\" or \"max\".");
+                return;
+            }
+        }
+    }
+
+    protected static void checkAndExtractCriteriaPreferenceThresholds(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+        if (inputs.criteriaIds == null || inputs.criteriaIds.isEmpty()) {
+            return;
+        }
+
+        if (xmcda.criteriaThresholdsList.size() != 1) {
+            errors.addError("You need to provide one not empty criteria thresholds list.");
+            return;
+        }
+
+        inputs.criteriaPreferenceThresholds = new HashMap<>();
+        CriteriaThresholds criteriaThresholds = xmcda.criteriaThresholdsList.get(0);
+        for(Map.Entry<Criterion, CriterionThresholds> criterionEntry : criteriaThresholds.entrySet()) {
+            for (int i = 0; i < criterionEntry.getValue().size(); i++) {
+                if ("preference".equalsIgnoreCase(criterionEntry.getValue().get(i).mcdaConcept())) {
+                    try {
+                        Threshold<Double> threshold = (Threshold<Double>) criterionEntry.getValue().get(i);
+                        inputs.criteriaPreferenceThresholds.put(criterionEntry.getKey().id(), threshold.getConstant().getValue());
+                    } catch (Exception e) {
+                        errors.addError("Each threshold must be a real value");
+                        return;
+                    }
+                }
             }
         }
     }

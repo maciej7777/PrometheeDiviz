@@ -37,6 +37,12 @@ public class PromsortXMCDAv3 {
         Utils.loadXMCDAv3(xmcda, new File(indir, "categories.xml"), true, executionResult, "categoriesValues");
         Referenceable.DefaultCreationObserver.currentMarker="categoriesProfiles";
         Utils.loadXMCDAv3(xmcda, new File(indir, "categories_profiles.xml"), true, executionResult, "categoriesProfiles");
+        Referenceable.DefaultCreationObserver.currentMarker = "criteria";
+        Utils.loadXMCDAv3(xmcda, new File(indir, "criteria.xml"), true, executionResult, "criteria");
+        Referenceable.DefaultCreationObserver.currentMarker = "criteriaScales";
+        Utils.loadXMCDAv3(xmcda, new File(indir, "criteria.xml"), true, executionResult, "criteriaScales");
+        Referenceable.DefaultCreationObserver.currentMarker = "criteriaThresholds";
+        Utils.loadXMCDAv3(xmcda, new File(indir, "criteria.xml"), true, executionResult, "criteriaThresholds");
         Referenceable.DefaultCreationObserver.currentMarker="positiveFlows";
         Utils.loadXMCDAv3(xmcda, new File(indir, "positive_flows.xml"), true, executionResult, "alternativesValues");
         Referenceable.DefaultCreationObserver.currentMarker="negativeFlows";

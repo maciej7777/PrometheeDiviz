@@ -48,6 +48,9 @@ public class PromsortXMCDAv2 {
         convertToV3AndMark(xmcda, new File(indir,  "categories.xml"), true, "categories", "categories");
         convertToV3AndMark(xmcda, new File(indir,  "categories.xml"), true, "categoriesValues", "categoriesValues");
         convertToV3AndMark(xmcda, new File(indir,  "categories_profiles.xml"), true, "categoriesProfiles", "categoriesProfiles");
+        convertToV3AndMark(xmcda, new File(indir, "criteria.xml"), true, "criteria", "criteria");
+        convertToV3AndMark(xmcda, new File(indir, "criteria.xml"), true, "criteriaScales", "criteriaScales");
+        convertToV3AndMark(xmcda, new File(indir, "criteria.xml"), true, "criteriaThresholds", "criteriaThresholds");
         convertToV3AndMark(xmcda, new File(indir,  "positive_flows.xml"), true, "positiveFlows", "alternativesValues");
         convertToV3AndMark(xmcda, new File(indir,  "negative_flows.xml"), true, "negativeFlows", "alternativesValues");
         convertToV3AndMark(xmcda, new File(indir,  "method_parameters.xml"), true, "methodParameters", "methodParameters");
