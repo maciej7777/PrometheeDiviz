@@ -139,8 +139,8 @@ public class Promsort {
         }
 
         OutputsHandler.Output output = new OutputsHandler.Output();
-        output.firstStepAssignments = firstStepAssignments;
-        output.finalAssignments = finalAssignments;
+        output.setFirstStepAssignments(firstStepAssignments);
+        output.setFinalAssignments(finalAssignments);
         return output;
     }
 

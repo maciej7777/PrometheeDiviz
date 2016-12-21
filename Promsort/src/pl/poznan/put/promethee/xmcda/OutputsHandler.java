@@ -2,27 +2,48 @@ package pl.poznan.put.promethee.xmcda;
 
 import org.xmcda.*;
 
-import java.io.File;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
  * Created by Maciej Uniejewski on 2016-11-01.
  */
 public class OutputsHandler {
+
+    private static final String FIRST_STEP_ASSIGNMENTS = "first_step_assignments";
+    private static final String FINAL_ASSIGNMENTS = "final_assignments";
+
+    private OutputsHandler() {
+
+    }
+
     public static class Output{
-        public Map<String, Map<String, String>> firstStepAssignments;
-        public Map<String, String> finalAssignments;
+        private Map<String, Map<String, String>> firstStepAssignments;
+        private Map<String, String> finalAssignments;
+
+        public Map<String, Map<String, String>> getFirstStepAssignments() {
+            return firstStepAssignments;
+        }
+
+        public void setFirstStepAssignments(Map<String, Map<String, String>> firstStepAssignments) {
+            this.firstStepAssignments = firstStepAssignments;
+        }
+
+        public Map<String, String> getFinalAssignments() {
+            return finalAssignments;
+        }
+
+        public void setFinalAssignments(Map<String, String> finalAssignments) {
+            this.finalAssignments = finalAssignments;
+        }
     }
 
     public static final String xmcdaV3Tag(String outputName)
     {
         switch(outputName)
         {
-            case "final_assignments":
-                return "alternativesAssignments";
-            case "first_step_assignments":
+            case FINAL_ASSIGNMENTS:
+            case FIRST_STEP_ASSIGNMENTS:
                 return "alternativesAssignments";
             case "messages":
                 return "programExecutionResult";
@@ -35,9 +56,8 @@ public class OutputsHandler {
     {
         switch(outputName)
         {
-            case "final_assignments":
-                return "alternativesAffectations";
-            case "first_step_assignments":
+            case FINAL_ASSIGNMENTS:
+            case FIRST_STEP_ASSIGNMENTS:
                 return "alternativesAffectations";
             case "messages":
                 return "methodMessages";
@@ -46,30 +66,29 @@ public class OutputsHandler {
         }
     }
 
-    public static Map<String, XMCDA> convert(Map<String, Map<String, String>> firstStepAssignments, Map<String, String> finalAssignments, ProgramExecutionResult executionResult)
+    public static Map<String, XMCDA> convert(Map<String, Map<String, String>> firstStepAssignments, Map<String, String> finalAssignments)
     {
-        final HashMap<String, XMCDA> x_results = new HashMap<>();
+        final HashMap<String, XMCDA> xResults = new HashMap<>();
 
-		/* alternativesValues */
         XMCDA finalAssignmentsXmcdaObject = new XMCDA();
         XMCDA firstStepAssignmentsXmcdaObject = new XMCDA();
         AlternativesAssignments  finalAlternativeAssignments = new AlternativesAssignments();
         AlternativesAssignments firstStepAlternativeAssignments = new AlternativesAssignments();
 
-        for (String alternativeId : finalAssignments.keySet()) {
+        for (Map.Entry<String, String> alternativeEntry : finalAssignments.entrySet()) {
             AlternativeAssignment tmpAssignment = new AlternativeAssignment();
-            tmpAssignment.setAlternative(new Alternative(alternativeId));
-            tmpAssignment.setCategory(new Category(finalAssignments.get(alternativeId)));
+            tmpAssignment.setAlternative(new Alternative(alternativeEntry.getKey()));
+            tmpAssignment.setCategory(new Category(alternativeEntry.getValue()));
             finalAlternativeAssignments.add(tmpAssignment);
         }
 
-        for (String alternativeId : firstStepAssignments.keySet()) {
+        for (Map.Entry<String, Map<String, String>> alternativeEntry : firstStepAssignments.entrySet()) {
             AlternativeAssignment tmpAssignment = new AlternativeAssignment();
-            tmpAssignment.setAlternative(new Alternative(alternativeId));
+            tmpAssignment.setAlternative(new Alternative(alternativeEntry.getKey()));
 
             CategoriesInterval tmpInterval = new CategoriesInterval();
-            tmpInterval.setLowerBound(new Category(firstStepAssignments.get(alternativeId).get("LOWER")));
-            tmpInterval.setUpperBound(new Category(firstStepAssignments.get(alternativeId).get("UPPER")));
+            tmpInterval.setLowerBound(new Category(alternativeEntry.getValue().get("LOWER")));
+            tmpInterval.setUpperBound(new Category(alternativeEntry.getValue().get("UPPER")));
 
             tmpAssignment.setCategoryInterval(tmpInterval);
 
@@ -80,9 +99,9 @@ public class OutputsHandler {
         finalAssignmentsXmcdaObject.alternativesAssignmentsList.add(finalAlternativeAssignments);
         firstStepAssignmentsXmcdaObject.alternativesAssignmentsList.add(firstStepAlternativeAssignments);
 
-        x_results.put("final_assignments", finalAssignmentsXmcdaObject);
-        x_results.put("first_step_assignments", firstStepAssignmentsXmcdaObject);
+        xResults.put("final_assignments", finalAssignmentsXmcdaObject);
+        xResults.put("first_step_assignments", firstStepAssignmentsXmcdaObject);
 
-        return x_results;
+        return xResults;
     }
 }

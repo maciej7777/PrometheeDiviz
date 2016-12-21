@@ -116,7 +116,7 @@ public class PromsortXMCDAv2 {
             return;
         }
 
-        final Map<String, org.xmcda.XMCDA> xResults = OutputsHandler.convert(results.firstStepAssignments, results.finalAssignments, executionResult);
+        final Map<String, org.xmcda.XMCDA> xResults = OutputsHandler.convert(results.getFirstStepAssignments(), results.getFinalAssignments());
 
         handleResults(outdir, xResults);
         Utils.writeProgramExecutionResultsAndExit(prgExecResultsFile, executionResult, Utils.XMCDA_VERSION.v2);
