@@ -4,14 +4,6 @@
 		xmlns:xmcda="http://www.decision-deck.org/2016/XMCDA-2.2.2"
 		xsi:schemaLocation="http://www.decision-deck.org/2016/XMCDA-2.2.2 http://www.decision-deck.org/xmcda/_downloads/XMCDA-2.2.2.xsd">	<categoriesProfiles>
 		<categoryProfile>
-			<alternativeID>b0</alternativeID>
-			<limits>
-				<upperCategory>
-					<categoryID>C1</categoryID>
-				</upperCategory>
-			</limits>
-		</categoryProfile>
-		<categoryProfile>
 			<alternativeID>b1</alternativeID>
 			<limits>
 				<lowerCategory>
@@ -65,13 +57,5 @@
 				</upperCategory>
 			</limits>
 		</categoryProfile>
-	<categoryProfile>
-		<alternativeID>bmax</alternativeID>
-		<limits>
-			<lowerCategory>
-				<categoryID>C6</categoryID>
-			</lowerCategory>
-		</limits>
-	</categoryProfile>
 	</categoriesProfiles>
 </xmcda:XMCDA>
