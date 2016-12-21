@@ -49,6 +49,8 @@ public class PromsortXMCDAv3 {
         Utils.loadXMCDAv3(xmcda, new File(indir, "negative_flows.xml"), true, executionResult, "alternativesValues");
         Referenceable.DefaultCreationObserver.currentMarker="methodParameters";
         Utils.loadXMCDAv3(xmcda, new File(indir, "method_parameters.xml"), true, executionResult, "programParameters");
+        Referenceable.DefaultCreationObserver.currentMarker = "performanceTable";
+        Utils.loadXMCDAv3(xmcda, new File(indir, "performance_table.xml"), true, executionResult, "performanceTable");
 
         if ( ! (executionResult.isOk() || executionResult.isWarning() ) ) {
             Utils.writeProgramExecutionResultsAndExit(prgExecResults, executionResult, Utils.XMCDA_VERSION.v3);

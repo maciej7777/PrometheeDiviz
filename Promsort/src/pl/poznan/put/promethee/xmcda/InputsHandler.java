@@ -34,6 +34,7 @@ public class InputsHandler {
         public List<String> criteriaIds;
         public Map<String, String> criteriaPreferencesDirection;
         public Map<String, Double> criteriaPreferenceThresholds;
+        public Map<String, Map<String, Double>> profilesPerformance;
     }
 
     public static Inputs checkAndExtractInputs(XMCDA xmcda, ProgramExecutionResult xmcdaExecResults) {
@@ -53,6 +54,7 @@ public class InputsHandler {
         checkAndExtractProfilesIds(inputs, xmcda, errors);
         checkAndExtractAlternativesFlows(inputs, xmcda, errors);
         checkAndExtractCriteria(inputs, xmcda, errors);
+        checkAndExtractProfilesPerformance(inputs, xmcda, errors);
 
         return inputs;
     }
@@ -372,6 +374,7 @@ public class InputsHandler {
             }
         }
     }
+
     protected static void checkAndExtractCriteria(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
         if (xmcda.criteria.getActiveCriteria().isEmpty()) {
             errors.addError("You need to provide a not empty criteria list.");
@@ -421,7 +424,7 @@ public class InputsHandler {
 
         inputs.criteriaPreferenceThresholds = new HashMap<>();
         CriteriaThresholds criteriaThresholds = xmcda.criteriaThresholdsList.get(0);
-        for(Map.Entry<Criterion, CriterionThresholds> criterionEntry : criteriaThresholds.entrySet()) {
+        for (Map.Entry<Criterion, CriterionThresholds> criterionEntry : criteriaThresholds.entrySet()) {
             for (int i = 0; i < criterionEntry.getValue().size(); i++) {
                 if ("preference".equalsIgnoreCase(criterionEntry.getValue().get(i).mcdaConcept())) {
                     try {
@@ -432,6 +435,57 @@ public class InputsHandler {
                         return;
                     }
                 }
+            }
+        }
+    }
+
+    protected static void checkAndExtractProfilesPerformance(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+        if (inputs.profilesIds == null || inputs.profilesIds.isEmpty() || inputs.profilesIds.get(0).isEmpty()) {
+            return;
+        }
+        if (xmcda.performanceTablesList.size() != 1) {
+            errors.addError("You need to provide exactly 1 profile performances lists.");
+            return;
+        }
+
+        inputs.profilesPerformance = new HashMap<>();
+
+        @SuppressWarnings("rawtypes")
+        PerformanceTable p = xmcda.performanceTablesList.get(0);
+
+        if (p.hasMissingValues()) {
+            errors.addError("The performance table has missing values.");
+            return;
+        }
+        if (!p.isNumeric()) {
+            errors.addError("The performance table must contain numeric values only");
+            return;
+        }
+
+        try {
+            @SuppressWarnings("unchecked")
+            PerformanceTable<Double> perfTable = p.asDouble();
+            xmcda.performanceTablesList.set(0, perfTable);
+        } catch (Exception e) {
+            final String msg = "Error when converting the performance table's value to Double, reason:";
+            errors.addError(Utils.getMessage(msg, e));
+            return;
+        }
+
+        @SuppressWarnings("unchecked")
+        PerformanceTable<Double> profilesPerformance = (PerformanceTable<Double>) xmcda.performanceTablesList.get(0);
+        for (Alternative alternative : profilesPerformance.getAlternatives()) {
+            if (!inputs.profilesIds.contains(alternative.id())) {
+                continue;
+            }
+            for (Criterion criterion : profilesPerformance.getCriteria()) {
+                if (!inputs.criteriaIds.contains(criterion.id())) {
+                    continue;
+                }
+
+                Double value = profilesPerformance.getValue(alternative, criterion);
+                inputs.profilesPerformance.putIfAbsent(alternative.id(), new LinkedHashMap<>());
+                inputs.profilesPerformance.get(alternative.id()).put(criterion.id(), value);
             }
         }
     }

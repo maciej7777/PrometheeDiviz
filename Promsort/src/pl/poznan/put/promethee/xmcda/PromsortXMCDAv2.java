@@ -54,6 +54,7 @@ public class PromsortXMCDAv2 {
         convertToV3AndMark(xmcda, new File(indir,  "positive_flows.xml"), true, "positiveFlows", "alternativesValues");
         convertToV3AndMark(xmcda, new File(indir,  "negative_flows.xml"), true, "negativeFlows", "alternativesValues");
         convertToV3AndMark(xmcda, new File(indir,  "method_parameters.xml"), true, "methodParameters", "methodParameters");
+        convertToV3AndMark(xmcda, new File(indir, "performance_table.xml"), true, "performanceTable", "performanceTable");
     }
 
     private static void handleResults(String outdir, Map<String, XMCDA> xResults) {
