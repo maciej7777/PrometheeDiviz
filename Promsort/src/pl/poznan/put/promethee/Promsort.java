@@ -18,10 +18,23 @@ public class Promsort {
 
     }
 
+    private static boolean preferenceCondition1(BigDecimal a1PositiveFlow, BigDecimal a1NegativeFlow, BigDecimal a2PositiveFlow, BigDecimal a2NegativeFlow) {
+        return a1PositiveFlow.compareTo(a2PositiveFlow) > 0 && a1NegativeFlow.compareTo(a2NegativeFlow) < 0;
+    }
+
+    private static boolean preferenceCondition2(BigDecimal a1PositiveFlow, BigDecimal a1NegativeFlow, BigDecimal a2PositiveFlow, BigDecimal a2NegativeFlow) {
+        return a1PositiveFlow.compareTo(a2PositiveFlow) == 0 && a1NegativeFlow.compareTo(a2NegativeFlow) < 0;
+    }
+
+    private static boolean preferenceCondition3(BigDecimal a1PositiveFlow, BigDecimal a1NegativeFlow, BigDecimal a2PositiveFlow, BigDecimal a2NegativeFlow) {
+        return a1PositiveFlow.compareTo(a2PositiveFlow) > 0 && a1NegativeFlow.compareTo(a2NegativeFlow) == 0;
+    }
+
+
     private static boolean isA1PreferedToA2(BigDecimal a1PositiveFlow, BigDecimal a1NegativeFlow, BigDecimal a2PositiveFlow, BigDecimal a2NegativeFlow) {
-        if ((a1PositiveFlow.compareTo(a2PositiveFlow) > 0 && a1NegativeFlow.compareTo(a2NegativeFlow) < 0) ||
-                (a1PositiveFlow.compareTo(a2PositiveFlow) == 0 && a1NegativeFlow.compareTo(a2NegativeFlow) < 0) ||
-                (a1PositiveFlow.compareTo(a2PositiveFlow) > 0 && a1NegativeFlow.compareTo(a2NegativeFlow) == 0)) {
+        if ( preferenceCondition1(a1PositiveFlow, a1NegativeFlow, a2PositiveFlow, a2NegativeFlow) ||
+                preferenceCondition2(a1PositiveFlow, a1NegativeFlow, a2PositiveFlow, a2NegativeFlow) ||
+                preferenceCondition3(a1PositiveFlow, a1NegativeFlow, a2PositiveFlow, a2NegativeFlow)) {
             return true;
         }
         return false;
@@ -98,7 +111,18 @@ public class Promsort {
             }
         }
 
-        //Now let's calculate second step
+        performSecondStep(unassignedAlternatives, firstStepAssignments, assignedAlternatives, inputs, finalAssignments,
+                categoriesFlows);
+
+        OutputsHandler.Output output = new OutputsHandler.Output();
+        output.setFirstStepAssignments(firstStepAssignments);
+        output.setFinalAssignments(finalAssignments);
+        return output;
+    }
+
+    private static void performSecondStep(List<String> unassignedAlternatives, Map<String, Map<String, String>> firstStepAssignments,
+                                          Map<String, Set<String>> assignedAlternatives, InputsHandler.Inputs inputs,
+                                          Map<String, String> finalAssignments, Map<String, BigDecimal> categoriesFlows) {
         if (!unassignedAlternatives.isEmpty()) {
             for (int i = 0; i < unassignedAlternatives.size(); i++) {
                 String categoryT = firstStepAssignments.get(unassignedAlternatives.get(i)).get(LOWER);
@@ -134,11 +158,6 @@ public class Promsort {
                 }
             }
         }
-
-        OutputsHandler.Output output = new OutputsHandler.Output();
-        output.setFirstStepAssignments(firstStepAssignments);
-        output.setFinalAssignments(finalAssignments);
-        return output;
     }
 
 }
