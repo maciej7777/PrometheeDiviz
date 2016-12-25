@@ -3,6 +3,7 @@ package pl.poznan.put.promethee;
 import pl.poznan.put.promethee.xmcda.InputsHandler;
 import pl.poznan.put.promethee.xmcda.OutputsHandler;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -17,42 +18,33 @@ public class Promsort {
 
     }
 
-    private static boolean isA1PreferedToA2(double a1PositiveFlow, double a1NegativeFlow, double a2PositiveFlow, double a2NegativeFlow) {
-        if ((a1PositiveFlow > a2PositiveFlow && a1NegativeFlow < a2NegativeFlow) ||
-                (a1PositiveFlow == a2PositiveFlow && a1NegativeFlow < a2NegativeFlow) ||
-                (a1PositiveFlow > a2PositiveFlow && a1NegativeFlow == a2NegativeFlow)) {
+    private static boolean isA1PreferedToA2(BigDecimal a1PositiveFlow, BigDecimal a1NegativeFlow, BigDecimal a2PositiveFlow, BigDecimal a2NegativeFlow) {
+        if ((a1PositiveFlow.compareTo(a2PositiveFlow) > 0 && a1NegativeFlow.compareTo(a2NegativeFlow) < 0) ||
+                (a1PositiveFlow.compareTo(a2PositiveFlow) == 0 && a1NegativeFlow.compareTo(a2NegativeFlow) < 0) ||
+                (a1PositiveFlow.compareTo(a2PositiveFlow) > 0 && a1NegativeFlow.compareTo(a2NegativeFlow) == 0)) {
             return true;
         }
         return false;
     }
 
-    private static boolean isA1IndifferencedToA2(double a1PositiveFlow, double a1NegativeFlow, double a2PositiveFlow, double a2NegativeFlow) {
-        if (a1PositiveFlow == a2PositiveFlow && a1NegativeFlow == a2NegativeFlow){
+    private static boolean isA1IndifferencedToA2(BigDecimal a1PositiveFlow, BigDecimal a1NegativeFlow, BigDecimal a2PositiveFlow, BigDecimal a2NegativeFlow) {
+        if (a1PositiveFlow.compareTo(a2PositiveFlow) == 0 && a1NegativeFlow.compareTo(a2NegativeFlow) == 0){
             return true;
         }
         return false;
     }
-
-    private static boolean isA1IncomparableToA2(double a1PositiveFlow, double a1NegativeFlow, double a2PositiveFlow, double a2NegativeFlow) {
-        if ((a1PositiveFlow > a2PositiveFlow && a1NegativeFlow > a2NegativeFlow) ||
-                (a1PositiveFlow < a2PositiveFlow && a1NegativeFlow < a2NegativeFlow)){
-            return true;
-        }
-        return false;
-    }
-
 
     public static OutputsHandler.Output sort(InputsHandler.Inputs inputs) {
         Map<String, Map<String, String>> firstStepAssignments = new LinkedHashMap<>();
         Map<String, String> finalAssignments = new LinkedHashMap<>();
 
-        Map<String, Double> categoriesFlows = new LinkedHashMap<>();
+        Map<String, BigDecimal> categoriesFlows = new LinkedHashMap<>();
         List<String> unassignedAlternatives = new ArrayList<>();
         Map<String, Set<String>> assignedAlternatives = new LinkedHashMap<>();
 
         for (int i = 0; i < inputs.categoriesIds.size(); i++) {
             assignedAlternatives.put(inputs.categoriesIds.get(i), new LinkedHashSet<>());
-            categoriesFlows.put(inputs.categoriesIds.get(i), 0.0);
+            categoriesFlows.put(inputs.categoriesIds.get(i), BigDecimal.ZERO);
         }
 
         for (int altI = 0 ; altI < inputs.alternativesIds.size(); altI++) {
@@ -73,8 +65,9 @@ public class Promsort {
 
                     assignedAlternatives.get(inputs.categoryProfiles.get(catProfI+1).getCategory().id()).add(inputs.alternativesIds.get(altI));
                     categoriesFlows.put(inputs.categoryProfiles.get(catProfI+1).getCategory().id(),
-                            categoriesFlows.getOrDefault(inputs.categoryProfiles.get(catProfI+1).getCategory().id(), 0.0) +
-                                    inputs.positiveFlows.get(inputs.alternativesIds.get(altI)) - inputs.negativeFlows.get(inputs.alternativesIds.get(altI)));
+                            categoriesFlows.getOrDefault(inputs.categoryProfiles.get(catProfI+1).getCategory().id(), BigDecimal.ZERO).
+                                    add(inputs.positiveFlows.get(inputs.alternativesIds.get(altI))).
+                                    subtract(inputs.negativeFlows.get(inputs.alternativesIds.get(altI))));
                     marked = true;
                     break;
                 } else if (isA1IndifferencedToA2(inputs.positiveFlows.get(inputs.alternativesIds.get(altI)),
@@ -94,8 +87,9 @@ public class Promsort {
             if (!marked) {
                 assignedAlternatives.get(inputs.categoryProfiles.get(0).getCategory().id()).add(inputs.alternativesIds.get(altI));
                 categoriesFlows.put(inputs.categoryProfiles.get(0).getCategory().id(),
-                        categoriesFlows.getOrDefault(inputs.categoryProfiles.get(0).getCategory().id(), 0.0) +
-                                inputs.positiveFlows.get(inputs.alternativesIds.get(altI)) - inputs.negativeFlows.get(inputs.alternativesIds.get(altI)));
+                        categoriesFlows.getOrDefault(inputs.categoryProfiles.get(0).getCategory().id(), BigDecimal.ZERO).
+                                add(inputs.positiveFlows.get(inputs.alternativesIds.get(altI))).
+                                subtract(inputs.negativeFlows.get(inputs.alternativesIds.get(altI))));
                 finalAssignments.put(inputs.alternativesIds.get(altI), inputs.categoryProfiles.get(0).getCategory().id());
                 Map<String, String> interval = new LinkedHashMap<>();
                 interval.put(LOWER,inputs.categoryProfiles.get(0).getCategory().id());
@@ -110,27 +104,30 @@ public class Promsort {
                 String categoryT = firstStepAssignments.get(unassignedAlternatives.get(i)).get(LOWER);
                 String categoryT1 = firstStepAssignments.get(unassignedAlternatives.get(i)).get(UPPER);
 
-                Integer lenghtT = assignedAlternatives.get(categoryT).size();
-                Integer lenghtT1 = assignedAlternatives.get(categoryT1).size();
+                BigDecimal lengthT = new BigDecimal(assignedAlternatives.get(categoryT).size());
+                BigDecimal lengthT1 = new BigDecimal(assignedAlternatives.get(categoryT1).size());
 
-                Double dkPositive = lenghtT * (inputs.positiveFlows.get(unassignedAlternatives.get(i)) -
-                        inputs.negativeFlows.get(unassignedAlternatives.get(i)) - categoriesFlows.get(categoryT));
-                Double dkNegative = categoriesFlows.get(categoryT1) - lenghtT1 * (inputs.positiveFlows.get(unassignedAlternatives.get(i)) -
-                        inputs.negativeFlows.get(unassignedAlternatives.get(i)));
 
-                Double dk1 = 0.0;
-                if (lenghtT > 0) {
-                    dk1 = dkPositive/lenghtT;
+                BigDecimal dkPositive = lengthT.multiply(inputs.positiveFlows.get(unassignedAlternatives.get(i)).
+                        subtract(inputs.negativeFlows.get(unassignedAlternatives.get(i))).
+                        subtract( categoriesFlows.get(categoryT)));
+                BigDecimal dkNegative = categoriesFlows.get(categoryT1).
+                        subtract(lengthT1.multiply(inputs.positiveFlows.get(unassignedAlternatives.get(i)).
+                                subtract(inputs.negativeFlows.get(unassignedAlternatives.get(i)))));
+
+                BigDecimal dk1 = BigDecimal.ZERO;
+                if (lengthT.compareTo(BigDecimal.ZERO) > 0) {
+                    dk1 = dkPositive.divide(lengthT);
                 }
 
-                Double dk2 = 0.0;
-                if (lenghtT1 > 0) {
-                    dk2 = dkNegative/lenghtT1;
+                BigDecimal dk2 = BigDecimal.ZERO;
+                if (lengthT1.compareTo(BigDecimal.ZERO) > 0) {
+                    dk2 = dkNegative.divide(lengthT1);
                 }
 
-                Double dk = dk1 - dk2;
+                BigDecimal dk = dk1.subtract(dk2);
 
-                if (dk > inputs.cutPoint || (dk.doubleValue() == inputs.cutPoint.doubleValue() && inputs.assignToABetterClass)) {
+                if (dk.compareTo(inputs.cutPoint) > 0 || (dk.compareTo(inputs.cutPoint) == 0 && inputs.assignToABetterClass)) {
                     finalAssignments.put(unassignedAlternatives.get(i), categoryT1);
                 } else {
                     finalAssignments.put(unassignedAlternatives.get(i), categoryT);

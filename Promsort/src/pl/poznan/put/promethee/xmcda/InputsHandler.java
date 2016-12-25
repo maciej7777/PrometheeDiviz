@@ -9,6 +9,7 @@ import org.xmcda.Category;
 import org.xmcda.CategoryProfile;
 import org.xmcda.XMCDA;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -25,16 +26,16 @@ public class InputsHandler {
         public List<String> alternativesIds;
         public List<String> categoriesIds;
         public List<String> profilesIds;
-        public Map<String, Double> positiveFlows;
-        public Map<String, Double> negativeFlows;
-        public Double cutPoint;
+        public Map<String, BigDecimal> positiveFlows;
+        public Map<String, BigDecimal> negativeFlows;
+        public BigDecimal cutPoint;
         public Boolean assignToABetterClass;
         public Map<String, Integer> categoriesRanking;
         public List<CategoryProfile> categoryProfiles;
         public List<String> criteriaIds;
         public Map<String, String> criteriaPreferencesDirection;
-        public Map<String, Double> criteriaPreferenceThresholds;
-        public Map<String, Map<String, Double>> profilesPerformance;
+        public Map<String, BigDecimal> criteriaPreferenceThresholds;
+        public Map<String, Map<String, BigDecimal>> profilesPerformance;
     }
 
     public static Inputs checkAndExtractInputs(XMCDA xmcda, ProgramExecutionResult xmcdaExecResults) {
@@ -175,11 +176,12 @@ public class InputsHandler {
         }
         try {
             cutPoint = (Double) prgParam1.getValues().get(0).getValue();
+            BigDecimal bigDecimalCutPoint = BigDecimal.valueOf(cutPoint);
             if (cutPoint > 1 || cutPoint < -1) {
                 errors.addError("Invalid value for parameter cutPoint, it must be a numeric value greater or equal to -1 and lower or equal to 1");
                 return;
             }
-            inputs.cutPoint = cutPoint;
+            inputs.cutPoint = bigDecimalCutPoint;
         } catch (Exception exception) {
             String err = "Invalid value for parameter cut point, it must be a real number.";
             errors.addError(err);
@@ -286,7 +288,8 @@ public class InputsHandler {
             Map<Alternative, LabelledQValues<Double>> positiveFlowsMap = positiveFlows;
             for (Map.Entry<Alternative, LabelledQValues<Double>> flow : positiveFlowsMap.entrySet()) {
                 Double tmpValue = flow.getValue().get(0).convertToDouble().getValue();
-                inputs.positiveFlows.put(flow.getKey().id(), tmpValue);
+                BigDecimal bigDecimalTmpValue = BigDecimal.valueOf(tmpValue);
+                inputs.positiveFlows.put(flow.getKey().id(), bigDecimalTmpValue);
             }
         } catch (Exception exception) {
             errors.addError("An error occurred: " + exception + ". Each flow must have numeric type.");
@@ -338,7 +341,8 @@ public class InputsHandler {
             Map<Alternative, LabelledQValues<Double>> negativeFlowsMap = negativeFlows;
             for (Map.Entry<Alternative, LabelledQValues<Double>> flow : negativeFlowsMap.entrySet()) {
                 Double tmpValue = flow.getValue().get(0).convertToDouble().getValue();
-                inputs.negativeFlows.put(flow.getKey().id(), tmpValue);
+                BigDecimal bigDecimalTmpValue = BigDecimal.valueOf(tmpValue);
+                inputs.negativeFlows.put(flow.getKey().id(), bigDecimalTmpValue);
             }
         } catch (Exception exception) {
             errors.addError("An error occurred: " + exception + ". Each flow must have numeric type.");
@@ -430,7 +434,7 @@ public class InputsHandler {
                 if ("preference".equalsIgnoreCase(criterionEntry.getValue().get(i).mcdaConcept())) {
                     try {
                         Threshold<Double> threshold = (Threshold<Double>) criterionEntry.getValue().get(i);
-                        inputs.criteriaPreferenceThresholds.put(criterionEntry.getKey().id(), threshold.getConstant().getValue());
+                        inputs.criteriaPreferenceThresholds.put(criterionEntry.getKey().id(), BigDecimal.valueOf(threshold.getConstant().getValue()));
                     } catch (Exception e) {
                         errors.addError("Each threshold must be a real value");
                         return;
@@ -485,8 +489,9 @@ public class InputsHandler {
                 }
 
                 Double value = profilesPerformance.getValue(alternative, criterion);
+                BigDecimal bigDecimalValue = BigDecimal.valueOf(value);
                 inputs.profilesPerformance.putIfAbsent(alternative.id(), new LinkedHashMap<>());
-                inputs.profilesPerformance.get(alternative.id()).put(criterion.id(), value);
+                inputs.profilesPerformance.get(alternative.id()).put(criterion.id(), bigDecimalValue);
             }
         }
     }
@@ -498,22 +503,22 @@ public class InputsHandler {
                 String profileId = inputs.profilesIds.get(i);
                 String nextProfileId = inputs.profilesIds.get(i + 1);
 
-                Map<String, Double> firstProfilePerformance = inputs.profilesPerformance.get(profileId);
-                Map<String, Double> secondProfilePerformance = inputs.profilesPerformance.get(nextProfileId);
-                Double preferenceThreshold = inputs.criteriaPreferenceThresholds.get(criterionId);
+                Map<String, BigDecimal> firstProfilePerformance = inputs.profilesPerformance.get(profileId);
+                Map<String, BigDecimal> secondProfilePerformance = inputs.profilesPerformance.get(nextProfileId);
+                BigDecimal preferenceThreshold = inputs.criteriaPreferenceThresholds.get(criterionId);
                 String preferenceDirection = inputs.criteriaPreferencesDirection.get(criterionId);
                 if (firstProfilePerformance == null || secondProfilePerformance == null || preferenceThreshold == null || preferenceDirection == null) {
                     errors.addError("There was a problem when checking profiles preferences. Profiles need to fulfill the dominance condition on each criterion.");
                     return;
                 }
-                Double firstProfileCriterionPerformance = firstProfilePerformance.get(criterionId);
-                Double secondProfileCriterionPerformance = secondProfilePerformance.get(criterionId);
+                BigDecimal firstProfileCriterionPerformance = firstProfilePerformance.get(criterionId);
+                BigDecimal secondProfileCriterionPerformance = secondProfilePerformance.get(criterionId);
                 if (firstProfileCriterionPerformance == null || secondProfileCriterionPerformance == null) {
                     errors.addError("There was a problem when checking profiles preferences. Profiles need to fulfill the dominance condition on each criterion.");
                     return;
                 }
-                if (("max".equalsIgnoreCase(preferenceDirection) && firstProfileCriterionPerformance + preferenceThreshold > secondProfileCriterionPerformance) ||
-                        ("min".equalsIgnoreCase(preferenceDirection) && firstProfileCriterionPerformance - preferenceThreshold < secondProfileCriterionPerformance)) {
+                if (("max".equalsIgnoreCase(preferenceDirection) && firstProfileCriterionPerformance.add(preferenceThreshold).compareTo(secondProfileCriterionPerformance) > 0) ||
+                        ("min".equalsIgnoreCase(preferenceDirection) && firstProfileCriterionPerformance.subtract(preferenceThreshold).compareTo(secondProfileCriterionPerformance) < 0)) {
                     errors.addError("Profiles need to fulfill the dominance condition on each criterion.");
                     return;
                 }
