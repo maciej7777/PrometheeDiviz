@@ -12,6 +12,11 @@ import java.util.Map;
  * Created by Maciej Uniejewski on 2016-11-11.
  */
 public class PrometheeTriXMCDAv3 {
+
+    private PrometheeTriXMCDAv3(){
+
+    }
+
     public static void main(String[] args) throws Utils.InvalidCommandLineException {
         final Utils.Arguments params = Utils.parseCmdLineArguments(args);
 
@@ -23,12 +28,6 @@ public class PrometheeTriXMCDAv3 {
         final ProgramExecutionResult executionResult = new ProgramExecutionResult();
 
         final XMCDA xmcda = new XMCDA();
-
-/*        Map<String, InputFile> files = LoadFiles.initFiles();
-
-        for (InputFile file : files.values()) {
-            Utils.loadXMCDAv3(xmcda, new File(indir, file.filename), file.mandatory, executionResult, file.loadTagV3);
-        }*/
 
         Referenceable.DefaultCreationObserver.currentMarker="alternatives";
         Utils.loadXMCDAv3(xmcda, new File(indir, "alternatives.xml"), true, executionResult, "alternatives");
@@ -58,30 +57,27 @@ public class PrometheeTriXMCDAv3 {
         {
             results = PrometheeTri.sort(inputs);
         }
-        catch (Throwable t) {
-            executionResult.addError(Utils.getMessage("The calculation could not be performed, reason: ", t));
+        catch (Exception e) {
+            executionResult.addError(Utils.getMessage("The calculation could not be performed, reason: ", e));
             Utils.writeProgramExecutionResultsAndExit(prgExecResults, executionResult, Utils.XMCDA_VERSION.v3);
             return;
         }
 
-        //convert results
-        Map<String, XMCDA> x_results = OutputsHandler.convert(results.assignments, executionResult);
+        Map<String, XMCDA> xResults = OutputsHandler.convert(results.getAssignments());
 
-        //write results
         final org.xmcda.parsers.xml.xmcda_v3.XMCDAParser parser = new org.xmcda.parsers.xml.xmcda_v3.XMCDAParser();
 
-        for ( String key : x_results.keySet() )
+        for ( Map.Entry<String, XMCDA> keyEntry : xResults.entrySet() )
         {
-            File outputFile = new File(outdir, String.format("%s.xml", key));
+            File outputFile = new File(outdir, String.format("%s.xml", keyEntry.getKey()));
             try
             {
-                parser.writeXMCDA(x_results.get(key), outputFile, OutputsHandler.xmcdaV3Tag(key));
+                parser.writeXMCDA(keyEntry.getValue(), outputFile, OutputsHandler.xmcdaV3Tag(keyEntry.getKey()));
             }
-            catch (Throwable throwable)
+            catch (Exception e)
             {
-                final String err = String.format("Error while writing %s.xml, reason: ", key);
-                executionResult.addError(Utils.getMessage(err, throwable));
-                // Whatever the error is, clean up the file: we do not want to leave an empty or partially-written file
+                final String err = String.format("Error while writing %s.xml, reason: ", keyEntry.getKey());
+                executionResult.addError(Utils.getMessage(err, e));
                 outputFile.delete();
             }
         }

@@ -9,17 +9,32 @@ import java.util.Map;
  * Created by Maciej Uniejewski on 2016-11-11.
  */
 public class OutputsHandler {
+
+    private static final String ASSIGNMENTS = "assignments";
+    private static final String MESSAGES = "messages";
+
+    private OutputsHandler() {
+    }
+
     public static class Output{
-        public Map<String, String> assignments;
+        private Map<String, String> assignments;
+
+        public Map<String, String> getAssignments() {
+            return assignments;
+        }
+
+        public void setAssignments(Map<String, String> assignments) {
+            this.assignments = assignments;
+        }
     }
 
     public static final String xmcdaV3Tag(String outputName)
     {
         switch(outputName)
         {
-            case "assignments":
+            case ASSIGNMENTS:
                 return "alternativesAssignments";
-            case "messages":
+            case MESSAGES:
                 return "programExecutionResult";
             default:
                 throw new IllegalArgumentException(String.format("Unknown output name '%s'",outputName));
@@ -30,34 +45,33 @@ public class OutputsHandler {
     {
         switch(outputName)
         {
-            case "assignments":
+            case ASSIGNMENTS:
                 return "alternativesAffectations";
-            case "messages":
+            case MESSAGES:
                 return "methodMessages";
             default:
                 throw new IllegalArgumentException(String.format("Unknown output name '%s'",outputName));
         }
     }
 
-    public static Map<String, XMCDA> convert(Map<String, String> assignments, ProgramExecutionResult executionResult)
+    public static Map<String, XMCDA> convert(Map<String, String> assignments)
     {
-        final HashMap<String, XMCDA> x_results = new HashMap<>();
+        final HashMap<String, XMCDA> xResults = new HashMap<>();
 
-		/* alternativesValues */
         XMCDA assignmentsXmcdaObject = new XMCDA();
         AlternativesAssignments alternativeAssignments = new AlternativesAssignments();
 
-        for (String alternativeId : assignments.keySet()) {
+        for (Map.Entry<String, String> alternativeEntry : assignments.entrySet()) {
             AlternativeAssignment tmpAssignment = new AlternativeAssignment();
-            tmpAssignment.setAlternative(new Alternative(alternativeId));
-            tmpAssignment.setCategory(new Category(assignments.get(alternativeId)));
+            tmpAssignment.setAlternative(new Alternative(alternativeEntry.getKey()));
+            tmpAssignment.setCategory(new Category(alternativeEntry.getValue()));
             alternativeAssignments.add(tmpAssignment);
         }
 
         assignmentsXmcdaObject.alternativesAssignmentsList.add(alternativeAssignments);
 
-        x_results.put("assignments", assignmentsXmcdaObject);
+        xResults.put(ASSIGNMENTS, assignmentsXmcdaObject);
 
-        return x_results;
+        return xResults;
     }
 }

@@ -1,7 +1,5 @@
 package pl.poznan.put.promethee.xmcda;
 
-import pl.poznan.put.promethee.PrometheeTri;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -9,9 +7,12 @@ import java.util.Arrays;
  * Created by Maciej Uniejewski on 2016-11-11.
  */
 public class PrometheeTriCLI {
+    private PrometheeTriCLI() {
+
+    }
     public static void main(String[] args) throws Exception
     {
-        final ArrayList<String> argsList = new ArrayList<String>(Arrays.asList(args));
+        final ArrayList<String> argsList = new ArrayList<>(Arrays.asList(args));
         if ( argsList.remove("--v2") )
         {
             PrometheeTriXMCDAv2.main((String[]) argsList.toArray(new String[]{}));
