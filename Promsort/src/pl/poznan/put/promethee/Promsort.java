@@ -82,7 +82,6 @@ public class Promsort {
                                     add(inputs.positiveFlows.get(inputs.alternativesIds.get(altI))).
                                     subtract(inputs.negativeFlows.get(inputs.alternativesIds.get(altI))));
                     marked = true;
-                    break;
                 } else if (isA1IndifferencedToA2(inputs.positiveFlows.get(inputs.alternativesIds.get(altI)),
                         inputs.negativeFlows.get(inputs.alternativesIds.get(altI)),
                         inputs.positiveFlows.get(inputs.categoryProfiles.get(catProfI).getUpperBound().getAlternative().id()),
@@ -94,6 +93,8 @@ public class Promsort {
 
                     marked = true;
                     unassignedAlternatives.add(inputs.alternativesIds.get(altI));
+                }
+                if (marked) {
                     break;
                 }
             }
