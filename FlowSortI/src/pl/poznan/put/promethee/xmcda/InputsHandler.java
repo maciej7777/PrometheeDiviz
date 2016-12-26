@@ -61,9 +61,9 @@ public class InputsHandler {
         public ComparisonWithProfiles profilesType;
     }
 
-    static public Inputs checkAndExtractInputs(XMCDA xmcda, ProgramExecutionResult xmcda_exec_results) {
-        Inputs inputsDict = checkInputs(xmcda, xmcda_exec_results);
-        if (xmcda_exec_results.isError())
+    public static Inputs checkAndExtractInputs(XMCDA xmcda, ProgramExecutionResult xmcdaExecResults) {
+        Inputs inputsDict = checkInputs(xmcda, xmcdaExecResults);
+        if (xmcdaExecResults.isError())
             return null;
         return inputsDict;
     }
