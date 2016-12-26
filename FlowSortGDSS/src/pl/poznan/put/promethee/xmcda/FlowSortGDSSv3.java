@@ -84,7 +84,6 @@ public class FlowSortGDSSv3 {
     }
 
     private static void handleResults(String outdir, Map<String, XMCDA> resultsMap, ProgramExecutionResult executionResult) {
-        //write results
         final org.xmcda.parsers.xml.xmcda_v3.XMCDAParser parser = new org.xmcda.parsers.xml.xmcda_v3.XMCDAParser();
 
         for ( Map.Entry<String, XMCDA> entry : resultsMap.entrySet() )
@@ -98,7 +97,6 @@ public class FlowSortGDSSv3 {
             {
                 final String err = String.format("Error while writing %s.xml, reason: ", entry.getKey());
                 executionResult.addError(Utils.getMessage(err, exception));
-                // Whatever the error is, clean up the file: we do not want to leave an empty or partially-written file
                 outputFile.delete();
             }
         }

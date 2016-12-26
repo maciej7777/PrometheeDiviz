@@ -26,9 +26,10 @@ public class PromsortXMCDAv2 {
      * Loads, converts and inserts the content of the XMCDA v2 {@code file} into {@code xmcdaV3}.
      * Updates {@link #executionResult} if an error occurs.
      *
-     * @param file         the XMCDA v2 file to be loaded
-     * @param marker       the marker to use, see {@link Referenceable.DefaultCreationObserver#currentMarker}
      * @param xmcdaV3     the object into which the content of {@file} is inserted
+     * @param file         the XMCDA v2 file to be loaded
+     * @param isMandatory   information if file is mandatory
+     * @param marker       the marker to use, see {@link Referenceable.DefaultCreationObserver#currentMarker}
      * @param v2TagsOnly the list of XMCDA v2 tags to be loaded
      */
     private static void convertToV3AndMark(org.xmcda.XMCDA xmcdaV3, File file, boolean isMandatory, String marker,
