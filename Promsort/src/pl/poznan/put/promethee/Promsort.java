@@ -4,6 +4,7 @@ import pl.poznan.put.promethee.xmcda.InputsHandler;
 import pl.poznan.put.promethee.xmcda.OutputsHandler;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 /**
@@ -142,12 +143,12 @@ public class Promsort {
 
                 BigDecimal dk1 = BigDecimal.ZERO;
                 if (lengthT.compareTo(BigDecimal.ZERO) > 0) {
-                    dk1 = dkPositive.divide(lengthT);
+                    dk1 = dkPositive.divide(lengthT, 6, RoundingMode.HALF_UP);
                 }
 
                 BigDecimal dk2 = BigDecimal.ZERO;
                 if (lengthT1.compareTo(BigDecimal.ZERO) > 0) {
-                    dk2 = dkNegative.divide(lengthT1);
+                    dk2 = dkNegative.divide(lengthT1, 6, RoundingMode.HALF_UP);
                 }
 
                 BigDecimal dk = dk1.subtract(dk2);
