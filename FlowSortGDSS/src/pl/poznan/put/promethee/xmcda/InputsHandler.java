@@ -323,7 +323,7 @@ public class InputsHandler {
             CategoriesProfiles categoriesProfiles = xmcda.categoriesProfilesList.get(i);
             if (inputs.categoriesRanking.size() != categoriesProfiles.size()) {
                 errors.addError("There is a problem with categories rank list or categories profiles list for decision maker"
-                        + (i + 1) + ". Each category has to be added to categories profiles list or each decision maker and to global categories ranks list.");
+                        + (i + 1) + ". Each category has to be added to categories profiles list for each decision maker and to global categories ranks list.");
                 return;
             }
 
