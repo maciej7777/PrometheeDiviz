@@ -3,6 +3,8 @@ package pl.poznan.put.promethee;
 import pl.poznan.put.promethee.xmcda.InputsHandler;
 import pl.poznan.put.promethee.xmcda.OutputsHandler;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 /**
@@ -41,10 +43,10 @@ public class FlowSortGDSS {
                     String alternativeId = inputs.alternativesIds.get(k);
 
                     Integer profilesNumber = inputs.profilesIds.size() * inputs.profilesIds.get(i).size();
-                    Double leftFlow = inputs.profilesFlows.get(profileId) * profilesNumber;
-                    Double rightFlow = inputs.preferences.get(i).get(profileId).get(alternativeId) - inputs.preferences.get(i).get(alternativeId).get(profileId);
+                    BigDecimal leftFlow = inputs.profilesFlows.get(profileId).multiply(new BigDecimal(profilesNumber));
+                    BigDecimal rightFlow = inputs.preferences.get(i).get(profileId).get(alternativeId).subtract(inputs.preferences.get(i).get(alternativeId).get(profileId));
 
-                    Double flow = (leftFlow + rightFlow) / (profilesNumber + 1);
+                    BigDecimal flow = (leftFlow.add(rightFlow)).divide(new BigDecimal(profilesNumber + 1), 6, RoundingMode.HALF_UP);
 
                     inputs.profilesSummaryFlows.putIfAbsent(profileId, new HashMap<>());
                     inputs.profilesSummaryFlows.get(profileId).put(alternativeId, flow);
@@ -67,12 +69,12 @@ public class FlowSortGDSS {
                 Integer decisionMakerClassNumber = null;
                 for (int profile = 0; profile < inputs.profilesIds.get(decisionMaker).size(); profile++) {
                     String profilesId = inputs.profilesIds.get(decisionMaker).get(profile);
-                    if (inputs.alternativesFlowsAverage.get(alternativeId) <= inputs.profilesSummaryFlows.get(profilesId).get(alternativeId) && decisionMakerClassNumber == null) {
+                    if (inputs.alternativesFlowsAverage.get(alternativeId).compareTo(inputs.profilesSummaryFlows.get(profilesId).get(alternativeId)) <= 0 && decisionMakerClassNumber == null) {
                         decisionMakerClassNumber = profile;
                         break;
                     }
                 }
-                if (decisionMakerClassNumber == null && inputs.alternativesFlowsAverage.get(alternativeId) > inputs.profilesSummaryFlows.get(inputs.profilesIds.get(decisionMaker).get(inputs.profilesIds.get(decisionMaker).size() - 1)).get(alternativeId)) {
+                if (decisionMakerClassNumber == null && inputs.alternativesFlowsAverage.get(alternativeId).compareTo(inputs.profilesSummaryFlows.get(inputs.profilesIds.get(decisionMaker).get(inputs.profilesIds.get(decisionMaker).size() - 1)).get(alternativeId)) > 0) {
                     decisionMakerClassNumber = inputs.profilesIds.get(decisionMaker).size();
                 }
                 if (firstClassNumber == null) {
@@ -101,8 +103,8 @@ public class FlowSortGDSS {
                 interval.put(UPPER, rightClassId);
                 firstStepAssignments.put(alternativeId, interval);
 
-                Double profileK;
-                Double profileK1;
+                BigDecimal profileK;
+                BigDecimal profileK1;
 
                 if (firstClassNumber.intValue() < secondClassNumber.intValue()) {
                     profileK = countDkForLimitingProfiles(alternativeId, firstClassNumber, secondClassDecisionMakers, inputs);
@@ -112,9 +114,9 @@ public class FlowSortGDSS {
                     profileK1 = countDk1ForLimitingProfiles(alternativeId, firstClassNumber, secondClassDecisionMakers, inputs);
                 }
 
-                if (profileK1 - profileK > 0) {
+                if (profileK1.compareTo(profileK) > 0) {
                     assignments.put(alternativeId, leftClassId);
-                } else if (profileK1 - profileK < 0) {
+                } else if (profileK1.compareTo(profileK) < 0) {
                     assignments.put(alternativeId, rightClassId);
                 } else {
                     if (inputs.assignToABetterClass) {
@@ -129,23 +131,23 @@ public class FlowSortGDSS {
         output.setFirstStepAssignments(firstStepAssignments);
     }
 
-    private static double countDkForLimitingProfiles(String alternativeId, Integer profile, Set<Integer> decisionMakers, InputsHandler.Inputs inputs) {
-        double sum = 0.0;
+    private static BigDecimal countDkForLimitingProfiles(String alternativeId, Integer profile, Set<Integer> decisionMakers, InputsHandler.Inputs inputs) {
+        BigDecimal sum = BigDecimal.ZERO;
 
         for (Integer decisionMaker: decisionMakers) {
             String profileId = inputs.profilesIds.get(decisionMaker).get(profile);
-            sum += inputs.decisionMakersWages.get(decisionMaker) * (inputs.alternativesFlowsAverage.get(alternativeId) - inputs.profilesSummaryFlows.get(profileId).get(alternativeId));
+            sum = sum.add(inputs.decisionMakersWages.get(decisionMaker).multiply((inputs.alternativesFlowsAverage.get(alternativeId).subtract(inputs.profilesSummaryFlows.get(profileId).get(alternativeId)))));
         }
 
         return sum;
     }
 
-    private static double countDk1ForLimitingProfiles(String alternativeId, Integer profile, Set<Integer> decisionMakers, InputsHandler.Inputs inputs) {
-        double sum = 0.0;
+    private static BigDecimal countDk1ForLimitingProfiles(String alternativeId, Integer profile, Set<Integer> decisionMakers, InputsHandler.Inputs inputs) {
+        BigDecimal sum = BigDecimal.ZERO;
 
         for (Integer decisionMaker: decisionMakers) {
             String profileId = inputs.profilesIds.get(decisionMaker).get(profile);
-            sum += inputs.decisionMakersWages.get(decisionMaker) * (inputs.profilesSummaryFlows.get(profileId).get(alternativeId) - inputs.alternativesFlowsAverage.get(alternativeId));
+            sum = sum.add(inputs.decisionMakersWages.get(decisionMaker).multiply((inputs.profilesSummaryFlows.get(profileId).get(alternativeId).subtract(inputs.alternativesFlowsAverage.get(alternativeId)))));
         }
 
         return sum;
@@ -163,12 +165,12 @@ public class FlowSortGDSS {
             String alternativeId = inputs.alternativesIds.get(i);
             for (int decisionMaker = 0; decisionMaker < inputs.profilesIds.size(); decisionMaker++) {
                 Integer nearestClass = null;
-                double distance = 0.0;
+                BigDecimal distance = BigDecimal.ZERO;
                 for (int profile = 0; profile < inputs.profilesIds.get(decisionMaker).size(); profile++) {
                     String profilesId = inputs.profilesIds.get(decisionMaker).get(profile);
-                    double tmpDist = Math.abs(inputs.profilesSummaryFlows.get(profilesId).get(alternativeId) - inputs.alternativesFlowsAverage.get(alternativeId));
+                    BigDecimal tmpDist = (inputs.profilesSummaryFlows.get(profilesId).get(alternativeId).subtract(inputs.alternativesFlowsAverage.get(alternativeId))).abs();
 
-                    if (tmpDist < distance || nearestClass == null) {
+                    if (tmpDist.compareTo(distance) < 0 || nearestClass == null) {
                         nearestClass = profile;
                         distance = tmpDist;
                     }
@@ -199,8 +201,8 @@ public class FlowSortGDSS {
                 interval.put(UPPER, rightClassId);
                 firstStepAssignments.put(alternativeId, interval);
 
-                Double profileK;
-                Double profileK1;
+                BigDecimal profileK;
+                BigDecimal profileK1;
 
                 if (firstClassNumber.intValue() < secondClassNumber.intValue()) {
                     profileK = countDkForCentralProfiles(alternativeId, firstClassNumber, firstClassDecisionMakers, inputs);
@@ -210,9 +212,9 @@ public class FlowSortGDSS {
                     profileK1 = countDkForCentralProfiles(alternativeId, firstClassNumber, firstClassDecisionMakers, inputs);
                 }
 
-                if (profileK1 - profileK > 0) {
+                if (profileK1.compareTo(profileK) > 0) {
                     assignments.put(alternativeId, leftClassId);
-                } else if (profileK1 - profileK < 0) {
+                } else if (profileK1.compareTo(profileK) < 0) {
                     assignments.put(alternativeId, rightClassId);
                 } else {
                     if (inputs.assignToABetterClass) {
@@ -227,12 +229,12 @@ public class FlowSortGDSS {
         output.setFirstStepAssignments(firstStepAssignments);
     }
 
-    private static double countDkForCentralProfiles(String alternativeId, Integer profile, Set<Integer> decisionMakers, InputsHandler.Inputs inputs) {
-        double sum = 0.0;
+    private static BigDecimal countDkForCentralProfiles(String alternativeId, Integer profile, Set<Integer> decisionMakers, InputsHandler.Inputs inputs) {
+        BigDecimal sum = BigDecimal.ZERO;
 
         for (Integer decisionMaker: decisionMakers) {
             String profileId = inputs.profilesIds.get(decisionMaker).get(profile);
-            sum += inputs.decisionMakersWages.get(decisionMaker) * Math.abs(inputs.profilesSummaryFlows.get(profileId).get(alternativeId) - inputs.alternativesFlowsAverage.get(alternativeId));
+            sum = sum.add(inputs.decisionMakersWages.get(decisionMaker).multiply((inputs.profilesSummaryFlows.get(profileId).get(alternativeId).subtract(inputs.alternativesFlowsAverage.get(alternativeId))).abs()));
         }
 
         return sum;

@@ -13,6 +13,8 @@ import org.xmcda.PerformanceTable;
 import org.xmcda.XMCDA;
 import org.xmcda.utils.Coord;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,18 +29,18 @@ public class InputsHandler {
         public List<String> criteriaIds;
         public Map<String, Integer> categoriesRanking;
         public List<List<String>> profilesIds;
-        public List<Map<String, Double>> alternativesFlows;
-        public Map<String, Double> alternativesFlowsAverage;
+        public List<Map<String, BigDecimal>> alternativesFlows;
+        public Map<String, BigDecimal> alternativesFlowsAverage;
         public List<List<CategoryProfile>> categoryProfiles;
         public ComparisonWithProfiles profilesType;
-        public List<Double> decisionMakersWages;
+        public List<BigDecimal> decisionMakersWages;
         public Boolean assignToABetterClass;
         public Integer decisionMakers;
         public Map<String, String> criteriaPreferencesDirection;
-        public List<Map<String, Map<String, Double>>> profilesPerformance;
-        public Map<String, Double> profilesFlows;
-        public List<Map<String, Map<String, Double>>> preferences;
-        public Map<String, Map<String, Double>> profilesSummaryFlows;
+        public List<Map<String, Map<String, BigDecimal>>> profilesPerformance;
+        public Map<String, BigDecimal> profilesFlows;
+        public List<Map<String, Map<String, BigDecimal>>> preferences;
+        public Map<String, Map<String, BigDecimal>> profilesSummaryFlows;
     }
 
     public enum ComparisonWithProfiles {
@@ -255,6 +257,7 @@ public class InputsHandler {
 
         for (int i = 1; i <= 10; i++) {
             Double weight;
+            BigDecimal bigDecimalWeight;
 
             final ProgramParameter<?> tmpPrgParam = xmcda.programParametersList.get(0).get(i + 1);
             if (!("decisionMaker" + i).equalsIgnoreCase(tmpPrgParam.id())) {
@@ -268,11 +271,12 @@ public class InputsHandler {
 
             try {
                 weight = (Double) tmpPrgParam.getValues().get(0).getValue();
+                bigDecimalWeight = BigDecimal.valueOf(weight);
                 if (weight == null) {
                     errors.addError("Invalid value for parameter decisionMaker" + i + ", it must be a real number.");
                     return;
                 }
-                inputs.decisionMakersWages.add(weight);
+                inputs.decisionMakersWages.add(bigDecimalWeight);
             } catch (Exception exception) {
                 String err = "Invalid value for parameter decisionMaker" + i + ", it must be a real number.";
                 errors.addError(err);
@@ -464,7 +468,7 @@ public class InputsHandler {
 
             @SuppressWarnings("unchecked")
             PerformanceTable<Double> profilesPerformance = (PerformanceTable<Double>) xmcda.performanceTablesList.get(i);
-            Map<String, Map<String, Double>> profilesPerformanceMap = new LinkedHashMap<>();
+            Map<String, Map<String, BigDecimal>> profilesPerformanceMap = new LinkedHashMap<>();
             for (Alternative alternative : profilesPerformance.getAlternatives()) {
                 if (!inputs.profilesIds.get(i).contains(alternative.id())) {
                     continue;
@@ -476,7 +480,7 @@ public class InputsHandler {
 
                     Double value = profilesPerformance.getValue(alternative, criterion);
                     profilesPerformanceMap.putIfAbsent(alternative.id(), new LinkedHashMap<>());
-                    profilesPerformanceMap.get(alternative.id()).put(criterion.id(), value);
+                    profilesPerformanceMap.get(alternative.id()).put(criterion.id(), BigDecimal.valueOf(value));
                 }
             }
             inputs.profilesPerformance.add(profilesPerformanceMap);
@@ -493,15 +497,16 @@ public class InputsHandler {
                         multiplier = -1;
                     }
 
-                    Double currentPerformance = inputs.profilesPerformance.get(i).get(inputs.profilesIds.get(i).get(j)).get(
+                    BigDecimal currentPerformance = inputs.profilesPerformance.get(i).get(inputs.profilesIds.get(i).get(j)).get(
                             inputs.criteriaIds.get(criterionIterator));
 
                     for (int z = 0; z < inputs.profilesIds.size(); z++) {
                         if (z != i) {
-                            Double tempPerformance = inputs.profilesPerformance.get(z).get(inputs.profilesIds.get(z).get(j + 1)).get(
+                            BigDecimal tempPerformance = inputs.profilesPerformance.get(z).get(inputs.profilesIds.get(z).get(j + 1)).get(
                                     inputs.criteriaIds.get(criterionIterator));
 
-                            if (currentPerformance * multiplier >= tempPerformance * multiplier) {
+                            if (currentPerformance.multiply(BigDecimal.valueOf(multiplier))
+                                    .compareTo(tempPerformance.multiply(BigDecimal.valueOf(multiplier))) >= 0) {
                                 errors.addError("Dominance condition is not respected.");
                                 return;
                             }
@@ -529,13 +534,14 @@ public class InputsHandler {
                 errors.addError("Each flow must have numeric type");
             }
 
-            Map<String, Double> tmpFlows = new LinkedHashMap<>();
+            Map<String, BigDecimal> tmpFlows = new LinkedHashMap<>();
 
             try {
                 Map<Alternative, LabelledQValues<Double>> flowsMap = flows;
                 for (Map.Entry<Alternative, LabelledQValues<Double>> flow : flowsMap.entrySet()) {
                     Double tmpValue = flow.getValue().get(0).convertToDouble().getValue();
-                    tmpFlows.put(flow.getKey().id(), tmpValue);
+                    BigDecimal bigDecimalTmpValue = BigDecimal.valueOf(tmpValue);
+                    tmpFlows.put(flow.getKey().id(), bigDecimalTmpValue);
                 }
             } catch (Exception exception) {
                 errors.addError("An error occurred: " + exception.getMessage() + ". Each flow must have numeric type.");
@@ -562,13 +568,13 @@ public class InputsHandler {
         inputs.alternativesFlowsAverage = new LinkedHashMap<>();
 
         for (int i = 0; i < inputs.alternativesIds.size(); i++) {
-            double sum = 0.0;
+            BigDecimal sum = BigDecimal.ZERO;
 
             for (int j = 0; j < inputs.alternativesFlows.size(); j++) {
-                sum += inputs.alternativesFlows.get(j).get(inputs.alternativesIds.get(i));
+                sum = sum.add(inputs.alternativesFlows.get(j).get(inputs.alternativesIds.get(i)));
             }
 
-            sum = sum / inputs.alternativesFlows.size();
+            sum = sum.divide(new BigDecimal(inputs.alternativesFlows.size()), 6, RoundingMode.HALF_UP);
             inputs.alternativesFlowsAverage.put(inputs.alternativesIds.get(i), sum);
         }
     }
@@ -584,13 +590,14 @@ public class InputsHandler {
             errors.addError("Each flow must have numeric type");
         }
 
-        Map<String, Double> tmpFlows = new LinkedHashMap<>();
+        Map<String, BigDecimal> tmpFlows = new LinkedHashMap<>();
 
         try {
             Map<Alternative, LabelledQValues<Double>> flowsMap = flows;
             for (Map.Entry<Alternative, LabelledQValues<Double>> flow : flowsMap.entrySet()) {
                 Double tmpValue = flow.getValue().get(0).convertToDouble().getValue();
-                tmpFlows.put(flow.getKey().id(), tmpValue);
+                BigDecimal bigDecimalTmpValue = BigDecimal.valueOf(tmpValue);
+                tmpFlows.put(flow.getKey().id(), bigDecimalTmpValue);
             }
         } catch (Exception exception) {
             errors.addError("An error occurred: " + exception.getMessage() + ". Each flow must have numeric type.");
@@ -630,14 +637,14 @@ public class InputsHandler {
 
             try {
                 AlternativesMatrix<Double> matrix = (AlternativesMatrix<Double>) xmcda.alternativesMatricesList.get(i);
-                Map<String, Map<String, Double>> tmpPreferences = new LinkedHashMap<>();
+                Map<String, Map<String, BigDecimal>> tmpPreferences = new LinkedHashMap<>();
 
                 for (Map.Entry<Coord<Alternative, Alternative>, QualifiedValues<Double>> coordEntry : matrix.entrySet()) {
                     String x = coordEntry.getKey().x.id();
                     String y = coordEntry.getKey().y.id();
                     double value = coordEntry.getValue().get(0).getValue().doubleValue();
                     tmpPreferences.putIfAbsent(x, new HashMap<>());
-                    tmpPreferences.get(x).put(y, value);
+                    tmpPreferences.get(x).put(y, BigDecimal.valueOf(value));
                 }
 
                 for (String alternativeId : inputs.alternativesIds) {
