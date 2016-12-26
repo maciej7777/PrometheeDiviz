@@ -242,13 +242,13 @@ public class InputsHandler {
             return;
         }
 
-        checkMissingValuesInPositiveFlows(inputs, errors, positiveFlows);
+        checkMissingValuesInNetFlows(inputs, errors, positiveFlows);
     }
 
-    protected static void checkMissingValuesInPositiveFlows(Inputs inputs, ProgramExecutionResult errors, AlternativesValues positiveFlows) {
+    protected static void checkMissingValuesInNetFlows(Inputs inputs, ProgramExecutionResult errors, AlternativesValues flows) {
         for (int j = 0; j < inputs.alternativesIds.size(); j++) {
             boolean found = false;
-            for (Object alt : positiveFlows.getAlternatives()) {
+            for (Object alt : flows.getAlternatives()) {
                 if (((Alternative) alt).id().equals(inputs.alternativesIds.get(j))) {
                     found = true;
                 }
@@ -261,7 +261,7 @@ public class InputsHandler {
 
         for (int i = 0; i < inputs.profilesIds.size(); i++) {
             boolean found = false;
-            for (Object alt : positiveFlows.getAlternatives()) {
+            for (Object alt : flows.getAlternatives()) {
                 if (((Alternative) alt).id().equals(inputs.alternativesIds.get(i))) {
                     found = true;
                 }
