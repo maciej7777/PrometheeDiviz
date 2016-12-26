@@ -45,7 +45,7 @@
             <xmcda tag="programParameters">
                 <![CDATA[
                 <programParameters>
-                    <parameter name="ComparisonWithProfiles">
+                    <parameter name="comparisonWithProfiles">
                         <values>
                             <value>
                                 <real>%1</real>

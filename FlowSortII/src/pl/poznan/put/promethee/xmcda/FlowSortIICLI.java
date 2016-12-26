@@ -7,9 +7,14 @@ import java.util.Arrays;
  * Created by Maciej Uniejewski on 2016-11-12.
  */
 public class FlowSortIICLI {
+
+    private FlowSortIICLI() {
+
+    }
+
     public static void main(String[] args) throws Exception
     {
-        final ArrayList<String> argsList = new ArrayList<String>(Arrays.asList(args));
+        final ArrayList<String> argsList = new ArrayList<>(Arrays.asList(args));
         if ( argsList.remove("--v2") )
         {
             FlowSortIIXMCDAv2.main((String[]) argsList.toArray(new String[]{}));
