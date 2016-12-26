@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<xmcda:XMCDA xmlns:xmcda="http://www.decision-deck.org/2016/XMCDA-3.0.2"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xsi:schemaLocation="http://www.decision-deck.org/2016/XMCDA-3.0.2 http://www.decision-deck.org/xmcda/_downloads/XMCDA-3.0.2.xsd">
+	<categoriesProfiles>
+		<categoryProfile>
+			<categoryID>C1</categoryID>
+			<central>
+				<alternativeID>b1d2</alternativeID>
+			</central>
+		</categoryProfile>
+		<categoryProfile>
+			<categoryID>C2</categoryID>
+			<central>
+				<alternativeID>b2d2</alternativeID>
+			</central>
+		</categoryProfile>
+	</categoriesProfiles>
+</xmcda:XMCDA>

@@ -1,0 +1,91 @@
+<?xml version="1.0" ?>
+<xmcda:XMCDA xmlns:xmcda="http://www.decision-deck.org/2016/XMCDA-3.0.2"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xsi:schemaLocation="http://www.decision-deck.org/2016/XMCDA-3.0.2 http://www.decision-deck.org/xmcda/_downloads/XMCDA-3.0.2.xsd">
+	<programParameters>
+		<parameter id="ComparisonWithProfiles">
+			<values>
+				<value>
+					<label>central</label>
+				</value>
+			</values>
+		</parameter>
+        <parameter id="assignToABetterClass">
+            <values>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </values>
+        </parameter>
+		<parameter id="decisionMaker1">
+			<values>
+				<value>
+					<real>0.5</real>
+				</value>
+			</values>
+		</parameter>
+		<parameter id="decisionMaker2">
+			<values>
+				<value>
+					<real>0.5</real>
+				</value>
+			</values>
+		</parameter>
+		<parameter id="decisionMaker3">
+			<values>
+				<value>
+					<real>0.0</real>
+				</value>
+			</values>
+		</parameter>
+		<parameter id="decisionMaker4">
+			<values>
+				<value>
+					<real>0.0</real>
+				</value>
+			</values>
+		</parameter>
+		<parameter id="decisionMaker5">
+			<values>
+				<value>
+					<real>0.0</real>
+				</value>
+			</values>
+		</parameter>
+		<parameter id="decisionMaker6">
+			<values>
+				<value>
+					<real>0.0</real>
+				</value>
+			</values>
+		</parameter>
+		<parameter id="decisionMaker7">
+			<values>
+				<value>
+					<real>0.0</real>
+				</value>
+			</values>
+		</parameter>
+		<parameter id="decisionMaker8">
+			<values>
+				<value>
+					<real>0.0</real>
+				</value>
+			</values>
+		</parameter>
+		<parameter id="decisionMaker9">
+			<values>
+				<value>
+					<real>0.0</real>
+				</value>
+			</values>
+		</parameter>
+		<parameter id="decisionMaker10">
+			<values>
+				<value>
+					<real>0.0</real>
+				</value>
+			</values>
+		</parameter>
+	</programParameters>
+</xmcda:XMCDA>
