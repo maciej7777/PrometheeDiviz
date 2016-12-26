@@ -41,12 +41,12 @@ public class InputsHandler {
 
         public static ComparisonWithProfiles fromString(String operatorLabel) {
             if (operatorLabel == null)
-                throw new NullPointerException("operatorLabel is null");
+                throw new NullPointerException("ComparisonWithProfiles is null.");
             for (ComparisonWithProfiles op : ComparisonWithProfiles.values()) {
                 if (op.toString().equals(operatorLabel))
                     return op;
             }
-            throw new IllegalArgumentException("No enum ComparisonWithProfiles with label " + operatorLabel);
+            throw new IllegalArgumentException("No enum comparisonWithProfiles with label " + operatorLabel);
         }
     }
 

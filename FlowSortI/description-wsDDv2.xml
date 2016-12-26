@@ -52,7 +52,7 @@
             <xmcda tag="methodParameters">
                 <![CDATA[
                 <methodParameters>
-                    <parameter name="ComparisonWithProfiles">
+                    <parameter name="comparisonWithProfiles">
                         <value>
                             <real>%1</real>
                         </value>
