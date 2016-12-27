@@ -24,23 +24,159 @@ import java.util.stream.Collectors;
 public class InputsHandler {
 
     public static class Inputs {
-        public List<String> alternativesIds;
-        public List<String> categoriesIds;
-        public List<String> criteriaIds;
-        public Map<String, Integer> categoriesRanking;
-        public List<List<String>> profilesIds;
-        public List<Map<String, BigDecimal>> alternativesFlows;
-        public Map<String, BigDecimal> alternativesFlowsAverage;
-        public List<List<CategoryProfile>> categoryProfiles;
-        public ComparisonWithProfiles profilesType;
-        public List<BigDecimal> decisionMakersWages;
-        public Boolean assignToABetterClass;
-        public Integer decisionMakers;
-        public Map<String, String> criteriaPreferencesDirection;
-        public List<Map<String, Map<String, BigDecimal>>> profilesPerformance;
-        public Map<String, BigDecimal> profilesFlows;
-        public List<Map<String, Map<String, BigDecimal>>> preferences;
-        public Map<String, Map<String, BigDecimal>> profilesSummaryFlows;
+        private List<String> alternativesIds;
+        private List<String> categoriesIds;
+        private List<String> criteriaIds;
+        private Map<String, Integer> categoriesRanking;
+        private List<List<String>> profilesIds;
+        private List<Map<String, BigDecimal>> alternativesFlows;
+        private Map<String, BigDecimal> alternativesFlowsAverage;
+        private List<List<CategoryProfile>> categoryProfiles;
+        private ComparisonWithProfiles profilesType;
+        private List<BigDecimal> decisionMakersWages;
+        private Boolean assignToABetterClass;
+        private Integer decisionMakers;
+        private Map<String, String> criteriaPreferencesDirection;
+        private List<Map<String, Map<String, BigDecimal>>> profilesPerformance;
+        private Map<String, BigDecimal> profilesFlows;
+        private List<Map<String, Map<String, BigDecimal>>> preferences;
+        private Map<String, Map<String, BigDecimal>> profilesSummaryFlows;
+
+        public List<String> getAlternativesIds() {
+            return alternativesIds;
+        }
+
+        public void setAlternativesIds(List<String> alternativesIds) {
+            this.alternativesIds = alternativesIds;
+        }
+
+        public List<String> getCategoriesIds() {
+            return categoriesIds;
+        }
+
+        public void setCategoriesIds(List<String> categoriesIds) {
+            this.categoriesIds = categoriesIds;
+        }
+
+        public Map<String, Integer> getCategoriesRanking() {
+            return categoriesRanking;
+        }
+
+        public void setCategoriesRanking(Map<String, Integer> categoriesRanking) {
+            this.categoriesRanking = categoriesRanking;
+        }
+
+        public List<List<String>> getProfilesIds() {
+            return profilesIds;
+        }
+
+        public void setProfilesIds(List<List<String>> profilesIds) {
+            this.profilesIds = profilesIds;
+        }
+
+        public Map<String, BigDecimal> getAlternativesFlowsAverage() {
+            return alternativesFlowsAverage;
+        }
+
+        public void setAlternativesFlowsAverage(Map<String, BigDecimal> alternativesFlowsAverage) {
+            this.alternativesFlowsAverage = alternativesFlowsAverage;
+        }
+
+        public List<List<CategoryProfile>> getCategoryProfiles() {
+            return categoryProfiles;
+        }
+
+        public void setCategoryProfiles(List<List<CategoryProfile>> categoryProfiles) {
+            this.categoryProfiles = categoryProfiles;
+        }
+
+        public ComparisonWithProfiles getProfilesType() {
+            return profilesType;
+        }
+
+        public void setProfilesType(ComparisonWithProfiles profilesType) {
+            this.profilesType = profilesType;
+        }
+
+        public List<BigDecimal> getDecisionMakersWages() {
+            return decisionMakersWages;
+        }
+
+        public void setDecisionMakersWages(List<BigDecimal> decisionMakersWages) {
+            this.decisionMakersWages = decisionMakersWages;
+        }
+
+        public Boolean getAssignToABetterClass() {
+            return assignToABetterClass;
+        }
+
+        public void setAssignToABetterClass(Boolean assignToABetterClass) {
+            this.assignToABetterClass = assignToABetterClass;
+        }
+
+        public Integer getDecisionMakers() {
+            return decisionMakers;
+        }
+
+        public void setDecisionMakers(Integer decisionMakers) {
+            this.decisionMakers = decisionMakers;
+        }
+
+        public Map<String, BigDecimal> getProfilesFlows() {
+            return profilesFlows;
+        }
+
+        public void setProfilesFlows(Map<String, BigDecimal> profilesFlows) {
+            this.profilesFlows = profilesFlows;
+        }
+
+        public List<Map<String, Map<String, BigDecimal>>> getPreferences() {
+            return preferences;
+        }
+
+        public void setPreferences(List<Map<String, Map<String, BigDecimal>>> preferences) {
+            this.preferences = preferences;
+        }
+
+        public Map<String, Map<String, BigDecimal>> getProfilesSummaryFlows() {
+            return profilesSummaryFlows;
+        }
+
+        public void setProfilesSummaryFlows(Map<String, Map<String, BigDecimal>> profilesSummaryFlows) {
+            this.profilesSummaryFlows = profilesSummaryFlows;
+        }
+
+        private List<String> getCriteriaIds() {
+            return criteriaIds;
+        }
+
+        private void setCriteriaIds(List<String> criteriaIds) {
+            this.criteriaIds = criteriaIds;
+        }
+
+        private List<Map<String, BigDecimal>> getAlternativesFlows() {
+            return alternativesFlows;
+        }
+
+        private void setAlternativesFlows(List<Map<String, BigDecimal>> alternativesFlows) {
+            this.alternativesFlows = alternativesFlows;
+        }
+
+        private Map<String, String> getCriteriaPreferencesDirection() {
+            return criteriaPreferencesDirection;
+        }
+
+        private void setCriteriaPreferencesDirection(Map<String, String> criteriaPreferencesDirection) {
+            this.criteriaPreferencesDirection = criteriaPreferencesDirection;
+        }
+
+        private List<Map<String, Map<String, BigDecimal>>> getProfilesPerformance() {
+            return profilesPerformance;
+        }
+
+        private void setProfilesPerformance(List<Map<String, Map<String, BigDecimal>>> profilesPerformance) {
+            this.profilesPerformance = profilesPerformance;
+        }
     }
 
     public enum ComparisonWithProfiles {
@@ -109,7 +245,7 @@ public class InputsHandler {
             if (alternativesIds.isEmpty())
                 errors.addError("The alternatives list can not be empty");
 
-            inputs.alternativesIds = alternativesIds;
+            inputs.setAlternativesIds(alternativesIds);
         }
     }
 
@@ -121,7 +257,7 @@ public class InputsHandler {
         } else {
             List<String> categories = xmcda.categories.getActiveCategories().stream().filter(a -> "categories".equals(a.getMarker())).map(
                     Category::id).collect(Collectors.toList());
-            inputs.categoriesIds = categories;
+            inputs.setCategoriesIds(categories);
             if (categories.isEmpty())
                 errors.addError("The category list can not be empty.");
         }
@@ -158,7 +294,7 @@ public class InputsHandler {
                 errors.addError("Minimal rank should be equal to 1.");
                 return;
             }
-            if (max != inputs.categoriesIds.size()) {
+            if (max != inputs.getCategoriesIds().size()) {
                 errors.addError("Maximal rank should be equal to number of categories.");
                 return;
             }
@@ -172,7 +308,7 @@ public class InputsHandler {
                 }
             }
 
-            inputs.categoriesRanking = categoriesValues;
+            inputs.setCategoriesRanking(categoriesValues);
         } catch (Exception e) {
             errors.addError("An error occurred: " + e + ". Remember that each rank has to be integer.");
         }
@@ -223,7 +359,7 @@ public class InputsHandler {
             errors.addError(err);
             profilesType = null;
         }
-        inputs.profilesType = profilesType;
+        inputs.setProfilesType(profilesType);
     }
 
     protected static void checkAndExtractAssignToABetterClass(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
@@ -244,7 +380,7 @@ public class InputsHandler {
                 errors.addError("Invalid value for parameter assignToABetterClass, it must be true or false.");
                 return;
             }
-            inputs.assignToABetterClass = assignToABetterClass;
+            inputs.setAssignToABetterClass(assignToABetterClass);
         } catch (Exception exception) {
             String err = "Invalid value for parameter assignToABetterClass, it must be true or false.";
             errors.addError(err);
@@ -253,7 +389,7 @@ public class InputsHandler {
 
     protected static void checkAndExtractDecisionMakersWeights(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
 
-        inputs.decisionMakersWages = new ArrayList<>();
+        inputs.setDecisionMakersWages(new ArrayList<>());
 
         for (int i = 1; i <= 10; i++) {
             Double weight;
@@ -276,7 +412,7 @@ public class InputsHandler {
                     errors.addError("Invalid value for parameter decisionMaker" + i + ", it must be a real number.");
                     return;
                 }
-                inputs.decisionMakersWages.add(bigDecimalWeight);
+                inputs.getDecisionMakersWages().add(bigDecimalWeight);
             } catch (Exception exception) {
                 String err = "Invalid value for parameter decisionMaker" + i + ", it must be a real number.";
                 errors.addError(err);
@@ -304,11 +440,11 @@ public class InputsHandler {
             return;
         }
 
-        inputs.decisionMakers = decisionMakers;
+        inputs.setDecisionMakers(decisionMakers);
     }
 
     protected static void checkAndExtractProfilesIds(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
-        inputs.profilesIds = new ArrayList<>();
+        inputs.setProfilesIds(new ArrayList<>());
 
         if (xmcda.categoriesProfilesList.isEmpty()) {
             errors.addError("No categories profiles list has been supplied");
@@ -317,15 +453,15 @@ public class InputsHandler {
             errors.addError("You can not supply more then 10 categories profiles list");
         }
 
-        if (inputs.decisionMakers == null) {
+        if (inputs.getDecisionMakers() == null) {
             return;
         }
 
-        inputs.categoryProfiles = new ArrayList<>();
-        for (int i = 0; i < inputs.decisionMakers; i++) {
+        inputs.setCategoryProfiles(new ArrayList<>());
+        for (int i = 0; i < inputs.getDecisionMakers(); i++) {
             List<CategoryProfile> categoriesProfilesList = new ArrayList<>();
             CategoriesProfiles categoriesProfiles = xmcda.categoriesProfilesList.get(i);
-            if (inputs.categoriesRanking.size() != categoriesProfiles.size()) {
+            if (inputs.getCategoriesRanking().size() != categoriesProfiles.size()) {
                 errors.addError("There is a problem with categories rank list or categories profiles list for decision maker"
                         + (i + 1) + ". Each category has to be added to categories profiles list for each decision maker and to global categories ranks list.");
                 return;
@@ -333,7 +469,7 @@ public class InputsHandler {
 
             for (Object profile : categoriesProfiles) {
                 CategoryProfile tmpProfile = (CategoryProfile) profile;
-                if (!tmpProfile.getType().name().equalsIgnoreCase(inputs.profilesType.toString())) {
+                if (!tmpProfile.getType().name().equalsIgnoreCase(inputs.getProfilesType().toString())) {
                     errors.addError("There is a problem with categories rank list or categories profiles list for decision maker"
                             + (i + 1) + ". Every decision maker need to provide profiles for categories witch are boundary or central. Profiles type need to be same for all decision makers and equal to setting in program parameters input.");
                     return;
@@ -343,17 +479,17 @@ public class InputsHandler {
             }
 
             Collections.sort(categoriesProfilesList, (left, right) -> Integer.compare(
-                    inputs.categoriesRanking.get(left.getCategory().id()), inputs.categoriesRanking.get(right.getCategory().id())));
+                    inputs.getCategoriesRanking().get(left.getCategory().id()), inputs.getCategoriesRanking().get(right.getCategory().id())));
 
-            inputs.categoryProfiles.add(categoriesProfilesList);
+            inputs.getCategoryProfiles().add(categoriesProfilesList);
 
             List<String> profilesIds = new ArrayList<>();
-            if ("BOUNDING".equalsIgnoreCase(inputs.profilesType.toString())) {
+            if ("BOUNDING".equalsIgnoreCase(inputs.getProfilesType().toString())) {
                 checkAndExtractBoundaryProfilesIds(errors, categoriesProfilesList, profilesIds, i);
-            } else if ("CENTRAL".equalsIgnoreCase(inputs.profilesType.toString())) {
+            } else if ("CENTRAL".equalsIgnoreCase(inputs.getProfilesType().toString())) {
                 checkAndExtractCentralProfilesIds(errors, categoriesProfilesList, profilesIds, i);
             }
-            inputs.profilesIds.add(profilesIds);
+            inputs.getProfilesIds().add(profilesIds);
         }
         checkForProfilesDuplicates(inputs, errors);
     }
@@ -395,10 +531,10 @@ public class InputsHandler {
      */
     protected static void checkForProfilesDuplicates(Inputs inputs, ProgramExecutionResult errors) {
         HashSet<String> testDuplicates = new HashSet<>();
-        for (int i = 0; i < inputs.profilesIds.size(); i++) {
-            testDuplicates.addAll(inputs.profilesIds.get(i));
+        for (int i = 0; i < inputs.getProfilesIds().size(); i++) {
+            testDuplicates.addAll(inputs.getProfilesIds().get(i));
         }
-        if (inputs.profilesIds.get(0) != null && testDuplicates.size() != inputs.profilesIds.size() * inputs.profilesIds.get(0).size()) {
+        if (inputs.getProfilesIds().get(0) != null && testDuplicates.size() != inputs.getProfilesIds().size() * inputs.getProfilesIds().get(0).size()) {
             errors.addError("There are some duplicates in decision makers profiles id's.");
         }
 
@@ -409,12 +545,12 @@ public class InputsHandler {
             errors.addError("You need to provide a not empty criteria list.");
             return;
         }
-        inputs.criteriaIds = xmcda.criteria.getActiveCriteria().stream().filter(a -> "criteria".equals(a.getMarker())).map(
-                Criterion::id).collect(Collectors.toList());
+        inputs.setCriteriaIds(xmcda.criteria.getActiveCriteria().stream().filter(a -> "criteria".equals(a.getMarker())).map(
+                Criterion::id).collect(Collectors.toList()));
     }
 
     protected static void checkAndExtractCriteriaPreferencesDirection(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
-        if (inputs.criteriaIds == null || inputs.criteriaIds.isEmpty()) {
+        if (inputs.getCriteriaIds() == null || inputs.getCriteriaIds().isEmpty()) {
             return;
         }
 
@@ -423,18 +559,27 @@ public class InputsHandler {
             return;
         }
 
-        inputs.criteriaPreferencesDirection = new HashMap<>();
+        inputs.setCriteriaPreferencesDirection(new HashMap<>());
 
         CriteriaScales criteriaDirection = xmcda.criteriaScalesList.get(0);
         for (Map.Entry<Criterion, CriterionScales> criterionEntry : criteriaDirection.entrySet()) {
-            @SuppressWarnings("unchecked")
-            QuantitativeScale<String> scale = (QuantitativeScale<String>) criterionEntry.getValue().get(0);
-            inputs.criteriaPreferencesDirection.put(criterionEntry.getKey().id(), scale.getPreferenceDirection().name());
+            try {
+                @SuppressWarnings("unchecked")
+                QuantitativeScale<String> scale = (QuantitativeScale<String>) criterionEntry.getValue().get(0);
+                String scaleDirection = scale.getPreferenceDirection().name();
+                if (!"min".equalsIgnoreCase(scaleDirection) && !"max".equalsIgnoreCase(scaleDirection)) {
+                    errors.addError("Each criterion scale must be a label \"min\" or \"max\".");
+                }
+                inputs.getCriteriaPreferencesDirection().put(criterionEntry.getKey().id(), scaleDirection);
+            } catch (Exception e) {
+                errors.addError("Each criterion scale must be a label \"min\" or \"max\".");
+                return;
+            }
         }
     }
 
     protected static void checkAndExtractProfilesPerformance(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
-        if (inputs.profilesIds == null || inputs.profilesIds.isEmpty() || inputs.profilesIds.get(0).isEmpty()) {
+        if (inputs.getProfilesIds() == null || inputs.getProfilesIds().isEmpty() || inputs.getProfilesIds().get(0).isEmpty()) {
             return;
         }
         if (xmcda.performanceTablesList.size() < 2 || xmcda.performanceTablesList.size() > 10) {
@@ -442,7 +587,7 @@ public class InputsHandler {
             return;
         }
 
-        inputs.profilesPerformance = new ArrayList<>();
+        inputs.setProfilesPerformance(new ArrayList<>());
         for (int i = 0; i < xmcda.performanceTablesList.size(); i++) {
             @SuppressWarnings("rawtypes")
             PerformanceTable p = xmcda.performanceTablesList.get(i);
@@ -470,11 +615,11 @@ public class InputsHandler {
             PerformanceTable<Double> profilesPerformance = (PerformanceTable<Double>) xmcda.performanceTablesList.get(i);
             Map<String, Map<String, BigDecimal>> profilesPerformanceMap = new LinkedHashMap<>();
             for (Alternative alternative : profilesPerformance.getAlternatives()) {
-                if (!inputs.profilesIds.get(i).contains(alternative.id())) {
+                if (!inputs.getProfilesIds().get(i).contains(alternative.id())) {
                     continue;
                 }
                 for (Criterion criterion : profilesPerformance.getCriteria()) {
-                    if (!inputs.criteriaIds.contains(criterion.id())) {
+                    if (!inputs.getCriteriaIds().contains(criterion.id())) {
                         continue;
                     }
 
@@ -483,27 +628,27 @@ public class InputsHandler {
                     profilesPerformanceMap.get(alternative.id()).put(criterion.id(), BigDecimal.valueOf(value));
                 }
             }
-            inputs.profilesPerformance.add(profilesPerformanceMap);
+            inputs.getProfilesPerformance().add(profilesPerformanceMap);
         }
 
     }
 
     protected static void checkDominanceCondition(Inputs inputs, ProgramExecutionResult errors) {
-        for (int i = 0; i < inputs.profilesIds.size(); i++) {
-            for (int j = 0; j < inputs.profilesIds.get(i).size() - 1; j++) {
-                for (int criterionIterator = 0; criterionIterator < inputs.criteriaIds.size(); criterionIterator++) {
+        for (int i = 0; i < inputs.getProfilesIds().size(); i++) {
+            for (int j = 0; j < inputs.getProfilesIds().get(i).size() - 1; j++) {
+                for (int criterionIterator = 0; criterionIterator < inputs.getCriteriaIds().size(); criterionIterator++) {
                     int multiplier = 1;
-                    if ("MIN".equalsIgnoreCase(inputs.criteriaPreferencesDirection.get(inputs.criteriaIds.get(criterionIterator)))) {
+                    if ("MIN".equalsIgnoreCase(inputs.getCriteriaPreferencesDirection().get(inputs.getCriteriaIds().get(criterionIterator)))) {
                         multiplier = -1;
                     }
 
-                    BigDecimal currentPerformance = inputs.profilesPerformance.get(i).get(inputs.profilesIds.get(i).get(j)).get(
-                            inputs.criteriaIds.get(criterionIterator));
+                    BigDecimal currentPerformance = inputs.getProfilesPerformance().get(i).get(inputs.getProfilesIds().get(i).get(j)).get(
+                            inputs.getCriteriaIds().get(criterionIterator));
 
-                    for (int z = 0; z < inputs.profilesIds.size(); z++) {
+                    for (int z = 0; z < inputs.getProfilesIds().size(); z++) {
                         if (z != i) {
-                            BigDecimal tempPerformance = inputs.profilesPerformance.get(z).get(inputs.profilesIds.get(z).get(j + 1)).get(
-                                    inputs.criteriaIds.get(criterionIterator));
+                            BigDecimal tempPerformance = inputs.getProfilesPerformance().get(z).get(inputs.getProfilesIds().get(z).get(j + 1)).get(
+                                    inputs.getCriteriaIds().get(criterionIterator));
 
                             if (currentPerformance.multiply(BigDecimal.valueOf(multiplier))
                                     .compareTo(tempPerformance.multiply(BigDecimal.valueOf(multiplier))) >= 0) {
@@ -522,13 +667,13 @@ public class InputsHandler {
             errors.addError("You need to provide 2 - 10 alternatives flows lists.");
         }
 
-        inputs.alternativesFlows = new ArrayList<>();
+        inputs.setAlternativesFlows(new ArrayList<>());
 
-        if (inputs.decisionMakers == null) {
+        if (inputs.getDecisionMakers() == null) {
             return;
         }
 
-        for (int i = 0; i < inputs.decisionMakers; i++) {
+        for (int i = 0; i < inputs.getDecisionMakers(); i++) {
             AlternativesValues flows = xmcda.alternativesValuesList.get(i + 1);
             if (!flows.isNumeric()) {
                 errors.addError("Each flow must have numeric type");
@@ -547,10 +692,10 @@ public class InputsHandler {
                 errors.addError("An error occurred: " + exception.getMessage() + ". Each flow must have numeric type.");
             }
 
-            for (int j = 0; j < inputs.alternativesIds.size(); j++) {
+            for (int j = 0; j < inputs.getAlternativesIds().size(); j++) {
                 boolean found = false;
                 for (Object alt : flows.getAlternatives()) {
-                    if (((Alternative) alt).id().equals(inputs.alternativesIds.get(j))) {
+                    if (((Alternative) alt).id().equals(inputs.getAlternativesIds().get(j))) {
                         found = true;
                     }
                 }
@@ -559,23 +704,23 @@ public class InputsHandler {
                     return;
                 }
             }
-            inputs.alternativesFlows.add(tmpFlows);
+            inputs.getAlternativesFlows().add(tmpFlows);
         }
     }
 
     protected static void extractFlowsAverage(Inputs inputs) {
 
-        inputs.alternativesFlowsAverage = new LinkedHashMap<>();
+        inputs.setAlternativesFlowsAverage(new LinkedHashMap<>());
 
-        for (int i = 0; i < inputs.alternativesIds.size(); i++) {
+        for (int i = 0; i < inputs.getAlternativesIds().size(); i++) {
             BigDecimal sum = BigDecimal.ZERO;
 
-            for (int j = 0; j < inputs.alternativesFlows.size(); j++) {
-                sum = sum.add(inputs.alternativesFlows.get(j).get(inputs.alternativesIds.get(i)));
+            for (int j = 0; j < inputs.getAlternativesFlows().size(); j++) {
+                sum = sum.add(inputs.getAlternativesFlows().get(j).get(inputs.getAlternativesIds().get(i)));
             }
 
-            sum = sum.divide(new BigDecimal(inputs.alternativesFlows.size()), 6, RoundingMode.HALF_UP);
-            inputs.alternativesFlowsAverage.put(inputs.alternativesIds.get(i), sum);
+            sum = sum.divide(new BigDecimal(inputs.getAlternativesFlows().size()), 6, RoundingMode.HALF_UP);
+            inputs.getAlternativesFlowsAverage().put(inputs.getAlternativesIds().get(i), sum);
         }
     }
 
@@ -603,11 +748,11 @@ public class InputsHandler {
             errors.addError("An error occurred: " + exception.getMessage() + ". Each flow must have numeric type.");
         }
 
-        for (int j = 0; j < inputs.profilesIds.size(); j++) {
-            for (int k = 0; k < inputs.profilesIds.get(j).size(); k++) {
+        for (int j = 0; j < inputs.getProfilesIds().size(); j++) {
+            for (int k = 0; k < inputs.getProfilesIds().get(j).size(); k++) {
                 boolean found = false;
                 for (Object alt : flows.getAlternatives()) {
-                    if (((Alternative) alt).id().equals(inputs.profilesIds.get(j).get(k))) {
+                    if (((Alternative) alt).id().equals(inputs.getProfilesIds().get(j).get(k))) {
                         found = true;
                     }
                 }
@@ -617,7 +762,7 @@ public class InputsHandler {
                 }
             }
         }
-        inputs.profilesFlows = tmpFlows;
+        inputs.setProfilesFlows(tmpFlows);
     }
 
     protected static void checkAndExtractPreferences(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
@@ -626,7 +771,7 @@ public class InputsHandler {
             return;
         }
 
-        inputs.preferences = new ArrayList<>();
+        inputs.setPreferences(new ArrayList<>());
 
         for (int i = 0; i < xmcda.alternativesMatricesList.size(); i++) {
 
@@ -647,8 +792,8 @@ public class InputsHandler {
                     tmpPreferences.get(x).put(y, BigDecimal.valueOf(value));
                 }
 
-                for (String alternativeId : inputs.alternativesIds) {
-                    for (String profileId : inputs.profilesIds.get(i)) {
+                for (String alternativeId : inputs.getAlternativesIds()) {
+                    for (String profileId : inputs.getProfilesIds().get(i)) {
                         if (tmpPreferences.get(alternativeId) == null || tmpPreferences.get(alternativeId).get(profileId) == null
                                 || tmpPreferences.get(profileId) == null || tmpPreferences.get(profileId).get(alternativeId) == null) {
                             errors.addError("Preference between " + alternativeId + " and " + profileId +
@@ -657,7 +802,7 @@ public class InputsHandler {
                     }
                 }
 
-                inputs.preferences.add(tmpPreferences);
+                inputs.getPreferences().add(tmpPreferences);
             } catch (Exception e) {
                 errors.addError("There was en exception during processing preferences: " + e.getMessage() +
                         ". Remember that each preference need to be a double number.");

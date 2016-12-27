@@ -24,7 +24,7 @@ public class FlowSortGDSS {
         countProfilesSummaryFlows(inputs);
         OutputsHandler.Output output = new OutputsHandler.Output();
 
-        if ("bounding".equalsIgnoreCase(inputs.profilesType.toString())) {
+        if ("bounding".equalsIgnoreCase(inputs.getProfilesType().toString())) {
             sortWithLimitingProfiles(inputs, output);
         } else {
             sortWithCentralProfiles(inputs, output);
@@ -34,22 +34,22 @@ public class FlowSortGDSS {
     }
 
     private static void countProfilesSummaryFlows(InputsHandler.Inputs inputs) {
-        inputs.profilesSummaryFlows = new LinkedHashMap<>();
+        inputs.setProfilesSummaryFlows(new LinkedHashMap<>());
 
-        for (int i = 0; i < inputs.profilesIds.size(); i++) {
-            for (int j = 0; j < inputs.profilesIds.get(i).size(); j++) {
-                for (int k = 0; k < inputs.alternativesIds.size(); k++) {
-                    String profileId = inputs.profilesIds.get(i).get(j);
-                    String alternativeId = inputs.alternativesIds.get(k);
+        for (int i = 0; i < inputs.getProfilesIds().size(); i++) {
+            for (int j = 0; j < inputs.getProfilesIds().get(i).size(); j++) {
+                for (int k = 0; k < inputs.getAlternativesIds().size(); k++) {
+                    String profileId = inputs.getProfilesIds().get(i).get(j);
+                    String alternativeId = inputs.getAlternativesIds().get(k);
 
-                    Integer profilesNumber = inputs.profilesIds.size() * inputs.profilesIds.get(i).size();
-                    BigDecimal leftFlow = inputs.profilesFlows.get(profileId).multiply(new BigDecimal(profilesNumber));
-                    BigDecimal rightFlow = inputs.preferences.get(i).get(profileId).get(alternativeId).subtract(inputs.preferences.get(i).get(alternativeId).get(profileId));
+                    Integer profilesNumber = inputs.getProfilesIds().size() * inputs.getProfilesIds().get(i).size();
+                    BigDecimal leftFlow = inputs.getProfilesFlows().get(profileId).multiply(new BigDecimal(profilesNumber));
+                    BigDecimal rightFlow = inputs.getPreferences().get(i).get(profileId).get(alternativeId).subtract(inputs.getPreferences().get(i).get(alternativeId).get(profileId));
 
                     BigDecimal flow = (leftFlow.add(rightFlow)).divide(new BigDecimal(profilesNumber + 1), 6, RoundingMode.HALF_UP);
 
-                    inputs.profilesSummaryFlows.putIfAbsent(profileId, new HashMap<>());
-                    inputs.profilesSummaryFlows.get(profileId).put(alternativeId, flow);
+                    inputs.getProfilesSummaryFlows().putIfAbsent(profileId, new HashMap<>());
+                    inputs.getProfilesSummaryFlows().get(profileId).put(alternativeId, flow);
                 }
             }
         }
@@ -59,23 +59,23 @@ public class FlowSortGDSS {
         Map<String, String> assignments = new LinkedHashMap<>();
         Map<String, Map<String, String>> firstStepAssignments = new LinkedHashMap<>();
 
-        for (int i = 0; i < inputs.alternativesIds.size(); i++) {
+        for (int i = 0; i < inputs.getAlternativesIds().size(); i++) {
             Integer firstClassNumber = null;
             Integer secondClassNumber = null;
             Set<Integer> firstClassDecisionMakers = new HashSet<>();
             Set<Integer> secondClassDecisionMakers = new HashSet<>();
-            String alternativeId = inputs.alternativesIds.get(i);
-            for (int decisionMaker = 0; decisionMaker < inputs.profilesIds.size(); decisionMaker++) {
+            String alternativeId = inputs.getAlternativesIds().get(i);
+            for (int decisionMaker = 0; decisionMaker < inputs.getProfilesIds().size(); decisionMaker++) {
                 Integer decisionMakerClassNumber = null;
-                for (int profile = 0; profile < inputs.profilesIds.get(decisionMaker).size(); profile++) {
-                    String profilesId = inputs.profilesIds.get(decisionMaker).get(profile);
-                    if (inputs.alternativesFlowsAverage.get(alternativeId).compareTo(inputs.profilesSummaryFlows.get(profilesId).get(alternativeId)) <= 0 && decisionMakerClassNumber == null) {
+                for (int profile = 0; profile < inputs.getProfilesIds().get(decisionMaker).size(); profile++) {
+                    String profilesId = inputs.getProfilesIds().get(decisionMaker).get(profile);
+                    if (inputs.getAlternativesFlowsAverage().get(alternativeId).compareTo(inputs.getProfilesSummaryFlows().get(profilesId).get(alternativeId)) <= 0 && decisionMakerClassNumber == null) {
                         decisionMakerClassNumber = profile;
                         break;
                     }
                 }
-                if (decisionMakerClassNumber == null && inputs.alternativesFlowsAverage.get(alternativeId).compareTo(inputs.profilesSummaryFlows.get(inputs.profilesIds.get(decisionMaker).get(inputs.profilesIds.get(decisionMaker).size() - 1)).get(alternativeId)) > 0) {
-                    decisionMakerClassNumber = inputs.profilesIds.get(decisionMaker).size();
+                if (decisionMakerClassNumber == null && inputs.getAlternativesFlowsAverage().get(alternativeId).compareTo(inputs.getProfilesSummaryFlows().get(inputs.getProfilesIds().get(decisionMaker).get(inputs.getProfilesIds().get(decisionMaker).size() - 1)).get(alternativeId)) > 0) {
+                    decisionMakerClassNumber = inputs.getProfilesIds().get(decisionMaker).size();
                 }
                 if (firstClassNumber == null) {
                     firstClassNumber = decisionMakerClassNumber;
@@ -89,15 +89,15 @@ public class FlowSortGDSS {
             }
 
             if (secondClassNumber == null) {
-                String classId = inputs.categoryProfiles.get(0).get(firstClassNumber).getCategory().id();
+                String classId = inputs.getCategoryProfiles().get(0).get(firstClassNumber).getCategory().id();
                 assignments.put(alternativeId, classId);
                 Map<String, String> interval = new LinkedHashMap<>();
                 interval.put(LOWER,classId);
                 interval.put(UPPER, classId);
                 firstStepAssignments.put(alternativeId, interval);
             } else {
-                String leftClassId = inputs.categoryProfiles.get(0).get(Math.min(firstClassNumber, secondClassNumber)).getCategory().id();
-                String rightClassId = inputs.categoryProfiles.get(0).get(Math.max(firstClassNumber, secondClassNumber)).getCategory().id();
+                String leftClassId = inputs.getCategoryProfiles().get(0).get(Math.min(firstClassNumber, secondClassNumber)).getCategory().id();
+                String rightClassId = inputs.getCategoryProfiles().get(0).get(Math.max(firstClassNumber, secondClassNumber)).getCategory().id();
                 Map<String, String> interval = new LinkedHashMap<>();
                 interval.put(LOWER,leftClassId);
                 interval.put(UPPER, rightClassId);
@@ -119,7 +119,7 @@ public class FlowSortGDSS {
                 } else if (profileK1.compareTo(profileK) < 0) {
                     assignments.put(alternativeId, rightClassId);
                 } else {
-                    if (inputs.assignToABetterClass) {
+                    if (inputs.getAssignToABetterClass()) {
                         assignments.put(alternativeId, rightClassId);
                     } else {
                         assignments.put(alternativeId, leftClassId);
@@ -135,8 +135,8 @@ public class FlowSortGDSS {
         BigDecimal sum = BigDecimal.ZERO;
 
         for (Integer decisionMaker: decisionMakers) {
-            String profileId = inputs.profilesIds.get(decisionMaker).get(profile);
-            sum = sum.add(inputs.decisionMakersWages.get(decisionMaker).multiply((inputs.alternativesFlowsAverage.get(alternativeId).subtract(inputs.profilesSummaryFlows.get(profileId).get(alternativeId)))));
+            String profileId = inputs.getProfilesIds().get(decisionMaker).get(profile);
+            sum = sum.add(inputs.getDecisionMakersWages().get(decisionMaker).multiply((inputs.getAlternativesFlowsAverage().get(alternativeId).subtract(inputs.getProfilesSummaryFlows().get(profileId).get(alternativeId)))));
         }
 
         return sum;
@@ -146,8 +146,8 @@ public class FlowSortGDSS {
         BigDecimal sum = BigDecimal.ZERO;
 
         for (Integer decisionMaker: decisionMakers) {
-            String profileId = inputs.profilesIds.get(decisionMaker).get(profile);
-            sum = sum.add(inputs.decisionMakersWages.get(decisionMaker).multiply((inputs.profilesSummaryFlows.get(profileId).get(alternativeId).subtract(inputs.alternativesFlowsAverage.get(alternativeId)))));
+            String profileId = inputs.getProfilesIds().get(decisionMaker).get(profile);
+            sum = sum.add(inputs.getDecisionMakersWages().get(decisionMaker).multiply((inputs.getProfilesSummaryFlows().get(profileId).get(alternativeId).subtract(inputs.getAlternativesFlowsAverage().get(alternativeId)))));
         }
 
         return sum;
@@ -157,18 +157,18 @@ public class FlowSortGDSS {
         Map<String, String> assignments = new LinkedHashMap<>();
         Map<String, Map<String, String>> firstStepAssignments = new LinkedHashMap<>();
 
-        for (int i = 0; i < inputs.alternativesIds.size(); i++) {
+        for (int i = 0; i < inputs.getAlternativesIds().size(); i++) {
             Integer firstClassNumber = null;
             Integer secondClassNumber = null;
             Set<Integer> firstClassDecisionMakers = new HashSet<>();
             Set<Integer> secondClassDecisionMakers = new HashSet<>();
-            String alternativeId = inputs.alternativesIds.get(i);
-            for (int decisionMaker = 0; decisionMaker < inputs.profilesIds.size(); decisionMaker++) {
+            String alternativeId = inputs.getAlternativesIds().get(i);
+            for (int decisionMaker = 0; decisionMaker < inputs.getProfilesIds().size(); decisionMaker++) {
                 Integer nearestClass = null;
                 BigDecimal distance = BigDecimal.ZERO;
-                for (int profile = 0; profile < inputs.profilesIds.get(decisionMaker).size(); profile++) {
-                    String profilesId = inputs.profilesIds.get(decisionMaker).get(profile);
-                    BigDecimal tmpDist = (inputs.profilesSummaryFlows.get(profilesId).get(alternativeId).subtract(inputs.alternativesFlowsAverage.get(alternativeId))).abs();
+                for (int profile = 0; profile < inputs.getProfilesIds().get(decisionMaker).size(); profile++) {
+                    String profilesId = inputs.getProfilesIds().get(decisionMaker).get(profile);
+                    BigDecimal tmpDist = (inputs.getProfilesSummaryFlows().get(profilesId).get(alternativeId).subtract(inputs.getAlternativesFlowsAverage().get(alternativeId))).abs();
 
                     if (tmpDist.compareTo(distance) < 0 || nearestClass == null) {
                         nearestClass = profile;
@@ -187,15 +187,15 @@ public class FlowSortGDSS {
                 }
             }
             if (secondClassNumber == null) {
-                String classId = inputs.categoryProfiles.get(0).get(firstClassNumber).getCategory().id();
+                String classId = inputs.getCategoryProfiles().get(0).get(firstClassNumber).getCategory().id();
                 assignments.put(alternativeId, classId);
                 Map<String, String> interval = new LinkedHashMap<>();
                 interval.put(LOWER,classId);
                 interval.put(UPPER, classId);
                 firstStepAssignments.put(alternativeId, interval);
             } else {
-                String leftClassId = inputs.categoryProfiles.get(0).get(Math.min(firstClassNumber, secondClassNumber)).getCategory().id();
-                String rightClassId = inputs.categoryProfiles.get(0).get(Math.max(firstClassNumber, secondClassNumber)).getCategory().id();
+                String leftClassId = inputs.getCategoryProfiles().get(0).get(Math.min(firstClassNumber, secondClassNumber)).getCategory().id();
+                String rightClassId = inputs.getCategoryProfiles().get(0).get(Math.max(firstClassNumber, secondClassNumber)).getCategory().id();
                 Map<String, String> interval = new LinkedHashMap<>();
                 interval.put(LOWER,leftClassId);
                 interval.put(UPPER, rightClassId);
@@ -217,7 +217,7 @@ public class FlowSortGDSS {
                 } else if (profileK1.compareTo(profileK) < 0) {
                     assignments.put(alternativeId, rightClassId);
                 } else {
-                    if (inputs.assignToABetterClass) {
+                    if (inputs.getAssignToABetterClass()) {
                         assignments.put(alternativeId, rightClassId);
                     } else {
                         assignments.put(alternativeId, leftClassId);
@@ -233,8 +233,8 @@ public class FlowSortGDSS {
         BigDecimal sum = BigDecimal.ZERO;
 
         for (Integer decisionMaker: decisionMakers) {
-            String profileId = inputs.profilesIds.get(decisionMaker).get(profile);
-            sum = sum.add(inputs.decisionMakersWages.get(decisionMaker).multiply((inputs.profilesSummaryFlows.get(profileId).get(alternativeId).subtract(inputs.alternativesFlowsAverage.get(alternativeId))).abs()));
+            String profileId = inputs.getProfilesIds().get(decisionMaker).get(profile);
+            sum = sum.add(inputs.getDecisionMakersWages().get(decisionMaker).multiply((inputs.getProfilesSummaryFlows().get(profileId).get(alternativeId).subtract(inputs.getAlternativesFlowsAverage().get(alternativeId))).abs()));
         }
 
         return sum;

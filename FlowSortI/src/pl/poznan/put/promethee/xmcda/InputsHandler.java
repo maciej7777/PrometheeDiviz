@@ -506,7 +506,7 @@ public class InputsHandler {
                 @SuppressWarnings("unchecked")
                 QuantitativeScale<String> scale = (QuantitativeScale<String>) criterionEntry.getValue().get(0);
                 String scaleDirection = scale.getPreferenceDirection().name();
-                if (!"min".equalsIgnoreCase(scaleDirection) && !"max".equalsIgnoreCase((scaleDirection))) {
+                if (!"min".equalsIgnoreCase(scaleDirection) && !"max".equalsIgnoreCase(scaleDirection)) {
                     errors.addError("Each criterion scale must be a label \"min\" or \"max\".");
                 }
                 inputs.getCriteriaPreferencesDirection().put(criterionEntry.getKey().id(), scaleDirection);
