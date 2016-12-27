@@ -47,9 +47,12 @@ public class FlowSortIXMCDAv2 {
         convertToV3AndMark(new File(indir, "categories.xml"), "categories", xmcda, "categories");
         convertToV3AndMark(new File(indir, "categories.xml"), "categoriesValues", xmcda, "categoriesValues");
         convertToV3AndMark(new File(indir, "categories_profiles.xml"), "categoriesProfiles", xmcda, "categoriesProfiles");
+        convertToV3AndMark(new File(indir, "criteria.xml"), "criteria", xmcda, "criteria");
+        convertToV3AndMark(new File(indir, "criteria.xml"), "criteriaScales", xmcda, "criteriaScales");
         convertToV3AndMark(new File(indir, "positive_flows.xml"), "positiveFlows", xmcda, "alternativesValues");
         convertToV3AndMark(new File(indir, "negative_flows.xml"), "negativeFlows", xmcda, "alternativesValues");
         convertToV3AndMark(new File(indir, "method_parameters.xml"), "methodParameters", xmcda, "methodParameters");
+        convertToV3AndMark(new File(indir, "performance_table.xml"), "performanceTable", xmcda, "performanceTable");
     }
 
     private static void handleResults(String outdir, Map<String, XMCDA> xResults) {
