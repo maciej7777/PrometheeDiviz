@@ -56,13 +56,96 @@ public class InputsHandler {
     }
 
     public static class Inputs {
-        public List<String> alternativesIds;
-        public List<String> categoriesIds;
-        public List<String> profilesIds;
-        public Map<String, Double> flows;
-        public Map<String, Integer> categoriesRanking;
-        public List<CategoryProfile> categoryProfiles;
-        public ComparisonWithProfiles profilesType;
+        private List<String> alternativesIds;
+        private List<String> categoriesIds;
+        private List<String> profilesIds;
+        private Map<String, Double> flows;
+        private Map<String, Integer> categoriesRanking;
+        private List<CategoryProfile> categoryProfiles;
+        private ComparisonWithProfiles profilesType;
+        private List<String> criteriaIds;
+        private Map<String, String> criteriaPreferencesDirection;
+        private Map<String, Map<String, Double>> profilesPerformance;
+
+        public List<String> getAlternativesIds() {
+            return alternativesIds;
+        }
+
+        public void setAlternativesIds(List<String> alternativesIds) {
+            this.alternativesIds = alternativesIds;
+        }
+
+        public List<String> getCategoriesIds() {
+            return categoriesIds;
+        }
+
+        public void setCategoriesIds(List<String> categoriesIds) {
+            this.categoriesIds = categoriesIds;
+        }
+
+        public List<String> getProfilesIds() {
+            return profilesIds;
+        }
+
+        public void setProfilesIds(List<String> profilesIds) {
+            this.profilesIds = profilesIds;
+        }
+
+        public Map<String, Double> getFlows() {
+            return flows;
+        }
+
+        public void setFlows(Map<String, Double> flows) {
+            this.flows = flows;
+        }
+
+        public Map<String, Integer> getCategoriesRanking() {
+            return categoriesRanking;
+        }
+
+        public void setCategoriesRanking(Map<String, Integer> categoriesRanking) {
+            this.categoriesRanking = categoriesRanking;
+        }
+
+        public List<CategoryProfile> getCategoryProfiles() {
+            return categoryProfiles;
+        }
+
+        public void setCategoryProfiles(List<CategoryProfile> categoryProfiles) {
+            this.categoryProfiles = categoryProfiles;
+        }
+
+        public ComparisonWithProfiles getProfilesType() {
+            return profilesType;
+        }
+
+        public void setProfilesType(ComparisonWithProfiles profilesType) {
+            this.profilesType = profilesType;
+        }
+
+        private List<String> getCriteriaIds() {
+            return criteriaIds;
+        }
+
+        private void setCriteriaIds(List<String> criteriaIds) {
+            this.criteriaIds = criteriaIds;
+        }
+
+        private Map<String, String> getCriteriaPreferencesDirection() {
+            return criteriaPreferencesDirection;
+        }
+
+        private void setCriteriaPreferencesDirection(Map<String, String> criteriaPreferencesDirection) {
+            this.criteriaPreferencesDirection = criteriaPreferencesDirection;
+        }
+
+        private Map<String, Map<String, Double>> getProfilesPerformance() {
+            return profilesPerformance;
+        }
+
+        private void setProfilesPerformance(Map<String, Map<String, Double>> profilesPerformance) {
+            this.profilesPerformance = profilesPerformance;
+        }
     }
 
     public static Inputs checkAndExtractInputs(XMCDA xmcda, ProgramExecutionResult xmcdaExecResults)
@@ -83,6 +166,9 @@ public class InputsHandler {
         checkCategoriesRanking(inputs, xmcda, errors);
         checkAndExtractProfilesIds(inputs, xmcda, errors);
         checkAndExtractAlternativesFlows(inputs, xmcda, errors);
+        checkAndExtractCriteria(inputs, xmcda, errors);
+        checkAndExtractProfilesPerformance(inputs, xmcda, errors);
+        checkDominanceProperty(inputs, errors);
 
         return inputs;
     }
@@ -96,7 +182,7 @@ public class InputsHandler {
             if (alternativesIds.isEmpty())
                 errors.addError("The alternatives list can not be empty");
 
-            inputs.alternativesIds = alternativesIds;
+            inputs.setAlternativesIds(alternativesIds);
         }
     }
 
@@ -143,7 +229,7 @@ public class InputsHandler {
             errors.addError(err);
             profilesType = null;
         }
-        inputs.profilesType = profilesType;
+        inputs.setProfilesType(profilesType);
     }
 
     protected static void checkAndExtractCategories(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
@@ -154,7 +240,7 @@ public class InputsHandler {
         } else {
             List<String> categories = xmcda.categories.getActiveCategories().stream().filter(a -> "categories".equals(a.getMarker())).map(
                     Category::id).collect(Collectors.toList());
-            inputs.categoriesIds = categories;
+            inputs.setCategoriesIds(categories);
             if (categories.isEmpty())
                 errors.addError("The category list can not be empty.");
         }
@@ -191,7 +277,7 @@ public class InputsHandler {
                 errors.addError("Minimal rank should be equal to 1.");
                 return;
             }
-            if (max != inputs.categoriesIds.size()) {
+            if (max != inputs.getCategoriesIds().size()) {
                 errors.addError("Maximal rank should be equal to number of categories.");
                 return;
             }
@@ -205,14 +291,14 @@ public class InputsHandler {
                 }
             }
 
-            inputs.categoriesRanking = categoriesValues;
+            inputs.setCategoriesRanking(categoriesValues);
         } catch (Exception e) {
             errors.addError("An error occurred: " + e + ". Remember that each rank has to be integer.");
         }
     }
 
     protected static void checkAndExtractProfilesIds(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
-        inputs.profilesIds = new ArrayList<>();
+        inputs.setProfilesIds(new ArrayList<>());
 
         if (xmcda.categoriesProfilesList.isEmpty()) {
             errors.addError("No categories profiles list has been supplied.");
@@ -221,39 +307,39 @@ public class InputsHandler {
             errors.addError("You can not supply more then 1 categories profiles list.");
         }
 
-        inputs.categoryProfiles = new ArrayList<>();
+        inputs.setCategoryProfiles(new ArrayList<>());
 
         CategoriesProfiles categoriesProfiles = xmcda.categoriesProfilesList.get(0);
-        if (inputs.categoriesRanking.size() != categoriesProfiles.size()) {
+        if (inputs.getCategoriesRanking().size() != categoriesProfiles.size()) {
             errors.addError("There is a problem with categories rank list or categories profiles list. Each category has to be added to categories profiles list.");
             return;
         }
 
         for (Object profile : categoriesProfiles) {
             CategoryProfile tmpProfile = (CategoryProfile) profile;
-            if (!tmpProfile.getType().name().equalsIgnoreCase(inputs.profilesType.toString())) {
+            if (!tmpProfile.getType().name().equalsIgnoreCase(inputs.getProfilesType().toString())) {
                 errors.addError("There is a problem with categories rank list or categories profiles list. Each category has to be added to categories profiles list.");
                 return;
             } else {
-                inputs.categoryProfiles.add(tmpProfile);
+                inputs.getCategoryProfiles().add(tmpProfile);
             }
         }
 
-        Collections.sort(inputs.categoryProfiles, (left, right) -> Integer.compare(
-                inputs.categoriesRanking.get(left.getCategory().id()), inputs.categoriesRanking.get(right.getCategory().id())));
+        Collections.sort(inputs.getCategoryProfiles(), (left, right) -> Integer.compare(
+                inputs.getCategoriesRanking().get(left.getCategory().id()), inputs.getCategoriesRanking().get(right.getCategory().id())));
 
-        if ("BOUNDING".equalsIgnoreCase(inputs.profilesType.toString())) {
+        if ("BOUNDING".equalsIgnoreCase(inputs.getProfilesType().toString())) {
             checkAndExtractBoundaryProfilesIds(errors, inputs);
-        } else if ("CENTRAL".equalsIgnoreCase(inputs.profilesType.toString())) {
+        } else if ("CENTRAL".equalsIgnoreCase(inputs.getProfilesType().toString())) {
             checkAndExtractCentralProfilesIds(errors, inputs);
         }
     }
 
     protected static void checkAndExtractBoundaryProfilesIds(ProgramExecutionResult errors, Inputs inputs) {
-        for (int j = 0; j < inputs.categoryProfiles.size() - 1; j++) {
-            if (inputs.categoryProfiles.get(j).getUpperBound() != null && inputs.categoryProfiles.get(j + 1).getLowerBound() != null) {
-                inputs.profilesIds.add(inputs.categoryProfiles.get(j).getUpperBound().getAlternative().id());
-                if (!inputs.categoryProfiles.get(j).getUpperBound().getAlternative().id().equals(inputs.categoryProfiles.get(j + 1).getLowerBound().getAlternative().id())) {
+        for (int j = 0; j < inputs.getCategoryProfiles().size() - 1; j++) {
+            if (inputs.getCategoryProfiles().get(j).getUpperBound() != null && inputs.getCategoryProfiles().get(j + 1).getLowerBound() != null) {
+                inputs.getProfilesIds().add(inputs.getCategoryProfiles().get(j).getUpperBound().getAlternative().id());
+                if (!inputs.getCategoryProfiles().get(j).getUpperBound().getAlternative().id().equals(inputs.getCategoryProfiles().get(j + 1).getLowerBound().getAlternative().id())) {
                     errors.addError("Each two closest categories have to be separated by same boundary profile.");
                     return;
                 }
@@ -265,9 +351,9 @@ public class InputsHandler {
     }
 
     protected static void checkAndExtractCentralProfilesIds(ProgramExecutionResult errors, InputsHandler.Inputs inputs) {
-        for (int j = 0; j < inputs.categoryProfiles.size(); j++) {
-            if (inputs.categoryProfiles.get(j).getCentralProfile() != null) {
-                inputs.profilesIds.add(inputs.categoryProfiles.get(j).getCentralProfile().getAlternative().id());
+        for (int j = 0; j < inputs.getCategoryProfiles().size(); j++) {
+            if (inputs.getCategoryProfiles().get(j).getCentralProfile() != null) {
+                inputs.getProfilesIds().add(inputs.getCategoryProfiles().get(j).getCentralProfile().getAlternative().id());
             } else {
                 errors.addError("There is a problem with categories profiles. You need to provide central for categories.");
                 break;
@@ -286,7 +372,7 @@ public class InputsHandler {
 
     protected static void checkAndExtractNetFlows(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
 
-        inputs.flows = new LinkedHashMap<>();
+        inputs.setFlows(new LinkedHashMap<>());
 
         AlternativesValues netFlows = xmcda.alternativesValuesList.get(0);
         if (!netFlows.isNumeric()) {
@@ -298,7 +384,7 @@ public class InputsHandler {
             Map<Alternative, LabelledQValues<Double>> netFlowsMap = netFlows;
             for (Map.Entry<Alternative, LabelledQValues<Double>> flow : netFlowsMap.entrySet()) {
                 Double tmpValue = flow.getValue().get(0).convertToDouble().getValue();
-                inputs.flows.put(flow.getKey().id(), tmpValue);
+                inputs.getFlows().put(flow.getKey().id(), tmpValue);
             }
         } catch (Exception exception) {
             errors.addError("An error occurred: " + exception + ". Each flow must have numeric type.");
@@ -309,10 +395,10 @@ public class InputsHandler {
     }
 
     protected static void checkMissingValuesInNetFlows(Inputs inputs, ProgramExecutionResult errors, AlternativesValues flows) {
-        for (int j = 0; j < inputs.alternativesIds.size(); j++) {
+        for (int j = 0; j < inputs.getAlternativesIds().size(); j++) {
             boolean found = false;
             for (Object alt : flows.getAlternatives()) {
-                if (((Alternative) alt).id().equals(inputs.alternativesIds.get(j))) {
+                if (((Alternative) alt).id().equals(inputs.getAlternativesIds().get(j))) {
                     found = true;
                 }
             }
@@ -322,10 +408,10 @@ public class InputsHandler {
             }
         }
 
-        for (int i = 0; i < inputs.profilesIds.size(); i++) {
+        for (int i = 0; i < inputs.getProfilesIds().size(); i++) {
             boolean found = false;
             for (Object alt : flows.getAlternatives()) {
-                if (((Alternative) alt).id().equals(inputs.alternativesIds.get(i))) {
+                if (((Alternative) alt).id().equals(inputs.getAlternativesIds().get(i))) {
                     found = true;
                 }
             }
@@ -335,4 +421,125 @@ public class InputsHandler {
             }
         }
     }
+
+    protected static void checkAndExtractCriteria(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+        if (xmcda.criteria.getActiveCriteria().isEmpty()) {
+            errors.addError("You need to provide a not empty criteria list.");
+            return;
+        }
+        inputs.setCriteriaIds(xmcda.criteria.getActiveCriteria().stream().filter(a -> "criteria".equals(a.getMarker())).map(
+                Criterion::id).collect(Collectors.toList()));
+
+        checkAndExtractCriteriaPreferencesDirection(inputs, xmcda, errors);
+    }
+
+    protected static void checkAndExtractCriteriaPreferencesDirection(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+        if (inputs.getCriteriaIds() == null || inputs.getCriteriaIds().isEmpty()) {
+            return;
+        }
+
+        if (xmcda.criteriaScalesList.size() != 1) {
+            errors.addError("You need to provide one not empty criteria scales list.");
+            return;
+        }
+
+        inputs.setCriteriaPreferencesDirection(new HashMap<>());
+
+        CriteriaScales criteriaDirection = xmcda.criteriaScalesList.get(0);
+        for (Map.Entry<Criterion, CriterionScales> criterionEntry : criteriaDirection.entrySet()) {
+            try {
+                @SuppressWarnings("unchecked")
+                QuantitativeScale<String> scale = (QuantitativeScale<String>) criterionEntry.getValue().get(0);
+                String scaleDirection = scale.getPreferenceDirection().name();
+                if (!"min".equalsIgnoreCase(scaleDirection) && !"max".equalsIgnoreCase((scaleDirection))) {
+                    errors.addError("Each criterion scale must be a label \"min\" or \"max\".");
+                }
+                inputs.getCriteriaPreferencesDirection().put(criterionEntry.getKey().id(), scaleDirection);
+            } catch (Exception e) {
+                errors.addError("Each criterion scale must be a label \"min\" or \"max\".");
+                return;
+            }
+        }
+    }
+
+    protected static void checkAndExtractProfilesPerformance(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+        if (inputs.getProfilesIds() == null || inputs.getProfilesIds().isEmpty() || inputs.getProfilesIds().get(0).isEmpty()) {
+            return;
+        }
+        if (xmcda.performanceTablesList.size() != 1) {
+            errors.addError("You need to provide exactly 1 profile performances lists.");
+            return;
+        }
+
+        inputs.setProfilesPerformance(new HashMap<>());
+
+        @SuppressWarnings("rawtypes")
+        PerformanceTable p = xmcda.performanceTablesList.get(0);
+
+        if (p.hasMissingValues()) {
+            errors.addError("The performance table has missing values.");
+            return;
+        }
+        if (!p.isNumeric()) {
+            errors.addError("The performance table must contain numeric values only");
+            return;
+        }
+
+        try {
+            @SuppressWarnings("unchecked")
+            PerformanceTable<Double> perfTable = p.asDouble();
+            xmcda.performanceTablesList.set(0, perfTable);
+        } catch (Exception e) {
+            final String msg = "Error when converting the performance table's value to Double, reason:";
+            errors.addError(Utils.getMessage(msg, e));
+            return;
+        }
+
+        @SuppressWarnings("unchecked")
+        PerformanceTable<Double> profilesPerformance = (PerformanceTable<Double>) xmcda.performanceTablesList.get(0);
+        for (Alternative alternative : profilesPerformance.getAlternatives()) {
+            if (!inputs.getProfilesIds().contains(alternative.id())) {
+                continue;
+            }
+            for (Criterion criterion : profilesPerformance.getCriteria()) {
+                if (!inputs.getCriteriaIds().contains(criterion.id())) {
+                    continue;
+                }
+
+                Double value = profilesPerformance.getValue(alternative, criterion);
+                inputs.getProfilesPerformance().putIfAbsent(alternative.id(), new LinkedHashMap<>());
+                inputs.getProfilesPerformance().get(alternative.id()).put(criterion.id(), value);
+            }
+        }
+    }
+
+    protected static void checkDominanceProperty(Inputs inputs, ProgramExecutionResult errors) {
+
+        for (String criterionId : inputs.getCriteriaIds()) {
+            for (int i = 0; i < inputs.getProfilesIds().size() - 1; i++) {
+                String profileId = inputs.getProfilesIds().get(i);
+                String nextProfileId = inputs.getProfilesIds().get(i + 1);
+
+                Map<String, Double> firstProfilePerformance = inputs.getProfilesPerformance().get(profileId);
+                Map<String, Double> secondProfilePerformance = inputs.getProfilesPerformance().get(nextProfileId);
+                String preferenceDirection = inputs.getCriteriaPreferencesDirection().get(criterionId);
+                if (firstProfilePerformance == null || secondProfilePerformance == null || preferenceDirection == null) {
+                    errors.addError("There was a problem when checking profiles preferences. Profiles need to fulfill the dominance condition on each criterion.");
+                    return;
+                }
+                Double firstProfileCriterionPerformance = firstProfilePerformance.get(criterionId);
+                Double secondProfileCriterionPerformance = secondProfilePerformance.get(criterionId);
+                if (firstProfileCriterionPerformance == null || secondProfileCriterionPerformance == null) {
+                    errors.addError("There was a problem when checking profiles preferences. Profiles need to fulfill the dominance condition on each criterion.");
+                    return;
+                }
+                if (("max".equalsIgnoreCase(preferenceDirection) && firstProfileCriterionPerformance.compareTo(secondProfileCriterionPerformance) > 0) ||
+                        ("min".equalsIgnoreCase(preferenceDirection) && firstProfileCriterionPerformance.compareTo(secondProfileCriterionPerformance) < 0)) {
+                    errors.addError("Profiles need to fulfill the dominance condition on each criterion.");
+                    return;
+                }
+            }
+        }
+    }
+
 }
