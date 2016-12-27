@@ -17,18 +17,7 @@ public class FlowSortIXMCDAv3 {
 
     }
 
-    public static void main(String[] args) throws Utils.InvalidCommandLineException {
-        final Utils.Arguments params = Utils.parseCmdLineArguments(args);
-
-        final String indir = params.inputDirectory;
-        final String outdir = params.outputDirectory;
-
-        final File prgExecResults = new File(outdir, "messages.xml");
-
-        final ProgramExecutionResult executionResult = new ProgramExecutionResult();
-
-        final XMCDA xmcda = new XMCDA();
-
+    private static void readFiles(XMCDA xmcda, String indir, ProgramExecutionResult executionResult) {
         Referenceable.DefaultCreationObserver.currentMarker="alternatives";
         Utils.loadXMCDAv3(xmcda, new File(indir, "alternatives.xml"), true, executionResult, "alternatives");
         Referenceable.DefaultCreationObserver.currentMarker="categories";
@@ -49,6 +38,21 @@ public class FlowSortIXMCDAv3 {
         Utils.loadXMCDAv3(xmcda, new File(indir, "method_parameters.xml"), true, executionResult, "programParameters");
         Referenceable.DefaultCreationObserver.currentMarker = "performanceTable";
         Utils.loadXMCDAv3(xmcda, new File(indir, "performance_table.xml"), true, executionResult, "performanceTable");
+    }
+
+    public static void main(String[] args) throws Utils.InvalidCommandLineException {
+        final Utils.Arguments params = Utils.parseCmdLineArguments(args);
+
+        final String indir = params.inputDirectory;
+        final String outdir = params.outputDirectory;
+
+        final File prgExecResults = new File(outdir, "messages.xml");
+
+        final ProgramExecutionResult executionResult = new ProgramExecutionResult();
+
+        final XMCDA xmcda = new XMCDA();
+
+        readFiles(xmcda, indir, executionResult);
 
         if ( ! (executionResult.isOk() || executionResult.isWarning() ) ) {
             Utils.writeProgramExecutionResultsAndExit(prgExecResults, executionResult, Utils.XMCDA_VERSION.v3);

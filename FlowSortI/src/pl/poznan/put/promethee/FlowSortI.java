@@ -22,27 +22,27 @@ public class FlowSortI {
 
         Map<String, Map<String, String>> assignments = new LinkedHashMap<>();
 
-        for (int altI = 0 ; altI < inputs.alternativesIds.size(); altI++) {
+        for (int altI = 0; altI < inputs.getAlternativesIds().size(); altI++) {
             Map<String, String> interval = new LinkedHashMap<>();
-            interval.put(LOWER,inputs.categoryProfiles.get(0).getCategory().id());
-            interval.put(UPPER, inputs.categoryProfiles.get(0).getCategory().id());
-            assignments.put(inputs.alternativesIds.get(altI), interval);
+            interval.put(LOWER, inputs.getCategoryProfiles().get(0).getCategory().id());
+            interval.put(UPPER, inputs.getCategoryProfiles().get(0).getCategory().id());
+            assignments.put(inputs.getAlternativesIds().get(altI), interval);
 
-            for (int catProfI = 1; catProfI < inputs.categoryProfiles.size() ; catProfI++) {
-                if (inputs.positiveFlows.get(inputs.alternativesIds.get(altI)) >=
-                        (inputs.positiveFlows.get(inputs.categoryProfiles.get(catProfI).getCentralProfile().getAlternative().id())) +
-                                inputs.positiveFlows.get(inputs.categoryProfiles.get(catProfI-1).getCentralProfile().getAlternative().id())/2) {
-                    assignments.get(inputs.alternativesIds.get(altI)).put(UPPER, inputs.categoryProfiles.get(catProfI).getCategory().id());
+            for (int catProfI = 1; catProfI < inputs.getCategoryProfiles().size() ; catProfI++) {
+                if (inputs.getPositiveFlows().get(inputs.getAlternativesIds().get(altI)) >=
+                        (inputs.getPositiveFlows().get(inputs.getCategoryProfiles().get(catProfI).getCentralProfile().getAlternative().id())) +
+                                inputs.getPositiveFlows().get(inputs.getCategoryProfiles().get(catProfI-1).getCentralProfile().getAlternative().id())/2) {
+                    assignments.get(inputs.getAlternativesIds().get(altI)).put(UPPER, inputs.getCategoryProfiles().get(catProfI).getCategory().id());
                 } else {
                     break;
                 }
             }
 
-            for (int catProfI = 1; catProfI < inputs.categoryProfiles.size() ; catProfI++) {
-                if (inputs.negativeFlows.get(inputs.alternativesIds.get(altI)) <
-                        (inputs.negativeFlows.get(inputs.categoryProfiles.get(catProfI).getCentralProfile().getAlternative().id()) +
-                                inputs.negativeFlows.get(inputs.categoryProfiles.get(catProfI - 1).getCentralProfile().getAlternative().id()))/2) {
-                    assignments.get(inputs.alternativesIds.get(altI)).put(LOWER, inputs.categoryProfiles.get(catProfI).getCategory().id());
+            for (int catProfI = 1; catProfI < inputs.getCategoryProfiles().size() ; catProfI++) {
+                if (inputs.getNegativeFlows().get(inputs.getAlternativesIds().get(altI)) <
+                        (inputs.getNegativeFlows().get(inputs.getCategoryProfiles().get(catProfI).getCentralProfile().getAlternative().id()) +
+                                inputs.getNegativeFlows().get(inputs.getCategoryProfiles().get(catProfI - 1).getCentralProfile().getAlternative().id()))/2) {
+                    assignments.get(inputs.getAlternativesIds().get(altI)).put(LOWER, inputs.getCategoryProfiles().get(catProfI).getCategory().id());
                 } else {
                     break;
                 }
@@ -58,25 +58,25 @@ public class FlowSortI {
 
         Map<String, Map<String, String>> assignments = new LinkedHashMap<>();
 
-        for (int altI = 0 ; altI < inputs.alternativesIds.size(); altI++) {
+        for (int altI = 0; altI < inputs.getAlternativesIds().size(); altI++) {
             Map<String, String> interval = new LinkedHashMap<>();
-            interval.put(LOWER,inputs.categoryProfiles.get(0).getCategory().id());
-            interval.put(UPPER, inputs.categoryProfiles.get(0).getCategory().id());
-            assignments.put(inputs.alternativesIds.get(altI), interval);
+            interval.put(LOWER, inputs.getCategoryProfiles().get(0).getCategory().id());
+            interval.put(UPPER, inputs.getCategoryProfiles().get(0).getCategory().id());
+            assignments.put(inputs.getAlternativesIds().get(altI), interval);
 
-            for (int catProfI = 0; catProfI < inputs.categoryProfiles.size()-1; catProfI++) {
-                if (inputs.positiveFlows.get(inputs.alternativesIds.get(altI)) >=
-                        inputs.positiveFlows.get(inputs.categoryProfiles.get(catProfI).getUpperBound().getAlternative().id())){
-                    assignments.get(inputs.alternativesIds.get(altI)).put(UPPER, inputs.categoryProfiles.get(catProfI+1).getCategory().id());
+            for (int catProfI = 0; catProfI < inputs.getCategoryProfiles().size()-1; catProfI++) {
+                if (inputs.getPositiveFlows().get(inputs.getAlternativesIds().get(altI)) >=
+                        inputs.getPositiveFlows().get(inputs.getCategoryProfiles().get(catProfI).getUpperBound().getAlternative().id())){
+                    assignments.get(inputs.getAlternativesIds().get(altI)).put(UPPER, inputs.getCategoryProfiles().get(catProfI+1).getCategory().id());
                 } else {
                     break;
                 }
             }
 
-            for (int catProfI = 0; catProfI < inputs.categoryProfiles.size()-1; catProfI++) {
-                if (inputs.negativeFlows.get(inputs.alternativesIds.get(altI)) <
-                        inputs.negativeFlows.get(inputs.categoryProfiles.get(catProfI).getUpperBound().getAlternative().id())){
-                    assignments.get(inputs.alternativesIds.get(altI)).put(LOWER, inputs.categoryProfiles.get(catProfI+1).getCategory().id());
+            for (int catProfI = 0; catProfI < inputs.getCategoryProfiles().size()-1; catProfI++) {
+                if (inputs.getNegativeFlows().get(inputs.getAlternativesIds().get(altI)) <
+                        inputs.getNegativeFlows().get(inputs.getCategoryProfiles().get(catProfI).getUpperBound().getAlternative().id())){
+                    assignments.get(inputs.getAlternativesIds().get(altI)).put(LOWER, inputs.getCategoryProfiles().get(catProfI+1).getCategory().id());
                 } else {
                     break;
                 }
@@ -91,9 +91,9 @@ public class FlowSortI {
 
     public static OutputsHandler.Output sort(InputsHandler.Inputs inputs) {
 
-        if ("CENTRAL".equalsIgnoreCase(inputs.profilesType.toString())) {
+        if ("CENTRAL".equalsIgnoreCase(inputs.getProfilesType().toString())) {
             return sortWithCentralProfiles(inputs);
-        } else if ("BOUNDING".equalsIgnoreCase(inputs.profilesType.toString())) {
+        } else if ("BOUNDING".equalsIgnoreCase(inputs.getProfilesType().toString())) {
             return sortWithBoundaryProfiles(inputs);
         } else {
             throw new UnsupportedOperationException("Profiles can be only central or bounding.");
