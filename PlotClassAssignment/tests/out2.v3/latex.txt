@@ -1,0 +1,12 @@
+\begin{table}
+\begin{center}
+\begin{tabular}{c|c|c}
+\bf Alternative & \bf Lower class & \bf Upper class \cr
+\hline
+a1 & C1 & C2 \cr
+\hline
+a2 & C1 & C2 \cr
+\end{tabular}
+\caption{Alternatives Assignments}
+\end{center}
+\end{table}

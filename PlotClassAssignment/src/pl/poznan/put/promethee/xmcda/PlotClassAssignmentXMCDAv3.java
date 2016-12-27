@@ -3,8 +3,11 @@ package pl.poznan.put.promethee.xmcda;
 import org.xmcda.ProgramExecutionResult;
 import org.xmcda.Referenceable;
 import org.xmcda.XMCDA;
+import pl.poznan.put.promethee.PlotClassAssignment;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Map;
 
 /**
@@ -71,20 +74,26 @@ public class PlotClassAssignmentXMCDAv3 {
             Utils.writeProgramExecutionResultsAndExit(prgExecResults, executionResult, Utils.XMCDA_VERSION.v3);
         }
 
-/*        final OutputsHandler.Output results;
+        final OutputsHandler.Output results;
         try
         {
-            results = FlowSortGDSS.sort(inputs);
+            results = PlotClassAssignment.execute(inputs);
         }
         catch (Exception e) {
             executionResult.addError(Utils.getMessage("The calculation could not be performed, reason: ", e));
             Utils.writeProgramExecutionResultsAndExit(prgExecResults, executionResult, Utils.XMCDA_VERSION.v3);
             return;
         }
+        try(  PrintWriter out = new PrintWriter( outdir+"/latex.txt" )  ){
+            out.println( results.getLatexTable() );
+        } catch (FileNotFoundException e) {
+            executionResult.addError("Output file cannot be created. Reason: " + e);
+        }
 
+/*
         Map<String, XMCDA> resultsMap = OutputsHandler.convert(results.getFirstStepAssignments(), results.getAssignments());
 
-        handleResults(outdir, resultsMap, executionResult);
-        Utils.writeProgramExecutionResultsAndExit(prgExecResults, executionResult, Utils.XMCDA_VERSION.v3);*/
+        handleResults(outdir, resultsMap, executionResult);*/
+        Utils.writeProgramExecutionResultsAndExit(prgExecResults, executionResult, Utils.XMCDA_VERSION.v3);
     }
 }

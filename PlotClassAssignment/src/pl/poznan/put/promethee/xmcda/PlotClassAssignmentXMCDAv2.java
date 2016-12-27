@@ -8,6 +8,8 @@ import org.xmcda.parsers.xml.xmcda_v2.XMCDAParser;
 import pl.poznan.put.promethee.PlotClassAssignment;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Map;
 
 /**
@@ -100,7 +102,7 @@ public class PlotClassAssignmentXMCDAv2 {
         {
             Utils.writeProgramExecutionResultsAndExit(prgExecResultsFile, executionResult, Utils.XMCDA_VERSION.v2);
         }
-/*        final OutputsHandler.Output results ;
+        final OutputsHandler.Output results ;
         try
         {
             results = PlotClassAssignment.execute(inputs);
@@ -111,10 +113,15 @@ public class PlotClassAssignmentXMCDAv2 {
             Utils.writeProgramExecutionResultsAndExit(prgExecResultsFile, executionResult, Utils.XMCDA_VERSION.v2);
             return;
         }
-
+        try(  PrintWriter out = new PrintWriter( outdir+"/latex.txt" )  ){
+            out.println( results.getLatexTable() );
+        } catch (FileNotFoundException e) {
+            executionResult.addError("Output file cannot be created. Reason: " + e);
+        }
+/*
         final Map<String, XMCDA> resultsMap = OutputsHandler.convert(results.getFirstStepAssignments(), results.getAssignments());
 
-        handleResults(outdir, resultsMap);
-        Utils.writeProgramExecutionResultsAndExit(prgExecResultsFile, executionResult, Utils.XMCDA_VERSION.v2);*/
+        handleResults(outdir, resultsMap);*/
+        Utils.writeProgramExecutionResultsAndExit(prgExecResultsFile, executionResult, Utils.XMCDA_VERSION.v2);
     }
 }
