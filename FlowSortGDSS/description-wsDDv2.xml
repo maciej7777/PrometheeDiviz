@@ -102,70 +102,70 @@
 
         <input id="input14" name="flows1" displayName="flows_1" isoptional="0">
             <documentation>
-                <description>Flows of given alternatives for decision maker 1.</description>
+                <description>Normalised flows of given alternatives for decision maker 1.</description>
             </documentation>
             <xmcda tag="alternativesValues"/>
         </input>
 
         <input id="input15" name="flows2" displayName="flows_2" isoptional="0">
             <documentation>
-                <description>Flows of given alternatives for decision maker 2.</description>
+                <description>Normalised flows of given alternatives for decision maker 2.</description>
             </documentation>
             <xmcda tag="alternativesValues"/>
         </input>
 
         <input id="input16" name="flows3" displayName="flows_3" isoptional="1">
             <documentation>
-                <description>Flows of given alternatives for decision maker 3.</description>
+                <description>Normalised flows of given alternatives for decision maker 3.</description>
             </documentation>
             <xmcda tag="alternativesValues"/>
         </input>
 
         <input id="input17" name="flows4" displayName="flows_4" isoptional="1">
             <documentation>
-                <description>Flows of given alternatives for decision maker 4.</description>
+                <description>Normalised flows of given alternatives for decision maker 4.</description>
             </documentation>
             <xmcda tag="alternativesValues"/>
         </input>
 
         <input id="input18" name="flows5" displayName="flows_5" isoptional="1">
             <documentation>
-                <description>Flows of given alternatives for decision maker 5.</description>
+                <description>Normalised flows of given alternatives for decision maker 5.</description>
             </documentation>
             <xmcda tag="alternativesValues"/>
         </input>
 
         <input id="input19" name="flows6" displayName="flows_6" isoptional="1">
             <documentation>
-                <description>Flows of given alternatives for decision maker 6.</description>
+                <description>Normalised flows of given alternatives for decision maker 6.</description>
             </documentation>
             <xmcda tag="alternativesValues"/>
         </input>
 
         <input id="input20" name="flows7" displayName="flows_7" isoptional="1">
             <documentation>
-                <description>Flows of given alternatives for decision maker 7.</description>
+                <description>Normalised flows of given alternatives for decision maker 7.</description>
             </documentation>
             <xmcda tag="alternativesValues"/>
         </input>
 
         <input id="input21" name="flows8" displayName="flows_8" isoptional="1">
             <documentation>
-                <description>Flows of given alternatives for decision maker 8.</description>
+                <description>Normalised flows of given alternatives for decision maker 8.</description>
             </documentation>
             <xmcda tag="alternativesValues"/>
         </input>
 
         <input id="input22" name="flows9" displayName="flows_9" isoptional="1">
             <documentation>
-                <description>Flows of given alternatives for decision maker 9.</description>
+                <description>Normalised flows of given alternatives for decision maker 9.</description>
             </documentation>
             <xmcda tag="alternativesValues"/>
         </input>
 
         <input id="input23" name="flows10" displayName="flows_10" isoptional="1">
             <documentation>
-                <description>Flows of given alternatives for decision maker 10.</description>
+                <description>Normalised flows of given alternatives for decision maker 10.</description>
             </documentation>
             <xmcda tag="alternativesValues"/>
         </input>
@@ -531,7 +531,7 @@
 
         <input id="input45" name="profiles_flows" displayName="profiles_flows" isoptional="0">
             <documentation>
-                <description>Flows of given profiles counted for all decision makers together.</description>
+                <description>Normalised flows of given profiles counted for all decision makers together.</description>
             </documentation>
             <xmcda tag="alternativesValues"/>
         </input>
