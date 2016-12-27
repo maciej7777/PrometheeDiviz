@@ -1,6 +1,5 @@
 package pl.poznan.put.promethee;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import pl.poznan.put.promethee.xmcda.InputsHandler;
 import pl.poznan.put.promethee.xmcda.OutputsHandler;
 
@@ -8,6 +7,7 @@ import pl.poznan.put.promethee.xmcda.OutputsHandler;
  * Created by Maciej Uniejewski on 2016-12-26.
  */
 public class PlotClassAssignment {
+
     private static final String FIRST_ROWS = "\\begin{table}\n" +
             "\\begin{center}\n";
     private static final String SECOND_ROW_DIRECT = "\\begin{tabular}{c|c}\n" +
@@ -20,8 +20,11 @@ public class PlotClassAssignment {
             "\\end{table}";
     private static final String HLINE = "\\hline\n";
     private static final String SEPARATOR = " & ";
-    private static final String NEW_lINE = " \\cr\n";
+    private static final String NEW_LINE = " \\cr\n";
 
+    private PlotClassAssignment() {
+
+    }
 
     public static OutputsHandler.Output execute(InputsHandler.Inputs inputs) {
         OutputsHandler.Output output = new OutputsHandler.Output();
@@ -44,7 +47,7 @@ public class PlotClassAssignment {
             table.append(HLINE);
             String alternativeId = inputs.getAlternativesIds().get(i);
             String assignment = inputs.getAssignments().get(alternativeId).get("LOWER");
-            table.append(alternativeId + SEPARATOR + assignment + NEW_lINE);
+            table.append(alternativeId + SEPARATOR + assignment + NEW_LINE);
         }
 
         table.append(END_ROW);
@@ -62,7 +65,7 @@ public class PlotClassAssignment {
             String alternativeId = inputs.getAlternativesIds().get(i);
             String lowerBound = inputs.getAssignments().get(alternativeId).get("LOWER");
             String upperBound = inputs.getAssignments().get(alternativeId).get("UPPER");
-            table.append(alternativeId + SEPARATOR + lowerBound + SEPARATOR + upperBound + NEW_lINE);
+            table.append(alternativeId + SEPARATOR + lowerBound + SEPARATOR + upperBound + NEW_LINE);
         }
 
         table.append(END_ROW);
