@@ -30,8 +30,8 @@ public class FlowSortI {
 
             for (int catProfI = 1; catProfI < inputs.getCategoryProfiles().size() ; catProfI++) {
                 if (inputs.getPositiveFlows().get(inputs.getAlternativesIds().get(altI)) >=
-                        (inputs.getPositiveFlows().get(inputs.getCategoryProfiles().get(catProfI).getCentralProfile().getAlternative().id())) +
-                                inputs.getPositiveFlows().get(inputs.getCategoryProfiles().get(catProfI-1).getCentralProfile().getAlternative().id())/2) {
+                        (inputs.getPositiveFlows().get(inputs.getCategoryProfiles().get(catProfI).getCentralProfile().getAlternative().id()) +
+                                inputs.getPositiveFlows().get(inputs.getCategoryProfiles().get(catProfI-1).getCentralProfile().getAlternative().id()))/2) {
                     assignments.get(inputs.getAlternativesIds().get(altI)).put(UPPER, inputs.getCategoryProfiles().get(catProfI).getCategory().id());
                 } else {
                     break;
