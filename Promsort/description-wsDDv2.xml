@@ -44,8 +44,6 @@
                 <description>Definitions of criteria, their scales and preference thresholds. </description>
             </documentation>
             <xmcda tag="criteria"/>
-            <xmcda tag="criteriaScales"/>
-            <xmcda tag="criteriaThresholds"/>
         </input>
 
         <input id="input6" name="negative_flows" displayName="negative_flows" isoptional="0">

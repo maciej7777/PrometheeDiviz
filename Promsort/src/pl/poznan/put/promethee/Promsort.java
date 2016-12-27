@@ -56,60 +56,60 @@ public class Promsort {
         List<String> unassignedAlternatives = new ArrayList<>();
         Map<String, Set<String>> assignedAlternatives = new LinkedHashMap<>();
 
-        for (int i = 0; i < inputs.categoriesIds.size(); i++) {
-            assignedAlternatives.put(inputs.categoriesIds.get(i), new LinkedHashSet<>());
-            categoriesFlows.put(inputs.categoriesIds.get(i), BigDecimal.ZERO);
+        for (int i = 0; i < inputs.getCategoriesIds().size(); i++) {
+            assignedAlternatives.put(inputs.getCategoriesIds().get(i), new LinkedHashSet<>());
+            categoriesFlows.put(inputs.getCategoriesIds().get(i), BigDecimal.ZERO);
         }
 
-        for (int altI = 0 ; altI < inputs.alternativesIds.size(); altI++) {
+        for (int altI = 0; altI < inputs.getAlternativesIds().size(); altI++) {
             boolean marked = false;
 
-            for (int catProfI = inputs.categoryProfiles.size()-2; catProfI >= 0 ; catProfI--) {
-                if (isA1PreferedToA2(inputs.positiveFlows.get(inputs.alternativesIds.get(altI)),
-                        inputs.negativeFlows.get(inputs.alternativesIds.get(altI)),
-                        inputs.positiveFlows.get(inputs.categoryProfiles.get(catProfI).getUpperBound().getAlternative().id()),
-                        inputs.negativeFlows.get(inputs.categoryProfiles.get(catProfI).getUpperBound().getAlternative().id()))) {
+            for (int catProfI = inputs.getCategoryProfiles().size()-2; catProfI >= 0 ; catProfI--) {
+                if (isA1PreferedToA2(inputs.getPositiveFlows().get(inputs.getAlternativesIds().get(altI)),
+                        inputs.getNegativeFlows().get(inputs.getAlternativesIds().get(altI)),
+                        inputs.getPositiveFlows().get(inputs.getCategoryProfiles().get(catProfI).getUpperBound().getAlternative().id()),
+                        inputs.getNegativeFlows().get(inputs.getCategoryProfiles().get(catProfI).getUpperBound().getAlternative().id()))) {
 
-                    finalAssignments.put(inputs.alternativesIds.get(altI), inputs.categoryProfiles.get(catProfI+1).getCategory().id());
+                    finalAssignments.put(inputs.getAlternativesIds().get(altI), inputs.getCategoryProfiles().get(catProfI+1).getCategory().id());
 
                     Map<String, String> interval = new LinkedHashMap<>();
-                    interval.put(LOWER,inputs.categoryProfiles.get(catProfI+1).getCategory().id());
-                    interval.put(UPPER, inputs.categoryProfiles.get(catProfI+1).getCategory().id());
-                    firstStepAssignments.put(inputs.alternativesIds.get(altI), interval);
+                    interval.put(LOWER, inputs.getCategoryProfiles().get(catProfI+1).getCategory().id());
+                    interval.put(UPPER, inputs.getCategoryProfiles().get(catProfI+1).getCategory().id());
+                    firstStepAssignments.put(inputs.getAlternativesIds().get(altI), interval);
 
-                    assignedAlternatives.get(inputs.categoryProfiles.get(catProfI+1).getCategory().id()).add(inputs.alternativesIds.get(altI));
-                    categoriesFlows.put(inputs.categoryProfiles.get(catProfI+1).getCategory().id(),
-                            categoriesFlows.getOrDefault(inputs.categoryProfiles.get(catProfI+1).getCategory().id(), BigDecimal.ZERO).
-                                    add(inputs.positiveFlows.get(inputs.alternativesIds.get(altI))).
-                                    subtract(inputs.negativeFlows.get(inputs.alternativesIds.get(altI))));
+                    assignedAlternatives.get(inputs.getCategoryProfiles().get(catProfI+1).getCategory().id()).add(inputs.getAlternativesIds().get(altI));
+                    categoriesFlows.put(inputs.getCategoryProfiles().get(catProfI+1).getCategory().id(),
+                            categoriesFlows.getOrDefault(inputs.getCategoryProfiles().get(catProfI+1).getCategory().id(), BigDecimal.ZERO).
+                                    add(inputs.getPositiveFlows().get(inputs.getAlternativesIds().get(altI))).
+                                    subtract(inputs.getNegativeFlows().get(inputs.getAlternativesIds().get(altI))));
                     marked = true;
-                } else if (isA1IndifferencedToA2(inputs.positiveFlows.get(inputs.alternativesIds.get(altI)),
-                        inputs.negativeFlows.get(inputs.alternativesIds.get(altI)),
-                        inputs.positiveFlows.get(inputs.categoryProfiles.get(catProfI).getUpperBound().getAlternative().id()),
-                        inputs.negativeFlows.get(inputs.categoryProfiles.get(catProfI).getUpperBound().getAlternative().id()))) {
+                } else if (isA1IndifferencedToA2(inputs.getPositiveFlows().get(inputs.getAlternativesIds().get(altI)),
+                        inputs.getNegativeFlows().get(inputs.getAlternativesIds().get(altI)),
+                        inputs.getPositiveFlows().get(inputs.getCategoryProfiles().get(catProfI).getUpperBound().getAlternative().id()),
+                        inputs.getNegativeFlows().get(inputs.getCategoryProfiles().get(catProfI).getUpperBound().getAlternative().id()))) {
                     Map<String, String> interval = new LinkedHashMap<>();
-                    interval.put(LOWER,inputs.categoryProfiles.get(catProfI).getCategory().id());
-                    interval.put(UPPER, inputs.categoryProfiles.get(catProfI+1).getCategory().id());
-                    firstStepAssignments.put(inputs.alternativesIds.get(altI), interval);
+                    interval.put(LOWER, inputs.getCategoryProfiles().get(catProfI).getCategory().id());
+                    interval.put(UPPER, inputs.getCategoryProfiles().get(catProfI+1).getCategory().id());
+                    firstStepAssignments.put(inputs.getAlternativesIds().get(altI), interval);
 
                     marked = true;
-                    unassignedAlternatives.add(inputs.alternativesIds.get(altI));
+                    unassignedAlternatives.add(inputs.getAlternativesIds().get(altI));
                 }
                 if (marked) {
                     break;
                 }
             }
             if (!marked) {
-                assignedAlternatives.get(inputs.categoryProfiles.get(0).getCategory().id()).add(inputs.alternativesIds.get(altI));
-                categoriesFlows.put(inputs.categoryProfiles.get(0).getCategory().id(),
-                        categoriesFlows.getOrDefault(inputs.categoryProfiles.get(0).getCategory().id(), BigDecimal.ZERO).
-                                add(inputs.positiveFlows.get(inputs.alternativesIds.get(altI))).
-                                subtract(inputs.negativeFlows.get(inputs.alternativesIds.get(altI))));
-                finalAssignments.put(inputs.alternativesIds.get(altI), inputs.categoryProfiles.get(0).getCategory().id());
+                assignedAlternatives.get(inputs.getCategoryProfiles().get(0).getCategory().id()).add(inputs.getAlternativesIds().get(altI));
+                categoriesFlows.put(inputs.getCategoryProfiles().get(0).getCategory().id(),
+                        categoriesFlows.getOrDefault(inputs.getCategoryProfiles().get(0).getCategory().id(), BigDecimal.ZERO).
+                                add(inputs.getPositiveFlows().get(inputs.getAlternativesIds().get(altI))).
+                                subtract(inputs.getNegativeFlows().get(inputs.getAlternativesIds().get(altI))));
+                finalAssignments.put(inputs.getAlternativesIds().get(altI), inputs.getCategoryProfiles().get(0).getCategory().id());
                 Map<String, String> interval = new LinkedHashMap<>();
-                interval.put(LOWER,inputs.categoryProfiles.get(0).getCategory().id());
-                interval.put(UPPER, inputs.categoryProfiles.get(0).getCategory().id());
-                firstStepAssignments.put(inputs.alternativesIds.get(altI), interval);
+                interval.put(LOWER, inputs.getCategoryProfiles().get(0).getCategory().id());
+                interval.put(UPPER, inputs.getCategoryProfiles().get(0).getCategory().id());
+                firstStepAssignments.put(inputs.getAlternativesIds().get(altI), interval);
             }
         }
 
@@ -134,12 +134,12 @@ public class Promsort {
                 BigDecimal lengthT1 = new BigDecimal(assignedAlternatives.get(categoryT1).size());
 
 
-                BigDecimal dkPositive = lengthT.multiply(inputs.positiveFlows.get(unassignedAlternatives.get(i)).
-                        subtract(inputs.negativeFlows.get(unassignedAlternatives.get(i))).
+                BigDecimal dkPositive = lengthT.multiply(inputs.getPositiveFlows().get(unassignedAlternatives.get(i)).
+                        subtract(inputs.getNegativeFlows().get(unassignedAlternatives.get(i))).
                         subtract( categoriesFlows.get(categoryT)));
                 BigDecimal dkNegative = categoriesFlows.get(categoryT1).
-                        subtract(lengthT1.multiply(inputs.positiveFlows.get(unassignedAlternatives.get(i)).
-                                subtract(inputs.negativeFlows.get(unassignedAlternatives.get(i)))));
+                        subtract(lengthT1.multiply(inputs.getPositiveFlows().get(unassignedAlternatives.get(i)).
+                                subtract(inputs.getNegativeFlows().get(unassignedAlternatives.get(i)))));
 
                 BigDecimal dk1 = BigDecimal.ZERO;
                 if (lengthT.compareTo(BigDecimal.ZERO) > 0) {
@@ -153,7 +153,7 @@ public class Promsort {
 
                 BigDecimal dk = dk1.subtract(dk2);
 
-                if (dk.compareTo(inputs.cutPoint) > 0 || (dk.compareTo(inputs.cutPoint) == 0 && inputs.assignToABetterClass)) {
+                if (dk.compareTo(inputs.getCutPoint()) > 0 || (dk.compareTo(inputs.getCutPoint()) == 0 && inputs.getAssignToABetterClass())) {
                     finalAssignments.put(unassignedAlternatives.get(i), categoryT1);
                 } else {
                     finalAssignments.put(unassignedAlternatives.get(i), categoryT);
