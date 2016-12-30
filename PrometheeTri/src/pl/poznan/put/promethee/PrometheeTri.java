@@ -16,20 +16,20 @@ public class PrometheeTri {
     public static OutputsHandler.Output sort(InputsHandler.Inputs inputs) {
         Map<String, String> assignments = new LinkedHashMap<>();
 
-        for (int altI = 0 ; altI < inputs.alternativesIds.size(); altI++) {
-            assignments.put(inputs.alternativesIds.get(altI), inputs.categoryProfiles.get(0).getCategory().id());
-            BigDecimal firstProfileFlow = inputs.flows.get(inputs.categoryProfiles.get(0).getCentralProfile().getAlternative().id());
-            BigDecimal alternativeFlow = inputs.flows.get(inputs.alternativesIds.get(altI));
+        for (int altI = 0; altI < inputs.getAlternativesIds().size(); altI++) {
+            assignments.put(inputs.getAlternativesIds().get(altI), inputs.getCategoryProfiles().get(0).getCategory().id());
+            BigDecimal firstProfileFlow = inputs.getFlows().get(inputs.getCategoryProfiles().get(0).getCentralProfile().getAlternative().id());
+            BigDecimal alternativeFlow = inputs.getFlows().get(inputs.getAlternativesIds().get(altI));
             BigDecimal bestDiff = firstProfileFlow.subtract(alternativeFlow).abs();
 
-            for (int i = 1; i < inputs.categoryProfiles.size(); i++) {
+            for (int i = 1; i < inputs.getCategoryProfiles().size(); i++) {
 
-                BigDecimal profileFlow = inputs.flows.get(inputs.categoryProfiles.get(i).getCentralProfile().getAlternative().id());
+                BigDecimal profileFlow = inputs.getFlows().get(inputs.getCategoryProfiles().get(i).getCentralProfile().getAlternative().id());
                 BigDecimal tempDiff = profileFlow.subtract(alternativeFlow).abs();
 
-                if (tempDiff.compareTo(bestDiff) < 0 || (tempDiff.compareTo(bestDiff) == 0 && inputs.assignToABetterClass)) {
+                if (tempDiff.compareTo(bestDiff) < 0 || (tempDiff.compareTo(bestDiff) == 0 && inputs.getAssignToABetterClass())) {
                     bestDiff = tempDiff;
-                    assignments.put(inputs.alternativesIds.get(altI), inputs.categoryProfiles.get(i).getCategory().id());
+                    assignments.put(inputs.getAlternativesIds().get(altI), inputs.getCategoryProfiles().get(i).getCategory().id());
                 }
             }
         }

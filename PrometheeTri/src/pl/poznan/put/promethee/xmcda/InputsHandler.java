@@ -16,16 +16,72 @@ public class InputsHandler {
     }
 
     public static class Inputs {
-        public List<String> alternativesIds;
-        public List<String> categoriesIds;
-        public List<String> profilesIds;
-        public Map<String, BigDecimal> flows;
-        public Boolean assignToABetterClass;
-        public Map<String, Integer> categoriesRanking;
-        public List<CategoryProfile> categoryProfiles;
+        private List<String> alternativesIds;
+        private List<String> categoriesIds;
+        private List<String> profilesIds;
+        private Map<String, BigDecimal> flows;
+        private Boolean assignToABetterClass;
+        private Map<String, Integer> categoriesRanking;
+        private List<CategoryProfile> categoryProfiles;
+
+        public List<String> getAlternativesIds() {
+            return alternativesIds;
+        }
+
+        public void setAlternativesIds(List<String> alternativesIds) {
+            this.alternativesIds = alternativesIds;
+        }
+
+        public List<String> getCategoriesIds() {
+            return categoriesIds;
+        }
+
+        public void setCategoriesIds(List<String> categoriesIds) {
+            this.categoriesIds = categoriesIds;
+        }
+
+        public List<String> getProfilesIds() {
+            return profilesIds;
+        }
+
+        public void setProfilesIds(List<String> profilesIds) {
+            this.profilesIds = profilesIds;
+        }
+
+        public Map<String, BigDecimal> getFlows() {
+            return flows;
+        }
+
+        public void setFlows(Map<String, BigDecimal> flows) {
+            this.flows = flows;
+        }
+
+        public Boolean getAssignToABetterClass() {
+            return assignToABetterClass;
+        }
+
+        public void setAssignToABetterClass(Boolean assignToABetterClass) {
+            this.assignToABetterClass = assignToABetterClass;
+        }
+
+        public Map<String, Integer> getCategoriesRanking() {
+            return categoriesRanking;
+        }
+
+        public void setCategoriesRanking(Map<String, Integer> categoriesRanking) {
+            this.categoriesRanking = categoriesRanking;
+        }
+
+        public List<CategoryProfile> getCategoryProfiles() {
+            return categoryProfiles;
+        }
+
+        public void setCategoryProfiles(List<CategoryProfile> categoryProfiles) {
+            this.categoryProfiles = categoryProfiles;
+        }
     }
 
-    static public Inputs checkAndExtractInputs(XMCDA xmcda, ProgramExecutionResult xmcdaExecResults) {
+    public static Inputs checkAndExtractInputs(XMCDA xmcda, ProgramExecutionResult xmcdaExecResults) {
         Inputs inputsDict = checkInputs(xmcda, xmcdaExecResults);
         if (xmcdaExecResults.isError())
             return null;
@@ -54,7 +110,7 @@ public class InputsHandler {
             if (alternativesIds.isEmpty())
                 errors.addError("The alternatives list can not be empty.");
 
-            inputs.alternativesIds = alternativesIds;
+            inputs.setAlternativesIds(alternativesIds);
         }
     }
 
@@ -94,7 +150,7 @@ public class InputsHandler {
                 errors.addError("Invalid value for parameter assignToABetterClass, it must be true or false.");
                 return;
             }
-            inputs.assignToABetterClass = assignToABetterClass;
+            inputs.setAssignToABetterClass(assignToABetterClass);
         } catch (Exception exception) {
             String err = "Invalid value for parameter assignToABetterClass, it must be true or false.";
             errors.addError(err);
@@ -109,7 +165,7 @@ public class InputsHandler {
         } else {
             List<String> categories = xmcda.categories.getActiveCategories().stream().filter(a -> "categories".equals(a.getMarker())).map(
                     Category::id).collect(Collectors.toList());
-            inputs.categoriesIds = categories;
+            inputs.setCategoriesIds(categories);
             if (categories.isEmpty())
                 errors.addError("The category list can not be empty.");
         }
@@ -146,7 +202,7 @@ public class InputsHandler {
                 errors.addError("Minimal rank should be equal to 1.");
                 return;
             }
-            if (max != inputs.categoriesIds.size()) {
+            if (max != inputs.getCategoriesIds().size()) {
                 errors.addError("Maximal rank should be equal to number of categories.");
                 return;
             }
@@ -160,14 +216,14 @@ public class InputsHandler {
                 }
             }
 
-            inputs.categoriesRanking = categoriesValues;
+            inputs.setCategoriesRanking(categoriesValues);
         } catch (Exception e) {
             errors.addError("An error occurred: " + e + ". Remember that each rank has to be integer.");
         }
     }
 
     protected static void checkAndExtractProfilesIds(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
-        inputs.profilesIds = new ArrayList<>();
+        inputs.setProfilesIds(new ArrayList<>());
 
         if (xmcda.categoriesProfilesList.isEmpty()) {
             errors.addError("No categories profiles list has been supplied");
@@ -176,10 +232,10 @@ public class InputsHandler {
             errors.addError("You can not supply more then 1 categories profiles list");
         }
 
-        inputs.categoryProfiles = new ArrayList<>();
+        inputs.setCategoryProfiles(new ArrayList<>());
 
         CategoriesProfiles categoriesProfiles = xmcda.categoriesProfilesList.get(0);
-        if (inputs.categoriesRanking.size() != categoriesProfiles.size()) {
+        if (inputs.getCategoriesRanking().size() != categoriesProfiles.size()) {
             errors.addError("There is a problem with categories rank list or categories profiles list. Each category has to be added to categories profiles list.");
             return;
         }
@@ -190,21 +246,21 @@ public class InputsHandler {
                 errors.addError("There is a problem with categories rank list or categories profiles list. You need to provide central profiles for categories.");
                 return;
             } else {
-                inputs.categoryProfiles.add(tmpProfile);
+                inputs.getCategoryProfiles().add(tmpProfile);
             }
         }
 
-        Collections.sort(inputs.categoryProfiles, (left, right) -> Integer.compare(inputs.categoriesRanking.get(left.getCategory().id()), inputs.categoriesRanking.get(right.getCategory().id())));
+        Collections.sort(inputs.getCategoryProfiles(), (left, right) -> Integer.compare(inputs.getCategoriesRanking().get(left.getCategory().id()), inputs.getCategoriesRanking().get(right.getCategory().id())));
 
 
-        inputs.profilesIds = new ArrayList<>();
+        inputs.setProfilesIds(new ArrayList<>());
         checkAndExtractCentralProfilesIds(errors, inputs);
     }
 
     protected static void checkAndExtractCentralProfilesIds(ProgramExecutionResult errors, InputsHandler.Inputs inputs) {
-        for (int j = 0; j < inputs.categoryProfiles.size(); j++) {
-            if (inputs.categoryProfiles.get(j).getCentralProfile() != null) {
-                inputs.profilesIds.add(inputs.categoryProfiles.get(j).getCentralProfile().getAlternative().id());
+        for (int j = 0; j < inputs.getCategoryProfiles().size(); j++) {
+            if (inputs.getCategoryProfiles().get(j).getCentralProfile() != null) {
+                inputs.getProfilesIds().add(inputs.getCategoryProfiles().get(j).getCentralProfile().getAlternative().id());
             } else {
                 errors.addError("There is a problem with categories profiles. You need to provide central for categories.");
                 break;
@@ -222,54 +278,51 @@ public class InputsHandler {
 
     protected static void checkAndExtractNetFlows(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
 
-        inputs.flows = new LinkedHashMap<>();
+        inputs.setFlows(new LinkedHashMap<>());
 
-        AlternativesValues positiveFlows = xmcda.alternativesValuesList.get(0);
-        if (!positiveFlows.isNumeric()) {
+        AlternativesValues netFlows = xmcda.alternativesValuesList.get(0);
+        if (!netFlows.isNumeric()) {
             errors.addError("Each flow must have numeric type.");
             return;
         }
 
         try {
-            Map<Alternative, LabelledQValues<Double>> positiveFlowsMap = positiveFlows;
-            for (Map.Entry<Alternative, LabelledQValues<Double>> flow : positiveFlowsMap.entrySet()) {
+            Map<Alternative, LabelledQValues<Double>> netFlowsMap = netFlows;
+            for (Map.Entry<Alternative, LabelledQValues<Double>> flow : netFlowsMap.entrySet()) {
                 Double tmpValue = flow.getValue().get(0).convertToDouble().getValue();
                 BigDecimal bigDecimalValue = BigDecimal.valueOf(tmpValue);
-                inputs.flows.put(flow.getKey().id(), bigDecimalValue);
+                inputs.getFlows().put(flow.getKey().id(), bigDecimalValue);
             }
         } catch (Exception exception) {
             errors.addError("An error occurred: " + exception + ". Each flow must have numeric type.");
             return;
         }
 
-        checkMissingValuesInNetFlows(inputs, errors, positiveFlows);
+        checkMissingValuesInNetFlows(inputs, errors);
     }
 
-    protected static void checkMissingValuesInNetFlows(Inputs inputs, ProgramExecutionResult errors, AlternativesValues flows) {
-        for (int j = 0; j < inputs.alternativesIds.size(); j++) {
-            boolean found = false;
-            for (Object alt : flows.getAlternatives()) {
-                if (((Alternative) alt).id().equals(inputs.alternativesIds.get(j))) {
-                    found = true;
-                }
-            }
-            if (!found) {
+    protected static void checkMissingValuesInNetFlows(Inputs inputs, ProgramExecutionResult errors) {
+        for (int j = 0; j < inputs.getAlternativesIds().size(); j++) {
+            String alternativeId = inputs.getAlternativesIds().get(j);
+            if (!inputs.getFlows().containsKey(alternativeId)) {
                 errors.addError("There are some missing values in flows.");
                 return;
             }
         }
 
-        for (int i = 0; i < inputs.profilesIds.size(); i++) {
-            boolean found = false;
-            for (Object alt : flows.getAlternatives()) {
-                if (((Alternative) alt).id().equals(inputs.alternativesIds.get(i))) {
-                    found = true;
-                }
-            }
-            if (!found) {
+        BigDecimal lastFlow = BigDecimal.valueOf(Double.MIN_VALUE);
+        for (int i = 0; i < inputs.getProfilesIds().size(); i++) {
+            String profileId = inputs.getProfilesIds().get(i);
+            if (!inputs.getFlows().containsKey(profileId)) {
                 errors.addError("There are some missing values in flows.");
                 return;
             }
+            BigDecimal currentFlow = inputs.getFlows().get(profileId);
+            if (currentFlow.compareTo(lastFlow) <= 0) {
+                errors.addError("There are some errors in profiles flows. Better profiles should have bigger flows.");
+                return;
+            }
+            lastFlow = currentFlow;
         }
     }
 }
