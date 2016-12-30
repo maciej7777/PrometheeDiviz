@@ -375,6 +375,7 @@ public class InputsHandler {
         }
         checkAndExtractPositiveFlows(inputs, xmcda, errors);
         checkAndExtractNegativeFlows(inputs, xmcda, errors);
+        checkProfilesFlows(inputs, errors);
 
     }
 
@@ -400,31 +401,21 @@ public class InputsHandler {
             return;
         }
 
-        checkMissingValuesInPositiveFlows(inputs, errors, positiveFlows);
+        checkMissingValuesInPositiveFlows(inputs, errors);
     }
 
-    protected static void checkMissingValuesInPositiveFlows(Inputs inputs, ProgramExecutionResult errors, AlternativesValues positiveFlows) {
+    protected static void checkMissingValuesInPositiveFlows(Inputs inputs, ProgramExecutionResult errors) {
         for (int j = 0; j < inputs.getAlternativesIds().size(); j++) {
-            boolean found = false;
-            for (Object alt : positiveFlows.getAlternatives()) {
-                if (((Alternative) alt).id().equals(inputs.getAlternativesIds().get(j))) {
-                    found = true;
-                }
-            }
-            if (!found) {
+            String alternativeId = inputs.getAlternativesIds().get(j);
+            if (!inputs.getPositiveFlows().containsKey(alternativeId)) {
                 errors.addError("There are some missing values in positive flows.");
                 return;
             }
         }
 
         for (int i = 0; i < inputs.getProfilesIds().size(); i++) {
-            boolean found = false;
-            for (Object alt : positiveFlows.getAlternatives()) {
-                if (((Alternative) alt).id().equals(inputs.getAlternativesIds().get(i))) {
-                    found = true;
-                }
-            }
-            if (!found) {
+            String profileId = inputs.getProfilesIds().get(i);
+            if (!inputs.getPositiveFlows().containsKey(profileId)) {
                 errors.addError("There are some missing values in positive flows.");
                 return;
             }
@@ -453,35 +444,68 @@ public class InputsHandler {
             return;
         }
 
-        checkMissingValuesInNegativeFlows(inputs, errors, negativeFlows);
+        checkMissingValuesInNegativeFlows(inputs, errors);
     }
 
-    protected static void checkMissingValuesInNegativeFlows(Inputs inputs, ProgramExecutionResult errors, AlternativesValues negativeFlows) {
+    protected static void checkMissingValuesInNegativeFlows(Inputs inputs, ProgramExecutionResult errors) {
         for (int j = 0; j < inputs.getAlternativesIds().size(); j++) {
-            boolean found = false;
-            for (Object alt : negativeFlows.getAlternatives()) {
-                if (((Alternative) alt).id().equals(inputs.getAlternativesIds().get(j))) {
-                    found = true;
-                }
-            }
-            if (!found) {
+            String alternativeId = inputs.getAlternativesIds().get(j);
+            if (!inputs.getNegativeFlows().containsKey(alternativeId)) {
                 errors.addError("There are some missing values in negative flows.");
                 return;
             }
         }
 
         for (int i = 0; i < inputs.getProfilesIds().size(); i++) {
-            boolean found = false;
-            for (Object alt : negativeFlows.getAlternatives()) {
-                if (((Alternative) alt).id().equals(inputs.getAlternativesIds().get(i))) {
-                    found = true;
-                }
-            }
-            if (!found) {
+            String profileId = inputs.getProfilesIds().get(i);
+            if (!inputs.getNegativeFlows().containsKey(profileId)) {
                 errors.addError("There are some missing values in negative flows.");
                 return;
             }
         }
+    }
+
+    protected static void checkProfilesFlows(Inputs inputs, ProgramExecutionResult errors) {
+        if (errors.size() != 0) {
+            return;
+        }
+        for (int i = 1; i < inputs.profilesIds.size(); i++) {
+            String profile1 = inputs.profilesIds.get(i-1);
+            String profile2 = inputs.profilesIds.get(i);
+            if (!isPreffered(profile2, profile1, inputs)) {
+                errors.addError("There are some errors in profiles flows. Better profiles need to be preferred to the worse ones.");
+                return;
+            }
+        }
+
+    }
+
+
+    private static boolean preferenceCondition1(BigDecimal a1PositiveFlow, BigDecimal a1NegativeFlow, BigDecimal a2PositiveFlow, BigDecimal a2NegativeFlow) {
+        return a1PositiveFlow.compareTo(a2PositiveFlow) > 0 && a1NegativeFlow.compareTo(a2NegativeFlow) < 0;
+    }
+
+    private static boolean preferenceCondition2(BigDecimal a1PositiveFlow, BigDecimal a1NegativeFlow, BigDecimal a2PositiveFlow, BigDecimal a2NegativeFlow) {
+        return a1PositiveFlow.compareTo(a2PositiveFlow) == 0 && a1NegativeFlow.compareTo(a2NegativeFlow) < 0;
+    }
+
+    private static boolean preferenceCondition3(BigDecimal a1PositiveFlow, BigDecimal a1NegativeFlow, BigDecimal a2PositiveFlow, BigDecimal a2NegativeFlow) {
+        return a1PositiveFlow.compareTo(a2PositiveFlow) > 0 && a1NegativeFlow.compareTo(a2NegativeFlow) == 0;
+    }
+
+    private static boolean isPreffered(String profile1, String profile2, Inputs inputs) {
+
+        BigDecimal positiveFlowProfile1 = inputs.getPositiveFlows().get(profile1);
+        BigDecimal positiveFlowProfile2 = inputs.getPositiveFlows().get(profile2);
+        BigDecimal negativeFlowProfile1 = inputs.getNegativeFlows().get(profile1);
+        BigDecimal negativeFlowProfile2 = inputs.getNegativeFlows().get(profile2);
+
+        if (preferenceCondition1(positiveFlowProfile1, negativeFlowProfile1, positiveFlowProfile2, negativeFlowProfile2) ||
+                preferenceCondition2(positiveFlowProfile1, negativeFlowProfile1, positiveFlowProfile2, negativeFlowProfile2) ||
+                preferenceCondition3(positiveFlowProfile1, negativeFlowProfile1, positiveFlowProfile2, negativeFlowProfile2)) {
+            return true;
+        }
+        return false;
     }
 
     protected static void checkAndExtractCriteria(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
