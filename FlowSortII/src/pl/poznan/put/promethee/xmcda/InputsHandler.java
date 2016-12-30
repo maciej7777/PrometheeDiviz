@@ -9,6 +9,7 @@ import org.xmcda.Category;
 import org.xmcda.CategoryProfile;
 import org.xmcda.XMCDA;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -391,34 +392,31 @@ public class InputsHandler {
             return;
         }
 
-        checkMissingValuesInNetFlows(inputs, errors, netFlows);
+        checkMissingValuesInNetFlows(inputs, errors);
     }
 
-    protected static void checkMissingValuesInNetFlows(Inputs inputs, ProgramExecutionResult errors, AlternativesValues flows) {
+    protected static void checkMissingValuesInNetFlows(Inputs inputs, ProgramExecutionResult errors) {
         for (int j = 0; j < inputs.getAlternativesIds().size(); j++) {
-            boolean found = false;
-            for (Object alt : flows.getAlternatives()) {
-                if (((Alternative) alt).id().equals(inputs.getAlternativesIds().get(j))) {
-                    found = true;
-                }
-            }
-            if (!found) {
+            String alternativeId = inputs.getAlternativesIds().get(j);
+            if (!inputs.getFlows().containsKey(alternativeId)) {
                 errors.addError("There are some missing values in flows.");
                 return;
             }
         }
 
+        Double lastFlow = Double.MIN_VALUE;
         for (int i = 0; i < inputs.getProfilesIds().size(); i++) {
-            boolean found = false;
-            for (Object alt : flows.getAlternatives()) {
-                if (((Alternative) alt).id().equals(inputs.getAlternativesIds().get(i))) {
-                    found = true;
-                }
-            }
-            if (!found) {
+            String profileId = inputs.getProfilesIds().get(i);
+            if (!inputs.getFlows().containsKey(profileId)) {
                 errors.addError("There are some missing values in flows.");
                 return;
             }
+            Double currentFlow = inputs.getFlows().get(profileId);
+            if (currentFlow <= lastFlow) {
+                errors.addError("There are some errors in profiles flows. Better profiles should have bigger flows.");
+                return;
+            }
+            lastFlow = currentFlow;
         }
     }
 
