@@ -685,6 +685,9 @@ public class InputsHandler {
                 Map<Alternative, LabelledQValues<Double>> flowsMap = flows;
                 for (Map.Entry<Alternative, LabelledQValues<Double>> flow : flowsMap.entrySet()) {
                     Double tmpValue = flow.getValue().get(0).convertToDouble().getValue();
+                    if (tmpValue < -1.0 || tmpValue > 1.0) {
+                        errors.addError("An error occurred for a decision maker " + i + " alternatives flows. You need to provide normalised flows for alternatives (with value from -1.0 to 1.0).");
+                    }
                     BigDecimal bigDecimalTmpValue = BigDecimal.valueOf(tmpValue);
                     tmpFlows.put(flow.getKey().id(), bigDecimalTmpValue);
                 }
@@ -741,6 +744,9 @@ public class InputsHandler {
             Map<Alternative, LabelledQValues<Double>> flowsMap = flows;
             for (Map.Entry<Alternative, LabelledQValues<Double>> flow : flowsMap.entrySet()) {
                 Double tmpValue = flow.getValue().get(0).convertToDouble().getValue();
+                if (tmpValue < -1.0 || tmpValue > 1.0) {
+                    errors.addError("You need to provide normalised flows for profiles (with value from -1.0 to 1.0).");
+                }
                 BigDecimal bigDecimalTmpValue = BigDecimal.valueOf(tmpValue);
                 tmpFlows.put(flow.getKey().id(), bigDecimalTmpValue);
             }
@@ -748,21 +754,24 @@ public class InputsHandler {
             errors.addError("An error occurred: " + exception.getMessage() + ". Each flow must have numeric type.");
         }
 
+        inputs.setProfilesFlows(tmpFlows);
+
         for (int j = 0; j < inputs.getProfilesIds().size(); j++) {
+            BigDecimal lastFlow = BigDecimal.valueOf(Double.MIN_VALUE);
             for (int k = 0; k < inputs.getProfilesIds().get(j).size(); k++) {
-                boolean found = false;
-                for (Object alt : flows.getAlternatives()) {
-                    if (((Alternative) alt).id().equals(inputs.getProfilesIds().get(j).get(k))) {
-                        found = true;
-                    }
-                }
-                if (!found) {
-                    errors.addError("There are some missing values in profiles flows.");
+                String profileId = inputs.getProfilesIds().get(j).get(k);
+                if (!inputs.getProfilesFlows().containsKey(profileId)) {
+                    errors.addError("There are some missing values in flows.");
                     return;
                 }
+                BigDecimal currentFlow = inputs.getProfilesFlows().get(profileId);
+                if (currentFlow.compareTo(lastFlow) <= 0) {
+                    errors.addError("There are some errors in flows. Better profiles should have bigger flows.");
+                    return;
+                }
+                lastFlow = currentFlow;
             }
         }
-        inputs.setProfilesFlows(tmpFlows);
     }
 
     protected static void checkAndExtractPreferences(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
@@ -788,6 +797,10 @@ public class InputsHandler {
                     String x = coordEntry.getKey().x.id();
                     String y = coordEntry.getKey().y.id();
                     double value = coordEntry.getValue().get(0).getValue().doubleValue();
+
+                    if (value < 0.0 || value > 1.0) {
+                        errors.addError("An error occurred in preferences list number " + (i + 1) + ". Each preference must have value between 0.0 and 1.0.");
+                    }
                     tmpPreferences.putIfAbsent(x, new HashMap<>());
                     tmpPreferences.get(x).put(y, BigDecimal.valueOf(value));
                 }
