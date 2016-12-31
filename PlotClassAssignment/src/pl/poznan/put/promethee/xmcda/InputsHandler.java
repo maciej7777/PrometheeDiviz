@@ -76,10 +76,8 @@ public class InputsHandler {
         checkAndExtractAlternatives(inputs, xmcda, errors);
         checkAndExtractCategories(inputs, xmcda, errors);
         checkCategoriesRanking(inputs, xmcda, errors);
-        if (errors.size() == 0) {
-            sortCategories(inputs);
-            checkAndExtractAssignments(inputs, xmcda, errors);
-        }
+        sortCategories(inputs);
+        checkAndExtractAssignments(inputs, xmcda, errors);
 
 
         return inputs;
@@ -173,6 +171,9 @@ public class InputsHandler {
     }
 
     protected static void sortCategories(Inputs inputs) {
+        if (inputs.getCategoriesRanking() == null) {
+            return;
+        }
         Collections.sort(inputs.categoriesIds, (o1, o2) -> inputs.categoriesRanking.get(o1) - inputs.categoriesRanking.get(o2));
     }
 
@@ -187,12 +188,16 @@ public class InputsHandler {
             return;
         }
 
+        if (inputs.getCategoriesRanking() == null) {
+            return;
+        }
+
         Set<String> categoriesSet = new HashSet<>();
         categoriesSet.addAll(inputs.getCategoriesIds());
 
         inputs.assignments = new HashMap<>();
 
-        for(AlternativeAssignment<?> assignment: xmcda.alternativesAssignmentsList.get(0)) {
+        for (AlternativeAssignment<?> assignment : xmcda.alternativesAssignmentsList.get(0)) {
             Map<String, String> assignmentMap = new HashMap<>();
 
             if (assignment == null) {
@@ -212,7 +217,7 @@ public class InputsHandler {
     }
 
     protected static void checkAndExtractIndirectInAssignment(AlternativeAssignment assignment, Set<String> categoriesSet,
-                                                            Map<String, String> assignmentMap, Inputs inputs, ProgramExecutionResult errors) {
+                                                              Map<String, String> assignmentMap, Inputs inputs, ProgramExecutionResult errors) {
         if (assignment.getCategoryInterval() == null || assignment.getCategoryInterval().getLowerBound() == null ||
                 assignment.getCategoryInterval().getUpperBound() == null) {
             errors.addError(ALTERNATIVES_TAG_ERROR);
@@ -243,7 +248,7 @@ public class InputsHandler {
     }
 
     protected static void checkAndExtractDirectInAssignment(AlternativeAssignment assignment, Set<String> categoriesSet,
-                                                              Map<String, String> assignmentMap, Inputs inputs, ProgramExecutionResult errors) {
+                                                            Map<String, String> assignmentMap, Inputs inputs, ProgramExecutionResult errors) {
         if (assignment.getCategory().id() == null) {
             errors.addError(ALTERNATIVES_TAG_ERROR);
             return;
