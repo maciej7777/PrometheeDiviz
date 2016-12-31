@@ -309,6 +309,10 @@ public class InputsHandler {
             errors.addError("You can not supply more then 1 categories profiles list.");
         }
 
+        if (inputs.getCategoriesRanking() == null) {
+            return;
+        }
+
         inputs.setCategoryProfiles(new ArrayList<>());
 
         CategoriesProfiles categoriesProfiles = xmcda.categoriesProfilesList.get(0);

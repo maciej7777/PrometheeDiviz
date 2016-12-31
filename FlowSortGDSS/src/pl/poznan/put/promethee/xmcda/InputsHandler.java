@@ -453,6 +453,10 @@ public class InputsHandler {
             errors.addError("You can not supply more then 10 categories profiles list");
         }
 
+        if (inputs.getCategoriesRanking() == null) {
+            return;
+        }
+
         if (inputs.getDecisionMakers() == null) {
             return;
         }
