@@ -17,6 +17,7 @@ public class OutputsHandler {
 
     public static class Output {
         private String latexTable;
+        private byte[] asignmentsImage;
 
         public String getLatexTable() {
             return latexTable;
@@ -24,6 +25,14 @@ public class OutputsHandler {
 
         public void setLatexTable(String latexTable) {
             this.latexTable = latexTable;
+        }
+
+        public byte[] getAsignmentsImage() {
+            return asignmentsImage;
+        }
+
+        public void setAsignmentsImage(byte[] asignmentsImage) {
+            this.asignmentsImage = asignmentsImage;
         }
     }
 

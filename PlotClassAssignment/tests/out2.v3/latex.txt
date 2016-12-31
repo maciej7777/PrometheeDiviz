@@ -3,7 +3,7 @@
 \begin{tabular}{c|c|c}
 \bf Alternative & \bf Lower class & \bf Upper class \cr
 \hline
-a1 & C1 & C2 \cr
+a1 & C1 & C1 \cr
 \hline
 a2 & C1 & C2 \cr
 \end{tabular}

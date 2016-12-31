@@ -76,8 +76,11 @@ public class InputsHandler {
         checkAndExtractAlternatives(inputs, xmcda, errors);
         checkAndExtractCategories(inputs, xmcda, errors);
         checkCategoriesRanking(inputs, xmcda, errors);
-        sortCategories(inputs);
-        checkAndExtractAssignments(inputs, xmcda, errors);
+        if (errors.size() == 0) {
+            sortCategories(inputs);
+            checkAndExtractAssignments(inputs, xmcda, errors);
+        }
+
 
         return inputs;
     }

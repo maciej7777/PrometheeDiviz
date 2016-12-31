@@ -3,25 +3,11 @@
     <alternativesAffectations>
         <alternativeAffectation>
             <alternativeID>a1</alternativeID>
-            <categoriesInterval>
-                <lowerBound>
-                    <categoryID>C1</categoryID>
-                </lowerBound>
-                <upperBound>
-                    <categoryID>C2</categoryID>
-                </upperBound>
-            </categoriesInterval>
+            <categoryID>C1</categoryID>
         </alternativeAffectation>
         <alternativeAffectation>
             <alternativeID>a2</alternativeID>
-            <categoriesInterval>
-                <lowerBound>
-                    <categoryID>C1</categoryID>
-                </lowerBound>
-                <upperBound>
-                    <categoryID>C2</categoryID>
-                </upperBound>
-            </categoriesInterval>
+            <categoryID>C2</categoryID>
         </alternativeAffectation>
     </alternativesAffectations>
 </ns2:XMCDA>

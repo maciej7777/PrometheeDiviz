@@ -9,7 +9,7 @@
 					<categoryID>C1</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C2</categoryID>
+					<categoryID>C1</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>

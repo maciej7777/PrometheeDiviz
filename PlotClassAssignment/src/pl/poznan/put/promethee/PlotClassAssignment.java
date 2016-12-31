@@ -1,5 +1,6 @@
 package pl.poznan.put.promethee;
 
+import pl.poznan.put.promethee.components.DrowClassAssignment;
 import pl.poznan.put.promethee.xmcda.InputsHandler;
 import pl.poznan.put.promethee.xmcda.OutputsHandler;
 
@@ -34,6 +35,8 @@ public class PlotClassAssignment {
         } else {
             createLatexTableForIndirectAssignments(inputs, output);
         }
+
+        output.setAsignmentsImage(DrowClassAssignment.drawImage(inputs));
 
         return output;
     }

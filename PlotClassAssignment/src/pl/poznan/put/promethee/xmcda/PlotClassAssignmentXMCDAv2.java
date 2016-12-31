@@ -7,9 +7,9 @@ import org.xmcda.converters.v2_v3.XMCDAConverter;
 import org.xmcda.parsers.xml.xmcda_v2.XMCDAParser;
 import pl.poznan.put.promethee.PlotClassAssignment;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.Map;
 
 /**
@@ -117,6 +117,13 @@ public class PlotClassAssignmentXMCDAv2 {
             out.println( results.getLatexTable() );
         } catch (FileNotFoundException e) {
             executionResult.addError("Output file cannot be created. Reason: " + e);
+        }
+
+        try {
+            BufferedImage img = ImageIO.read(new ByteArrayInputStream(results.getAsignmentsImage()));
+            ImageIO.write(img,"PNG",new File(outdir + "/assignments.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 /*
         final Map<String, XMCDA> resultsMap = OutputsHandler.convert(results.getFirstStepAssignments(), results.getAssignments());
