@@ -84,11 +84,11 @@
                     </documentation>
                     <items>
                         <item id="central">
-                            <description>Central profiles</description>
+                            <description>central profiles</description>
                             <value>central</value>
                         </item>
                         <item id="bounding">
-                            <description>Boundary profiles</description>
+                            <description>boundary profiles</description>
                             <value>bounding</value>
                         </item>
                     </items>

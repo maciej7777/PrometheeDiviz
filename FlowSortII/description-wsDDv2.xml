@@ -23,14 +23,14 @@
             <xmcda tag="categoriesValues"/>
         </input>
 
-        <input id="input3" name="categories_profiles" displayName="categories_profiles" isoptional="0">
+        <input id="input3" name="categories_profiles" displayName="categories profiles" isoptional="0">
             <documentation>
                 <description>Definitions of profiles which should be used for classes (categories) representation.</description>
             </documentation>
             <xmcda tag="categoriesProfiles"/>
         </input>
 
-        <input id="input4" name="performance_table" displayName="performance_table" isoptional="0">
+        <input id="input4" name="performance_table" displayName="performance table" isoptional="0">
             <documentation>
                 <description>The performance of profiles.</description>
             </documentation>
@@ -51,7 +51,7 @@
             <xmcda tag="categoriesProfiles"/>
         </input>
 
-        <input id="input7" name="method_parameters" displayName="method_parameters"
+        <input id="input7" name="method_parameters" displayName="method parameters"
                isoptional="0">
             <documentation>
                 <description>A set of parameters provided to tune up the module's operation.</description>
@@ -67,17 +67,17 @@
 	        ]]>
             </xmcda>
             <gui status="preferGUI">
-                <entry id="%1" type="enum" displayName="Comparison with profiles:">
+                <entry id="%1" type="enum" displayName="comparison with profiles">
                     <documentation>
                         <description>Information if we are using central or boundary profiles.</description>
                     </documentation>
                     <items>
                         <item id="central">
-                            <description>Central profiles</description>
+                            <description>central profiles</description>
                             <value>central</value>
                         </item>
                         <item id="bounding">
-                            <description>Boundary profiles</description>
+                            <description>boundary profiles</description>
                             <value>bounding</value>
                         </item>
                     </items>
