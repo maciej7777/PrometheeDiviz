@@ -23,7 +23,7 @@
             <xmcda tag="categoriesValues"/>
         </input>
 
-        <input id="input3" name="categories_profiles" displayName="categories_profiles" isoptional="0">
+        <input id="input3" name="categories_profiles" displayName="categories profiles" isoptional="0">
             <documentation>
                 <description>Definitions of boundary profiles which should be used for classes (categories)
                     representation.
@@ -32,7 +32,7 @@
             <xmcda tag="categoriesProfiles"/>
         </input>
 
-        <input id="input4" name="performance_table" displayName="performance_table" isoptional="0">
+        <input id="input4" name="performance_table" displayName="performance table" isoptional="0">
             <documentation>
                 <description>The performance of boundary profiles.</description>
             </documentation>
@@ -48,21 +48,21 @@
             <xmcda tag="criteriaThresholds"/>
         </input>
 
-        <input id="input6" name="negative_flows" displayName="negative_flows" isoptional="0">
+        <input id="input6" name="negative_flows" displayName="negative flows" isoptional="0">
             <documentation>
                 <description>Negative flows of given alternatives and boundary profiles.</description>
             </documentation>
             <xmcda tag="alternativesValues"/>
         </input>
 
-        <input id="input7" name="positive_flows" displayName="positive_profiles" isoptional="0">
+        <input id="input7" name="positive_flows" displayName="positive profiles" isoptional="0">
             <documentation>
                 <description>Positive flows of given alternatives and boundary profiles.</description>
             </documentation>
             <xmcda tag="alternativesValues"/>
         </input>
 
-        <input id="input8" name="method_parameters" displayName="method_parameters"
+        <input id="input8" name="method_parameters" displayName="method parameters"
                isoptional="0">
             <documentation>
                 <description>A set of parameters provided to tune up the module's operation.</description>
@@ -88,7 +88,7 @@
 	        ]]>
             </xmcda>
             <gui status="preferFile">
-                <entry id="%1" type="real" displayName="cutPoint">
+                <entry id="%1" type="real" displayName="cut point">
                     <documentation>
                         <description>Parameter used in a second phase of Promsort method. Determines the impact of assigning alternatives to better/worse categories.</description>
                     </documentation>
@@ -105,7 +105,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%2" type="boolean" displayName="assignToABetterClass">
+                <entry id="%2" type="boolean" displayName="assign to a better class">
                     <documentation>
                         <description>Information if alternative will be assigned to a better class when the assignment is not
                             clear. Works only if cutPoint does unclear output for alternative.</description>
@@ -115,14 +115,14 @@
             </gui>
         </input>
 
-        <output id="output1" name="first_step_assignments" displayName="first_step_assignments">
+        <output id="output1" name="first_step_assignments" displayName="first step assignments">
             <documentation>
                 <description>Assignments made in a first step of Promsort process.</description>
             </documentation>
             <xmcda tag="alternativesAssignments"/>
         </output>
 
-        <output id="output2" name="final_assignments" displayName="final_assignments">
+        <output id="output2" name="final_assignments" displayName="final assignments">
             <documentation>
                 <description>Final assignments made in a Promsort process.</description>
             </documentation>
