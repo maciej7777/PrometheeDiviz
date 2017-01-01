@@ -23,14 +23,14 @@
             <xmcda tag="categoriesValues"/>
         </input>
 
-        <input id="input3" name="categories_profiles" displayName="categories_profiles" isoptional="0">
+        <input id="input3" name="categories_profiles" displayName="categories profiles" isoptional="0">
             <documentation>
                 <description>Definitions of profiles which should be used for classes (categories) representation.</description>
             </documentation>
             <xmcda tag="categoriesProfiles"/>
         </input>
 
-        <input id="input4" name="performance_table" displayName="performance_table" isoptional="0">
+        <input id="input4" name="performance_table" displayName="performance table" isoptional="0">
             <documentation>
                 <description>The performance of boundary profiles.</description>
             </documentation>
@@ -45,21 +45,21 @@
             <xmcda tag="criteriaScales"/>
         </input>
 
-        <input id="input6" name="negative_flows" displayName="negative_flows" isoptional="0">
+        <input id="input6" name="negative_flows" displayName="negative flows" isoptional="0">
             <documentation>
                 <description>Negative flows of given alternatives and profiles.</description>
             </documentation>
             <xmcda tag="categoriesProfiles"/>
         </input>
 
-        <input id="input7" name="positive_flows" displayName="positive_profiles" isoptional="0">
+        <input id="input7" name="positive_flows" displayName="positive profiles" isoptional="0">
             <documentation>
                 <description>Positive flows of given alternatives and profiles.</description>
             </documentation>
             <xmcda tag="categoriesProfiles"/>
         </input>
 
-        <input id="input8" name="method_parameters" displayName="method_parameters"
+        <input id="input8" name="method_parameters" displayName="method parameters"
                isoptional="0">
             <documentation>
                 <description>A set of parameters provided to tune up the module's operation.</description>
@@ -78,7 +78,7 @@
 	        ]]>
             </xmcda>
             <gui status="preferGUI">
-                <entry id="%1" type="enum" displayName="Comparison with profiles:">
+                <entry id="%1" type="enum" displayName="comparison with profiles">
                     <documentation>
                         <description>Information if we are using central or boundary profiles.</description>
                     </documentation>
