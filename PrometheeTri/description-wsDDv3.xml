@@ -23,22 +23,22 @@
             <xmcda tag="categoriesValues"/>
         </input>
 
-        <input id="input3" name="categories_profiles" displayName="categories_profiles" isoptional="0">
+        <input id="input3" name="categories_profiles" displayName="categories profiles" isoptional="0">
             <documentation>
                 <description>Definitions of central profiles which should be used for classes (categories) representation.</description>
             </documentation>
             <xmcda tag="categoriesProfiles"/>
         </input>
 
-        <input id="input4" name="flows" displayName="negative_flows" isoptional="0">
+        <input id="input4" name="flows" displayName="flows" isoptional="0">
             <documentation>
                 <description>Flows of given alternatives and central profiles.</description>
             </documentation>
-            <xmcda tag="categoriesProfiles"/>
+            <xmcda tag="alternativesValues"/>
         </input>
 
 
-        <input id="input5" name="method_parameters" displayName="method_parameters"
+        <input id="input5" name="method_parameters" displayName="method parameters"
                isoptional="0">
             <documentation>
                 <description>A set of parameters provided to tune up the module's operation.</description>
@@ -57,7 +57,7 @@
 	        ]]>
             </xmcda>
             <gui status="preferFile">
-                <entry id="%1" type="boolean" displayName="assignToABetterClass">
+                <entry id="%1" type="boolean" displayName="assign to a better class">
                     <documentation>
                         <description>Information if alternative will be assigned to a better class when the assignment is not clear.</description>
                     </documentation>
