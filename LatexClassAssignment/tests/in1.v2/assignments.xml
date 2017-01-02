@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:XMCDA xmlns:ns2="http://www.decision-deck.org/2016/XMCDA-2.2.2">
+    <alternativesAffectations>
+        <alternativeAffectation>
+            <alternativeID>a1</alternativeID>
+            <categoryID>C1</categoryID>
+        </alternativeAffectation>
+        <alternativeAffectation>
+            <alternativeID>a2</alternativeID>
+            <categoryID>C2</categoryID>
+        </alternativeAffectation>
+    </alternativesAffectations>
+</ns2:XMCDA>
