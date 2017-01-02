@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<xmcda:XMCDA xmlns:xmcda="http://www.decision-deck.org/2016/XMCDA-3.0.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.decision-deck.org/2016/XMCDA-3.0.2 http://www.decision-deck.org/xmcda/_downloads/XMCDA-3.0.2.xsd">
+
+<alternativesAssignments>
+		<alternativeAssignment>
+			<alternativeID>a34</alternativeID>
+			<categoriesInterval>
+				<lowerBound>
+					<categoryID>C3</categoryID>
+				</lowerBound>
+				<upperBound>
+					<categoryID>C3</categoryID>
+				</upperBound>
+			</categoriesInterval>
+		</alternativeAssignment>
+	</alternativesAssignments>
+</xmcda:XMCDA>
