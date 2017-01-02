@@ -23,30 +23,44 @@ public class FlowSortI {
         Map<String, Map<String, String>> assignments = new LinkedHashMap<>();
 
         for (int altI = 0; altI < inputs.getAlternativesIds().size(); altI++) {
-            Map<String, String> interval = new LinkedHashMap<>();
-            interval.put(LOWER, inputs.getCategoryProfiles().get(0).getCategory().id());
-            interval.put(UPPER, inputs.getCategoryProfiles().get(0).getCategory().id());
-            assignments.put(inputs.getAlternativesIds().get(altI), interval);
+            String alternativeId = inputs.getAlternativesIds().get(altI);
+
+            String positiveAssignment = inputs.getCategoryProfiles().get(0).getCategory().id();
+            String negativeAssignment = inputs.getCategoryProfiles().get(0).getCategory().id();
 
             for (int catProfI = 1; catProfI < inputs.getCategoryProfiles().size() ; catProfI++) {
-                if (inputs.getPositiveFlows().get(inputs.getAlternativesIds().get(altI)) >=
+                if (inputs.getPositiveFlows().get(alternativeId) >=
                         (inputs.getPositiveFlows().get(inputs.getCategoryProfiles().get(catProfI).getCentralProfile().getAlternative().id()) +
                                 inputs.getPositiveFlows().get(inputs.getCategoryProfiles().get(catProfI-1).getCentralProfile().getAlternative().id()))/2) {
-                    assignments.get(inputs.getAlternativesIds().get(altI)).put(UPPER, inputs.getCategoryProfiles().get(catProfI).getCategory().id());
+                    positiveAssignment = inputs.getCategoryProfiles().get(catProfI).getCategory().id();
                 } else {
                     break;
                 }
             }
 
             for (int catProfI = 1; catProfI < inputs.getCategoryProfiles().size() ; catProfI++) {
-                if (inputs.getNegativeFlows().get(inputs.getAlternativesIds().get(altI)) <
+                if (inputs.getNegativeFlows().get(alternativeId) <
                         (inputs.getNegativeFlows().get(inputs.getCategoryProfiles().get(catProfI).getCentralProfile().getAlternative().id()) +
                                 inputs.getNegativeFlows().get(inputs.getCategoryProfiles().get(catProfI - 1).getCentralProfile().getAlternative().id()))/2) {
-                    assignments.get(inputs.getAlternativesIds().get(altI)).put(LOWER, inputs.getCategoryProfiles().get(catProfI).getCategory().id());
+                    negativeAssignment = inputs.getCategoryProfiles().get(catProfI).getCategory().id();
                 } else {
                     break;
                 }
             }
+
+            Map<String, String> interval = new LinkedHashMap<>();
+
+            if (inputs.getCategoriesRanking().get(positiveAssignment) >= inputs.getCategoriesRanking().get(negativeAssignment)) {
+                interval.put(UPPER, positiveAssignment);
+                interval.put(LOWER, negativeAssignment);
+            } else {
+                interval.put(LOWER, positiveAssignment);
+                interval.put(UPPER, negativeAssignment);
+            }
+
+            assignments.put(alternativeId, interval);
+
+
         }
 
         OutputsHandler.Output output = new OutputsHandler.Output();
@@ -59,15 +73,10 @@ public class FlowSortI {
         Map<String, Map<String, String>> assignments = new LinkedHashMap<>();
 
         for (int altI = 0; altI < inputs.getAlternativesIds().size(); altI++) {
-            Map<String, String> interval = new LinkedHashMap<>();
             String alternativeId = inputs.getAlternativesIds().get(altI);
 
-            interval.put(LOWER, inputs.getCategoryProfiles().get(0).getCategory().id());
-            interval.put(UPPER, inputs.getCategoryProfiles().get(0).getCategory().id());
-            assignments.put(alternativeId, interval);
-
-            String positiveAssignment = null;
-            String negativeAssignment = null;
+            String positiveAssignment = inputs.getCategoryProfiles().get(0).getCategory().id();
+            String negativeAssignment = inputs.getCategoryProfiles().get(0).getCategory().id();
 
             for (int catProfI = 0; catProfI < inputs.getCategoryProfiles().size()-1; catProfI++) {
                 String upperProfileId = inputs.getCategoryProfiles().get(catProfI).getUpperBound().getAlternative().id();
@@ -89,13 +98,17 @@ public class FlowSortI {
                 }
             }
 
+            Map<String, String> interval = new LinkedHashMap<>();
+
             if (inputs.getCategoriesRanking().get(positiveAssignment) >= inputs.getCategoriesRanking().get(negativeAssignment)) {
-                assignments.get(alternativeId).put(UPPER, positiveAssignment);
-                assignments.get(alternativeId).put(LOWER, negativeAssignment);
+                interval.put(UPPER, positiveAssignment);
+                interval.put(LOWER, negativeAssignment);
             } else {
-                assignments.get(alternativeId).put(LOWER, positiveAssignment);
-                assignments.get(alternativeId).put(UPPER, negativeAssignment);
+                interval.put(LOWER, positiveAssignment);
+                interval.put(UPPER, negativeAssignment);
             }
+
+            assignments.put(alternativeId, interval);
         }
 
         OutputsHandler.Output output = new OutputsHandler.Output();
