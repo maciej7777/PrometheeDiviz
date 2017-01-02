@@ -60,26 +60,41 @@ public class FlowSortI {
 
         for (int altI = 0; altI < inputs.getAlternativesIds().size(); altI++) {
             Map<String, String> interval = new LinkedHashMap<>();
+            String alternativeId = inputs.getAlternativesIds().get(altI);
+
             interval.put(LOWER, inputs.getCategoryProfiles().get(0).getCategory().id());
             interval.put(UPPER, inputs.getCategoryProfiles().get(0).getCategory().id());
-            assignments.put(inputs.getAlternativesIds().get(altI), interval);
+            assignments.put(alternativeId, interval);
+
+            String positiveAssignment = null;
+            String negativeAssignment = null;
 
             for (int catProfI = 0; catProfI < inputs.getCategoryProfiles().size()-1; catProfI++) {
-                if (inputs.getPositiveFlows().get(inputs.getAlternativesIds().get(altI)) >=
-                        inputs.getPositiveFlows().get(inputs.getCategoryProfiles().get(catProfI).getUpperBound().getAlternative().id())){
-                    assignments.get(inputs.getAlternativesIds().get(altI)).put(UPPER, inputs.getCategoryProfiles().get(catProfI+1).getCategory().id());
+                String upperProfileId = inputs.getCategoryProfiles().get(catProfI).getUpperBound().getAlternative().id();
+
+                if (inputs.getPositiveFlows().get(alternativeId) >=
+                        inputs.getPositiveFlows().get(upperProfileId)){
+                    positiveAssignment = inputs.getCategoryProfiles().get(catProfI+1).getCategory().id();
                 } else {
                     break;
                 }
             }
 
             for (int catProfI = 0; catProfI < inputs.getCategoryProfiles().size()-1; catProfI++) {
-                if (inputs.getNegativeFlows().get(inputs.getAlternativesIds().get(altI)) <
+                if (inputs.getNegativeFlows().get(alternativeId) <
                         inputs.getNegativeFlows().get(inputs.getCategoryProfiles().get(catProfI).getUpperBound().getAlternative().id())){
-                    assignments.get(inputs.getAlternativesIds().get(altI)).put(LOWER, inputs.getCategoryProfiles().get(catProfI+1).getCategory().id());
+                    negativeAssignment = inputs.getCategoryProfiles().get(catProfI+1).getCategory().id();
                 } else {
                     break;
                 }
+            }
+
+            if (inputs.getCategoriesRanking().get(positiveAssignment) >= inputs.getCategoriesRanking().get(negativeAssignment)) {
+                assignments.get(alternativeId).put(UPPER, positiveAssignment);
+                assignments.get(alternativeId).put(LOWER, negativeAssignment);
+            } else {
+                assignments.get(alternativeId).put(LOWER, positiveAssignment);
+                assignments.get(alternativeId).put(UPPER, negativeAssignment);
             }
         }
 
