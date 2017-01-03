@@ -1,0 +1,19 @@
+1. Libraries
+- XMCDA - to compile and run each module you need to provide to project XMCDA library which supports xml files with tags 2.2.2 and 3.0.2 
+or above. It need to support at leat conversion of tags alternativesAssignments (v3) and alternativesAffectations (v2) - as it is the 
+last change in library required by this project.
+
+2. Java version
+To run modules from the repository you need to provide JAVA version at least 1.8 as some modules uses lambda expresions.
+
+3. Build and run modules
+The easiest way to build and run all modules from the repository is to import them using Intellij IDE. While running module you need to 
+specify main class (in each module it is the one with "CLI" in the name) and version of xmcda library and inputs and outputs files like 
+in following example:
+
+--v3 -i tests/in6.v3 -o tests/out6.v3
+
+Where:
+- --v3 means that we are using xmcda v3 standard
+- -i tests/in6.v3 informs us that we are using files from folder tests/in6.v3 on input; "-i" stands for input
+- -o tests/out6.v3 informs us that we are using files from folder tests/out6.v3 on input; "-o" stands for output
