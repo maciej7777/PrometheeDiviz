@@ -14,6 +14,6 @@ in following example:
 --v3 -i tests/in6.v3 -o tests/out6.v3
 
 Where:
-- --v3 means that we are using xmcda v3 standard
-- -i tests/in6.v3 informs us that we are using files from folder tests/in6.v3 on input; "-i" stands for input
-- -o tests/out6.v3 informs us that we are using files from folder tests/out6.v3 on input; "-o" stands for output
+- "--v3" means that we are using xmcda v3 standard
+- "-i tests/in6.v3" informs us that we are using files from folder tests/in6.v3 as input; "-i" stands for input
+- "-o tests/out6.v3" informs us that we are using files from folder tests/out6.v3 as output; "-o" stands for output
