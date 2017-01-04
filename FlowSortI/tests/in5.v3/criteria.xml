@@ -1,0 +1,208 @@
+<?xml version="1.0" ?>
+<xmcda:XMCDA xmlns:xmcda="http://www.decision-deck.org/2016/XMCDA-3.0.2"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.decision-deck.org/2016/XMCDA-3.0.2 http://www.decision-deck.org/xmcda/_downloads/XMCDA-3.0.2.xsd">
+
+    <criteria>
+        <criterion id="g1" name="earning before interest and taxes/total assets">
+            <active>true</active>
+        </criterion>
+        <criterion id="g2" name="net income/net worth">
+            <active>true</active>
+        </criterion>
+        <criterion id="g3" name="total liabilities/total assets">
+            <active>true</active>
+        </criterion>
+        <criterion id="g4" name="interests expenses/sales">
+            <active>true</active>
+        </criterion>
+        <criterion id="g5" name="general and administratie expenses/sales">
+            <active>true</active>
+        </criterion>
+        <criterion id="g6" name="managers work experience">
+            <active>true</active>
+        </criterion>
+        <criterion id="g7" name="market niche/position">
+            <active>true</active>
+        </criterion>
+    </criteria>
+    <criteriaScales>
+        <criterionScale>
+            <criterionID>g1</criterionID>
+            <scales>
+                <scale>
+                    <quantitative>
+                        <preferenceDirection>max</preferenceDirection>
+                    </quantitative>
+                </scale>
+            </scales>
+        </criterionScale>
+        <criterionScale>
+            <criterionID>g2</criterionID>
+            <scales>
+                <scale>
+                    <quantitative>
+                        <preferenceDirection>max</preferenceDirection>
+                    </quantitative>
+                </scale>
+            </scales>
+        </criterionScale>
+        <criterionScale>
+            <criterionID>g3</criterionID>
+            <scales>
+                <scale>
+                    <quantitative>
+                        <preferenceDirection>min</preferenceDirection>
+                    </quantitative>
+                </scale>
+            </scales>
+        </criterionScale>
+        <criterionScale>
+            <criterionID>g4</criterionID>
+            <scales>
+                <scale>
+                    <quantitative>
+                        <preferenceDirection>min</preferenceDirection>
+                    </quantitative>
+                </scale>
+            </scales>
+        </criterionScale>
+        <criterionScale>
+            <criterionID>g5</criterionID>
+            <scales>
+                <scale>
+                    <quantitative>
+                        <preferenceDirection>min</preferenceDirection>
+                    </quantitative>
+                </scale>
+            </scales>
+        </criterionScale>
+        <criterionScale>
+            <criterionID>g6</criterionID>
+            <scales>
+                <scale>
+                    <quantitative>
+                        <preferenceDirection>max</preferenceDirection>
+                    </quantitative>
+                </scale>
+            </scales>
+        </criterionScale>
+        <criterionScale>
+            <criterionID>g7</criterionID>
+            <scales>
+                <scale>
+                    <quantitative>
+                        <preferenceDirection>max</preferenceDirection>
+                    </quantitative>
+                </scale>
+            </scales>
+        </criterionScale>
+    </criteriaScales>
+    <criteriaThresholds>
+        <criterionThreshold>
+            <criterionID>g1</criterionID>
+            <thresholds>
+                <threshold mcdaConcept="indifference">
+                    <constant>
+                        <real>1.0</real>
+                    </constant>
+                </threshold>
+                <threshold mcdaConcept="preference">
+                    <constant>
+                        <real>2.0</real>
+                    </constant>
+                </threshold>
+            </thresholds>
+        </criterionThreshold>
+        <criterionThreshold>
+            <criterionID>g2</criterionID>
+            <thresholds>
+                <threshold mcdaConcept="indifference">
+                    <constant>
+                        <real>4.0</real>
+                    </constant>
+                </threshold>
+                <threshold mcdaConcept="preference">
+                    <constant>
+                        <real>4.0</real>
+                    </constant>
+                </threshold>
+            </thresholds>
+        </criterionThreshold>
+        <criterionThreshold>
+            <criterionID>g3</criterionID>
+            <thresholds>
+                <threshold mcdaConcept="indifference">
+                    <constant>
+                        <real>1.0</real>
+                    </constant>
+                </threshold>
+                <threshold mcdaConcept="preference">
+                    <constant>
+                        <real>3.0</real>
+                    </constant>
+                </threshold>
+            </thresholds>
+        </criterionThreshold>
+        <criterionThreshold>
+            <criterionID>g4</criterionID>
+            <thresholds>
+                <threshold mcdaConcept="indifference">
+                    <constant>
+                        <real>0.0</real>
+                    </constant>
+                </threshold>
+                <threshold mcdaConcept="preference">
+                    <constant>
+                        <real>3.0</real>
+                    </constant>
+                </threshold>
+            </thresholds>
+        </criterionThreshold>
+        <criterionThreshold>
+            <criterionID>g5</criterionID>
+            <thresholds>
+                <threshold mcdaConcept="indifference">
+                    <constant>
+                        <real>1.0</real>
+                    </constant>
+                </threshold>
+                <threshold mcdaConcept="preference">
+                    <constant>
+                        <real>3.0</real>
+                    </constant>
+                </threshold>
+            </thresholds>
+        </criterionThreshold>
+        <criterionThreshold>
+            <criterionID>g6</criterionID>
+            <thresholds>
+                <threshold mcdaConcept="indifference">
+                    <constant>
+                        <real>0.0</real>
+                    </constant>
+                </threshold>
+                <threshold mcdaConcept="preference">
+                    <constant>
+                        <real>0.0</real>
+                    </constant>
+                </threshold>
+            </thresholds>
+        </criterionThreshold>
+        <criterionThreshold>
+            <criterionID>g7</criterionID>
+            <thresholds>
+                <threshold mcdaConcept="indifference">
+                    <constant>
+                        <real>0.0</real>
+                    </constant>
+                </threshold>
+                <threshold mcdaConcept="preference">
+                    <constant>
+                        <real>0.0</real>
+                    </constant>
+                </threshold>
+            </thresholds>
+        </criterionThreshold>
+    </criteriaThresholds>
+</xmcda:XMCDA>

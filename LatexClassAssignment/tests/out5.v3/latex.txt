@@ -1,0 +1,88 @@
+\begin{table}
+\begin{center}
+\begin{tabular}{c|c}
+\bf Alternative & \bf Class \cr
+\hline
+a1 & C4 \cr
+\hline
+a2 & C3 \cr
+\hline
+a3 & C3 \cr
+\hline
+a4 & C3 \cr
+\hline
+a5 & C3 \cr
+\hline
+a6 & C3 \cr
+\hline
+a7 & C3 \cr
+\hline
+a8 & C4 \cr
+\hline
+a9 & C3 \cr
+\hline
+a10 & C3 \cr
+\hline
+a11 & C3 \cr
+\hline
+a12 & C3 \cr
+\hline
+a13 & C3 \cr
+\hline
+a14 & C2 \cr
+\hline
+a15 & C2 \cr
+\hline
+a16 & C3 \cr
+\hline
+a17 & C3 \cr
+\hline
+a18 & C3 \cr
+\hline
+a19 & C3 \cr
+\hline
+a20 & C3 \cr
+\hline
+a21 & C3 \cr
+\hline
+a22 & C2 \cr
+\hline
+a23 & C2 \cr
+\hline
+a24 & C2 \cr
+\hline
+a25 & C2 \cr
+\hline
+a26 & C3 \cr
+\hline
+a27 & C2 \cr
+\hline
+a28 & C3 \cr
+\hline
+a29 & C3 \cr
+\hline
+a30 & C3 \cr
+\hline
+a31 & C3 \cr
+\hline
+a32 & C2 \cr
+\hline
+a33 & C3 \cr
+\hline
+a34 & C2 \cr
+\hline
+a35 & C2 \cr
+\hline
+a36 & C2 \cr
+\hline
+a37 & C2 \cr
+\hline
+a38 & C2 \cr
+\hline
+a39 & C2 \cr
+\hline
+a40 & C2 \cr
+\end{tabular}
+\caption{Alternatives Assignments}
+\end{center}
+\end{table}

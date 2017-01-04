@@ -1,0 +1,168 @@
+<?xml version="1.0" ?>
+<xmcda:XMCDA
+        xmlns:xmcda="http://www.decision-deck.org/2013/XMCDA-3.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.decision-deck.org/2013/XMCDA-3.0.0 http://www.decision-deck.org/xmcda/_downloads/XMCDA-3.0.0.xsd">
+    <alternatives id="alternatives1" name="alternatives1 name" mcdaConcept="alternatives1 mcdaConcept">
+        <alternative id="a1">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a2">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a3">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a4">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a5">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a6">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a7">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a8">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a9">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a10">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a11">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a12">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a13">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a14">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a15">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a16">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a17">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a18">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a19">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a20">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a21">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a22">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a23">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a24">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a25">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a26">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a27">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a28">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a29">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a30">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a31">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a32">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a33">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a34">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a35">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a36">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a37">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a38">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a39">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+        <alternative id="a40">
+            <type>real</type>
+            <active>true</active>
+        </alternative>
+    </alternatives>
+</xmcda:XMCDA>
