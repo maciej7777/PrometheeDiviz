@@ -25,8 +25,7 @@
 
         <input id="input3" name="categories_profiles" displayName="categories profiles" isoptional="0">
             <documentation>
-                <description>Definitions of boundary profiles which should be used for classes (categories)
-                    representation.
+                <description>Definitions of boundary profiles which should be used for classes (categories) representation.
                 </description>
             </documentation>
             <xmcda tag="categoriesProfiles"/>
@@ -101,8 +100,7 @@
                 </entry>
                 <entry id="%2" type="boolean" displayName="assign to a better class">
                     <documentation>
-                        <description>Information if alternative will be assigned to a better class when the assignment is not
-                            clear. Works only if cutPoint does unclear output for alternative.</description>
+                        <description>Information if alternative will be assigned to a better class when the assignment is not clear. Works only if cutPoint does unclear output for alternative.</description>
                     </documentation>
                     <defaultValue>true</defaultValue>
                 </entry>
