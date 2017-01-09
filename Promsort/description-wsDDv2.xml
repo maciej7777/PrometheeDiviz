@@ -25,8 +25,7 @@
 
         <input id="input3" name="categories_profiles" displayName="categories profiles" isoptional="0">
             <documentation>
-                <description>Definitions of boundary profiles which should be used for classes (categories)
-                    representation.
+                <description>Definitions of boundary profiles which should be used for classes (categories) representation.
                 </description>
             </documentation>
             <xmcda tag="categoriesProfiles"/>
@@ -68,12 +67,12 @@
             <xmcda tag="methodParameters">
                 <![CDATA[
                 <methodParameters>
-                    <parameter name="cutPoint">
+                    <parameter id="cutPoint">
                         <value>
                             <real>%1</real>
                         </value>
                     </parameter>
-                    <parameter name="assignToABetterClass">
+                    <parameter id="assignToABetterClass">
                         <value>
                             <boolean>%2</boolean>
                         </value>
@@ -82,27 +81,20 @@
 	        ]]>
             </xmcda>
             <gui status="preferFile">
-                <entry id="%1" type="real" displayName="cut point">
+                <entry id="%1" type="float" displayName="cut point">
                     <documentation>
                         <description>Parameter used in a second phase of Promsort method. Determines the impact of assigning alternatives to better/worse categories.</description>
                     </documentation>
                     <constraint>
-                        <description>The value should be lower or equal to 1.0.</description>
+                        <description>The value should be between -1.0 and 1.0 (both included).</description>
                         <code>
-                            <![CDATA[ %1 <= 1.0 ]]>
-                        </code>
-                    </constraint>
-                    <constraint>
-                        <description>The value should be higher or equal to -1.0.</description>
-                        <code>
-                            <![CDATA[ %1 => -1.0 ]]>
+                            <![CDATA[ %1 <= 1.0 && %1 >= -1.0 ]]>
                         </code>
                     </constraint>
                 </entry>
                 <entry id="%2" type="boolean" displayName="assign to a better class">
                     <documentation>
-                        <description>Information if alternative will be assigned to a better class when the assignment is not
-                            clear. Works only if cutPoint does unclear output for alternative.</description>
+                        <description>Information if alternative will be assigned to a better class when the assignment is not clear. Works only if cutPoint does unclear output for alternative.</description>
                     </documentation>
                     <defaultValue>true</defaultValue>
                 </entry>

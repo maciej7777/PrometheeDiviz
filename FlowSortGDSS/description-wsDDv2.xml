@@ -321,69 +321,67 @@
         <input id="input45" name="method_parameters" displayName="method parameters"
                isoptional="0">
             <documentation>
-                <description>
-                    A set of parameters provided to tune up the module's operation.
-                </description>
+                <description>A set of parameters provided to tune up the module's operation.</description>
             </documentation>
             <xmcda tag="methodParameters">
                 <![CDATA[
                 <methodParameters>
-                    <parameter name="comparisonWithProfiles">
+                    <parameter id="comparisonWithProfiles">
                         <value>
                             <real>%1</real>
                         </value>
                     </parameter>
-                    <parameter name="assignToABetterClass">
+                    <parameter id="assignToABetterClass">
                         <value>
                             <boolean>%2</boolean>
                         </value>
                     </parameter>
-                    <parameter name="decisionMaker1">
+                    <parameter id="decisionMaker1">
                         <value>
                             <real>%3</real>
                         </value>
                     </parameter>
-                    <parameter name="decisionMaker2">
+                    <parameter id="decisionMaker2">
                         <value>
                             <real>%4</real>
                         </value>
                     </parameter>
-                    <parameter name="decisionMaker3">
+                    <parameter id="decisionMaker3">
                         <value>
                             <real>%5</real>
                         </value>
                     </parameter>
-                    <parameter name="decisionMaker4">
+                    <parameter id="decisionMaker4">
                         <value>
                             <real>%6</real>
                         </value>
                     </parameter>
-                    <parameter name="decisionMaker5">
+                    <parameter id="decisionMaker5">
                         <value>
                             <real>%7</real>
                         </value>
                     </parameter>
-                    <parameter name="decisionMaker6">
+                    <parameter id="decisionMaker6">
                         <value>
                             <real>%8</real>
                         </value>
                     </parameter>
-                    <parameter name="decisionMaker7">
+                    <parameter id="decisionMaker7">
                         <value>
                             <real>%9</real>
                         </value>
                     </parameter>
-                    <parameter name="decisionMaker8">
+                    <parameter id="decisionMaker8">
                         <value>
                             <real>%10</real>
                         </value>
                     </parameter>
-                    <parameter name="decisionMaker9">
+                    <parameter id="decisionMaker9">
                         <value>
                             <real>%11</real>
                         </value>
                     </parameter>
-                    <parameter name="decisionMaker10">
+                    <parameter id="decisionMaker10">
                         <value>
                             <real>%12</real>
                         </value>
@@ -409,12 +407,11 @@
                 </entry>
                 <entry id="%2" type="boolean" displayName="assign to a better class">
                     <documentation>
-                        <description>Information if alternative will be assigned to a better class when the assignment is not
-                            clear. Works only if cutPoint does unclear output for alternative.</description>
+                        <description>Information if alternative will be assigned to a better class when the assignment is not clear. Works only if cutPoint does unclear output for alternative.</description>
                     </documentation>
                     <defaultValue>true</defaultValue>
                 </entry>
-                <entry id="%3" type="real" displayName="decision maker 1 weight">
+                <entry id="%3" type="float" displayName="decision maker 1 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -426,7 +423,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%4" type="real" displayName="decision maker 2 weight">
+                <entry id="%4" type="float" displayName="decision maker 2 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -438,7 +435,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%5" type="real" displayName="decision maker 3 weight">
+                <entry id="%5" type="float" displayName="decision maker 3 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -450,7 +447,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%6" type="real" displayName="decision maker 4 weight">
+                <entry id="%6" type="float" displayName="decision maker 4 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -462,7 +459,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%7" type="real" displayName="decision maker 5 weight">
+                <entry id="%7" type="float" displayName="decision maker 5 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -474,7 +471,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%8" type="real" displayName="decision maker 6 weight">
+                <entry id="%8" type="float" displayName="decision maker 6 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -486,7 +483,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%9" type="real" displayName="decision maker 7 weight">
+                <entry id="%9" type="float" displayName="decision maker 7 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -498,7 +495,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%10" type="real" displayName="decision maker 8 weight">
+                <entry id="%10" type="float" displayName="decision maker 8 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -510,7 +507,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%11" type="real" displayName="decision maker 9 weight">
+                <entry id="%11" type="float" displayName="decision maker 9 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -522,7 +519,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%12" type="real" displayName="decision maker 10 weight">
+                <entry id="%12" type="float" displayName="decision maker 10 weight">
                     <documentation>
                         <description></description>
                     </documentation>

@@ -46,7 +46,7 @@
             <xmcda tag="programParameters">
                 <![CDATA[
                 <programParameters>
-                    <parameter name="assignToABetterClass">
+                    <parameter id="assignToABetterClass">
                         <values>
                             <value>
                                 <boolean>%1</boolean>
