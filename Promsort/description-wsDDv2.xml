@@ -81,7 +81,7 @@
 	        ]]>
             </xmcda>
             <gui status="preferFile">
-                <entry id="%1" type="real" displayName="cut point">
+                <entry id="%1" type="float" displayName="cut point">
                     <documentation>
                         <description>Parameter used in a second phase of Promsort method. Determines the impact of assigning alternatives to better/worse categories.</description>
                     </documentation>

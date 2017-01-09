@@ -411,7 +411,7 @@
                     </documentation>
                     <defaultValue>true</defaultValue>
                 </entry>
-                <entry id="%3" type="real" displayName="decision maker 1 weight">
+                <entry id="%3" type="float" displayName="decision maker 1 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -423,7 +423,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%4" type="real" displayName="decision maker 2 weight">
+                <entry id="%4" type="float" displayName="decision maker 2 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -435,7 +435,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%5" type="real" displayName="decision maker 3 weight">
+                <entry id="%5" type="float" displayName="decision maker 3 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -447,7 +447,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%6" type="real" displayName="decision maker 4 weight">
+                <entry id="%6" type="float" displayName="decision maker 4 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -459,7 +459,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%7" type="real" displayName="decision maker 5 weight">
+                <entry id="%7" type="float" displayName="decision maker 5 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -471,7 +471,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%8" type="real" displayName="decision maker 6 weight">
+                <entry id="%8" type="float" displayName="decision maker 6 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -483,7 +483,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%9" type="real" displayName="decision maker 7 weight">
+                <entry id="%9" type="float" displayName="decision maker 7 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -495,7 +495,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%10" type="real" displayName="decision maker 8 weight">
+                <entry id="%10" type="float" displayName="decision maker 8 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -507,7 +507,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%11" type="real" displayName="decision maker 9 weight">
+                <entry id="%11" type="float" displayName="decision maker 9 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -519,7 +519,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%12" type="real" displayName="decision maker 10 weight">
+                <entry id="%12" type="float" displayName="decision maker 10 weight">
                     <documentation>
                         <description></description>
                     </documentation>
