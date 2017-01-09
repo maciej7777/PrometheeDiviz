@@ -68,7 +68,7 @@
                 <methodParameters>
                     <parameter id="comparisonWithProfiles">
                         <value>
-                            <real>%1</real>
+                            <label>%1</label>
                         </value>
                     </parameter>
                 </methodParameters>

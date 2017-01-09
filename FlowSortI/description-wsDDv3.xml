@@ -70,7 +70,7 @@
                     <parameter id="comparisonWithProfiles">
                         <values>
                             <value>
-                                <real>%1</real>
+                                <label>%1</label>
                             </value>
                         </values>
                     </parameter>
