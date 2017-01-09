@@ -67,12 +67,12 @@
             <xmcda tag="methodParameters">
                 <![CDATA[
                 <methodParameters>
-                    <parameter name="cutPoint">
+                    <parameter id="cutPoint">
                         <value>
                             <real>%1</real>
                         </value>
                     </parameter>
-                    <parameter name="assignToABetterClass">
+                    <parameter id="assignToABetterClass">
                         <value>
                             <boolean>%2</boolean>
                         </value>
