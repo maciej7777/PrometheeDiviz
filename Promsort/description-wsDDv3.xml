@@ -70,14 +70,14 @@
             <xmcda tag="programParameters">
                 <![CDATA[
                 <programParameters>
-                    <parameter name="cutPoint">
+                    <parameter id="cutPoint">
                         <values>
                             <value>
                                 <real>%1</real>
                             </value>
                         </values>
                     </parameter>
-                    <parameter name="assignToABetterClass">
+                    <parameter id="assignToABetterClass">
                         <values>
                             <value>
                                 <boolean>%2</boolean>
