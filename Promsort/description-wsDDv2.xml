@@ -86,15 +86,9 @@
                         <description>Parameter used in a second phase of Promsort method. Determines the impact of assigning alternatives to better/worse categories.</description>
                     </documentation>
                     <constraint>
-                        <description>The value should be lower or equal to 1.0.</description>
+                        <description>The value should be between -1.0 and 1.0 (both included).</description>
                         <code>
-                            <![CDATA[ %1 <= 1.0 ]]>
-                        </code>
-                    </constraint>
-                    <constraint>
-                        <description>The value should be higher or equal to -1.0.</description>
-                        <code>
-                            <![CDATA[ %1 => -1.0 ]]>
+                            <![CDATA[ %1 <= 1.0 && %1 >= -1.0 ]]>
                         </code>
                     </constraint>
                 </entry>
