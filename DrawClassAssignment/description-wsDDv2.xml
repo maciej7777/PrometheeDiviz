@@ -23,12 +23,48 @@
             <xmcda tag="categoriesValues"/>
         </input>
 
-        <output id="input3" name="assignments" displayName="assignments">
+        <input id="input3" name="assignments" displayName="assignments">
             <documentation>
                 <description>Assignments of alternatives to given classes.</description>
             </documentation>
             <xmcda tag="alternativesAffectations"/>
-        </output>
+        </input>
+
+
+        <input id="input4" name="method_parameters" displayName="method parameters"
+               isoptional="0">
+            <documentation>
+                <description>A set of parameters provided to tune up the module's operation.</description>
+            </documentation>
+            <xmcda tag="methodParameters">
+                <![CDATA[
+                <methodParameters>
+                    <parameter id="visualizationType">
+                        <value>
+                            <label>%1</label>
+                        </value>
+                    </parameter>
+                </methodParameters>
+       ]]>
+            </xmcda>
+            <gui status="preferGUI">
+                <entry id="%1" type="enum" displayName="Visualization type">
+                    <documentation>
+                        <description>Information of the chosen type of visualization.</description>
+                    </documentation>
+                    <items>
+                        <item id="normal">
+                            <description>normal</description>
+                            <value>normal</value>
+                        </item>
+                        <item id="dashed">
+                            <description>dashed</description>
+                            <value>dashed</value>
+                        </item>
+                    </items>
+                </entry>
+            </gui>
+        </input>
 
         <output id="output1" name="visualization" displayName="visualization">
             <documentation>

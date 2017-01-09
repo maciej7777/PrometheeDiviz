@@ -23,12 +23,12 @@
             <xmcda tag="categoriesValues"/>
         </input>
 
-        <output id="input3" name="assignments" displayName="assignments">
+        <input id="input3" name="assignments" displayName="assignments">
             <documentation>
                 <description>Assignments of alternatives to given classes.</description>
             </documentation>
             <xmcda tag="alternativesAffectations"/>
-        </output>
+        </input>
 
         <output id="output1" name="latex_table" displayName="latex table">
             <documentation>
