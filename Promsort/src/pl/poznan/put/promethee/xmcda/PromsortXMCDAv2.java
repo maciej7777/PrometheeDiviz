@@ -1,5 +1,6 @@
 package pl.poznan.put.promethee.xmcda;
 
+import org.xmcda.Message;
 import org.xmcda.ProgramExecutionResult;
 import org.xmcda.Referenceable;
 import org.xmcda.XMCDA;
@@ -125,7 +126,7 @@ public class PromsortXMCDAv2 {
 
         handleResults(outdir, xResults);
         if (!executionResult.isError()) {
-            executionResult.addInfo("Success");
+            executionResult.addDebug("Success");
         }
         Utils.writeProgramExecutionResultsAndExit(prgExecResultsFile, executionResult, Utils.XMCDA_VERSION.v2);
     }
