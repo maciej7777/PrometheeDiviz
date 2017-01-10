@@ -123,6 +123,9 @@ public class DrawClassAssignmentXMCDAv2 {
         final Map<String, XMCDA> resultsMap = OutputsHandler.convert(results.getFirstStepAssignments(), results.getAssignments());
 
         handleResults(outdir, resultsMap);*/
+        if (!executionResult.isError()) {
+            executionResult.addDebug("Success");
+        }
         Utils.writeProgramExecutionResultsAndExit(prgExecResultsFile, executionResult, Utils.XMCDA_VERSION.v2);
     }
 }

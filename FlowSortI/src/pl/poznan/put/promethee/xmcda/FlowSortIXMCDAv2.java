@@ -109,7 +109,9 @@ public class FlowSortIXMCDAv2 {
         final Map<String, XMCDA> xResults = OutputsHandler.convert(results.getAssignments());
 
         handleResults(outdir, xResults);
-
+        if (!executionResult.isError()) {
+            executionResult.addDebug("Success");
+        }
         Utils.writeProgramExecutionResultsAndExit(prgExecResultsFile, executionResult, Utils.XMCDA_VERSION.v2);
     }
 

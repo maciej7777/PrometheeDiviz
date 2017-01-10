@@ -761,7 +761,7 @@ public class InputsHandler {
         inputs.setProfilesFlows(tmpFlows);
 
         for (int j = 0; j < inputs.getProfilesIds().size(); j++) {
-            BigDecimal lastFlow = BigDecimal.valueOf(Double.MIN_VALUE);
+            BigDecimal lastFlow = BigDecimal.valueOf(-Double.MAX_VALUE);
             for (int k = 0; k < inputs.getProfilesIds().get(j).size(); k++) {
                 String profileId = inputs.getProfilesIds().get(j).get(k);
                 if (!inputs.getProfilesFlows().containsKey(profileId)) {
