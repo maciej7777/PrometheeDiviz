@@ -25,90 +25,70 @@
 
         <input id="input3" name="categories_profiles1" displayName="categories profiles 1" isoptional="0">
             <documentation>
-                <description>Definitions of boundary profiles for decision maker 1, which should be used for classes
-                    (categories) representation.
-                </description>
+                <description>Definitions of boundary profiles for decision maker 1, which should be used for classes (categories) representation.</description>
             </documentation>
             <xmcda tag="categoriesProfiles"/>
         </input>
 
         <input id="input4" name="categories_profiles2" displayName="categories profiles 2" isoptional="0">
             <documentation>
-                <description>Definitions of boundary profiles for decision maker 2, which should be used for classes
-                    (categories) representation.
-                </description>
+                <description>Definitions of boundary profiles for decision maker 2, which should be used for classes (categories) representation.</description>
             </documentation>
             <xmcda tag="categoriesProfiles"/>
         </input>
 
         <input id="input5" name="categories_profiles3" displayName="categories profiles 3" isoptional="1">
             <documentation>
-                <description>Definitions of boundary profiles for decision maker 3, which should be used for classes
-                    (categories) representation.
-                </description>
+                <description>Definitions of boundary profiles for decision maker 3, which should be used for classes (categories) representation.</description>
             </documentation>
             <xmcda tag="categoriesProfiles"/>
         </input>
 
         <input id="input6" name="categories_profiles4" displayName="categories profiles 4" isoptional="1">
             <documentation>
-                <description>Definitions of boundary profiles for decision maker 4, which should be used for classes
-                    (categories) representation.
-                </description>
+                <description>Definitions of boundary profiles for decision maker 4, which should be used for classes (categories) representation.</description>
             </documentation>
             <xmcda tag="categoriesProfiles"/>
         </input>
 
         <input id="input7" name="categories_profiles5" displayName="categories profiles 5" isoptional="1">
             <documentation>
-                <description>Definitions of boundary profiles for decision maker 5, which should be used for classes
-                    (categories) representation.
-                </description>
+                <description>Definitions of boundary profiles for decision maker 5, which should be used for classes (categories) representation.</description>
             </documentation>
             <xmcda tag="categoriesProfiles"/>
         </input>
 
         <input id="input8" name="categories_profiles6" displayName="categories profiles 6" isoptional="1">
             <documentation>
-                <description>Definitions of boundary profiles for decision maker 6, which should be used for classes
-                    (categories) representation.
-                </description>
+                <description>Definitions of boundary profiles for decision maker 6, which should be used for classes (categories) representation.</description>
             </documentation>
             <xmcda tag="categoriesProfiles"/>
         </input>
 
         <input id="input9" name="categories_profiles7" displayName="categories profiles 7" isoptional="1">
             <documentation>
-                <description>Definitions of boundary profiles for decision maker 7, which should be used for classes
-                    (categories) representation.
-                </description>
+                <description>Definitions of boundary profiles for decision maker 7, which should be used for classes (categories) representation.</description>
             </documentation>
             <xmcda tag="categoriesProfiles"/>
         </input>
 
         <input id="input10" name="categories_profiles8" displayName="categories profiles 8" isoptional="1">
             <documentation>
-                <description>Definitions of boundary profiles for decision maker 8, which should be used for classes
-                    (categories) representation.
-                </description>
+                <description>Definitions of boundary profiles for decision maker 8, which should be used for classes (categories) representation.</description>
             </documentation>
             <xmcda tag="categoriesProfiles"/>
         </input>
 
         <input id="input11" name="categories_profiles9" displayName="categories profiles 9" isoptional="1">
             <documentation>
-                <description>Definitions of boundary profiles for decision maker 9, which should be used for classes
-                    (categories) representation.
-                </description>
+                <description>Definitions of boundary profiles for decision maker 9, which should be used for classes (categories) representation.</description>
             </documentation>
             <xmcda tag="categoriesProfiles"/>
         </input>
 
         <input id="input12" name="categories_profiles10" displayName="categories profiles 10" isoptional="1">
             <documentation>
-                <description>Definitions of boundary profiles for decision maker 10, which should be used for classes
-                    (categories) representation.
-                </description>
+                <description>Definitions of boundary profiles for decision maker 10, which should be used for classes (categories) representation.</description>
             </documentation>
             <xmcda tag="categoriesProfiles"/>
         </input>
@@ -263,80 +243,70 @@
 
         <input id="input34" name="preferences1" displayName="preferences 1" isoptional="0">
             <documentation>
-                <description>The preference matrix computed for profiles and alternatives given by decision maker 1.
-                </description>
+                <description>The preference matrix computed for profiles and alternatives given by decision maker 1.</description>
             </documentation>
             <xmcda tag="alternativesMatrix"/>
         </input>
 
         <input id="input35" name="preferences2" displayName="preferences 2" isoptional="0">
             <documentation>
-                <description>The preference matrix computed for profiles and alternatives given by decision maker 2.
-                </description>
+                <description>The preference matrix computed for profiles and alternatives given by decision maker 2.</description>
             </documentation>
             <xmcda tag="alternativesMatrix"/>
         </input>
 
         <input id="input36" name="preferences3" displayName="preferences 3" isoptional="1">
             <documentation>
-                <description>The preference matrix computed for profiles and alternatives given by decision maker 3.
-                </description>
+                <description>The preference matrix computed for profiles and alternatives given by decision maker 3.</description>
             </documentation>
             <xmcda tag="alternativesMatrix"/>
         </input>
 
         <input id="input37" name="preferences4" displayName="preferences 4" isoptional="1">
             <documentation>
-                <description>The preference matrix computed for profiles and alternatives given by decision maker 4.
-                </description>
+                <description>The preference matrix computed for profiles and alternatives given by decision maker 4.</description>
             </documentation>
             <xmcda tag="alternativesMatrix"/>
         </input>
 
         <input id="input38" name="preferences5" displayName="preferences 5" isoptional="1">
             <documentation>
-                <description>The preference matrix computed for profiles and alternatives given by decision maker 5.
-                </description>
+                <description>The preference matrix computed for profiles and alternatives given by decision maker 5.</description>
             </documentation>
             <xmcda tag="alternativesMatrix"/>
         </input>
 
         <input id="input39" name="preferences6" displayName="preferences 6" isoptional="1">
             <documentation>
-                <description>The preference matrix computed for profiles and alternatives given by decision maker 6.
-                </description>
+                <description>The preference matrix computed for profiles and alternatives given by decision maker 6.</description>
             </documentation>
             <xmcda tag="alternativesMatrix"/>
         </input>
 
         <input id="input40" name="preferences7" displayName="preferences 7" isoptional="1">
             <documentation>
-                <description>The preference matrix computed for profiles and alternatives given by decision maker 7.
-                </description>
+                <description>The preference matrix computed for profiles and alternatives given by decision maker 7.</description>
             </documentation>
             <xmcda tag="alternativesMatrix"/>
         </input>
 
         <input id="input41" name="preferences8" displayName="preferences 8" isoptional="1">
             <documentation>
-                <description>The preference matrix computed for profiles and alternatives given by decision maker 8.
-                </description>
+                <description>The preference matrix computed for profiles and alternatives given by decision maker 8.</description>
             </documentation>
             <xmcda tag="alternativesMatrix"/>
         </input>
 
         <input id="input42" name="preferences9" displayName="preferences 9" isoptional="1">
             <documentation>
-                <description>The preference matrix computed for profiles and alternatives given by decision maker 9.
-                </description>
+                <description>The preference matrix computed for profiles and alternatives given by decision maker 9.</description>
             </documentation>
             <xmcda tag="alternativesMatrix"/>
         </input>
 
         <input id="input43" name="preferences10" displayName="preferences 10" isoptional="1">
             <documentation>
-                <description>The preference matrix computed for profiles and alternatives given by decision maker 10.
-                </description>
+                <description>The preference matrix computed for profiles and alternatives given by decision maker 10.</description>
             </documentation>
             <xmcda tag="alternativesMatrix"/>
         </input>
@@ -351,9 +321,7 @@
         <input id="input45" name="method_parameters" displayName="method parameters"
                isoptional="0">
             <documentation>
-                <description>
-                    A set of parameters provided to tune up the module's operation.
-                </description>
+                <description>A set of parameters provided to tune up the module's operation.</description>
             </documentation>
             <xmcda tag="programParameters">
                 <![CDATA[
@@ -463,14 +431,11 @@
                 </entry>
                 <entry id="%2" type="boolean" displayName="assign to a better class">
                     <documentation>
-                        <description>Information if alternative will be assigned to a better class when the assignment
-                            is not
-                            clear. Works only if cutPoint does unclear output for alternative.
-                        </description>
+                        <description>Information if alternative will be assigned to a better class when the assignment is not clear. Works only if cutPoint does unclear output for alternative.</description>
                     </documentation>
                     <defaultValue>true</defaultValue>
                 </entry>
-                <entry id="%3" type="real" displayName="decision maker 1 weight">
+                <entry id="%3" type="float" displayName="decision maker 1 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -482,7 +447,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%4" type="real" displayName="decision maker 2 weight:">
+                <entry id="%4" type="float" displayName="decision maker 2 weight:">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -494,7 +459,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%5" type="real" displayName="decision maker 3 weight:">
+                <entry id="%5" type="float" displayName="decision maker 3 weight:">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -506,7 +471,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%6" type="real" displayName="decision maker 4 weight">
+                <entry id="%6" type="float" displayName="decision maker 4 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -518,7 +483,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%7" type="real" displayName="decision maker 5 weight">
+                <entry id="%7" type="float" displayName="decision maker 5 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -530,7 +495,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%8" type="real" displayName="decision maker 6 weight">
+                <entry id="%8" type="float" displayName="decision maker 6 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -542,7 +507,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%9" type="real" displayName="decision maker 7 weight">
+                <entry id="%9" type="float" displayName="decision maker 7 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -554,7 +519,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%10" type="real" displayName="decision maker 8 weight">
+                <entry id="%10" type="float" displayName="decision maker 8 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -566,7 +531,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%11" type="real" displayName="decision maker 9 weight">
+                <entry id="%11" type="float" displayName="decision maker 9 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -578,7 +543,7 @@
                         </code>
                     </constraint>
                 </entry>
-                <entry id="%12" type="real" displayName="decision maker 10 weight">
+                <entry id="%12" type="float" displayName="decision maker 10 weight">
                     <documentation>
                         <description></description>
                     </documentation>
@@ -595,9 +560,7 @@
 
         <output id="output1" name="first_step_assignments" displayName="first step assignments">
             <documentation>
-                <description>Assignments made in a first step of FlowSortGDSS process. They shows for which alternatives
-                    decision makers were not able to make an unanimous assignment.
-                </description>
+                <description>Assignments made in a first step of FlowSortGDSS process. They shows for which alternatives decision makers were not able to make an unanimous assignment.</description>
             </documentation>
             <xmcda tag="alternativesAssignments"/>
         </output>

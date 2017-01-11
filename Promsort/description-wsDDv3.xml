@@ -88,27 +88,21 @@
 	        ]]>
             </xmcda>
             <gui status="preferFile">
-                <entry id="%1" type="real" displayName="cut point">
+                <entry id="%1" type="float" displayName="cut point">
                     <documentation>
-                        <description>Parameter used in a second phase of Promsort method. Determines the impact of assigning alternatives to better/worse categories.</description>
+                        <description>Parameter used in a second phase of PromSort method. Determines the impact of assigning alternatives to better/worse categories.</description>
                     </documentation>
                     <constraint>
-                        <description>The value should be lower or equal to 1.0.</description>
+                        <description>The value should be between -1.0 and 1.0 (both included).</description>
                         <code>
-                            <![CDATA[ %1 <= 1.0 ]]>
-                        </code>
-                    </constraint>
-                    <constraint>
-                        <description>The value should be higher or equal to -1.0.</description>
-                        <code>
-                            <![CDATA[ %1 => -1.0 ]]>
+                            <![CDATA[ %1 <= 1.0 && %1 >= -1.0 ]]>
                         </code>
                     </constraint>
                 </entry>
                 <entry id="%2" type="boolean" displayName="assign to a better class">
                     <documentation>
                         <description>Information if alternative will be assigned to a better class when the assignment is not
-                            clear. Works only if cutPoint does unclear output for alternative.</description>
+                            clear. Works only if cut point does unclear output for alternative.</description>
                     </documentation>
                     <defaultValue>true</defaultValue>
                 </entry>
@@ -117,14 +111,14 @@
 
         <output id="output1" name="first_step_assignments" displayName="first step assignments">
             <documentation>
-                <description>Assignments made in a first step of Promsort process.</description>
+                <description>Assignments made in a first step of PromSort process.</description>
             </documentation>
             <xmcda tag="alternativesAssignments"/>
         </output>
 
         <output id="output2" name="final_assignments" displayName="final assignments">
             <documentation>
-                <description>Final assignments made in a Promsort process.</description>
+                <description>Final assignments made in a PromSort process.</description>
             </documentation>
             <xmcda tag="alternativesAssignments"/>
         </output>
