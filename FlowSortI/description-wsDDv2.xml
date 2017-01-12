@@ -44,16 +44,16 @@
             <xmcda tag="criteria"/>
         </input>
 
-        <input id="input6" name="negative_flows" displayName="negative flows" isoptional="0">
+        <input id="input6" name="positive_flows" displayName="positive flows" isoptional="0">
             <documentation>
-                <description>Negative flows of given alternatives and profiles.</description>
+                <description>Positive flows of given alternatives and profiles.</description>
             </documentation>
             <xmcda tag="alternativesValues"/>
         </input>
 
-        <input id="input7" name="positive_flows" displayName="positive flows" isoptional="0">
+        <input id="input7" name="negative_flows" displayName="negative flows" isoptional="0">
             <documentation>
-                <description>Positive flows of given alternatives and profiles.</description>
+                <description>Negative flows of given alternatives and profiles.</description>
             </documentation>
             <xmcda tag="alternativesValues"/>
         </input>
