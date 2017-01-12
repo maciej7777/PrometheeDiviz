@@ -48,14 +48,14 @@
             <documentation>
                 <description>Negative flows of given alternatives and profiles.</description>
             </documentation>
-            <xmcda tag="categoriesProfiles"/>
+            <xmcda tag="alternativesValues"/>
         </input>
 
         <input id="input7" name="positive_flows" displayName="positive flows" isoptional="0">
             <documentation>
                 <description>Positive flows of given alternatives and profiles.</description>
             </documentation>
-            <xmcda tag="categoriesProfiles"/>
+            <xmcda tag="alternativesValues"/>
         </input>
 
         <input id="input8" name="method_parameters" displayName="method parameters"

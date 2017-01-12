@@ -49,7 +49,7 @@
             <documentation>
                 <description>Flows of given alternatives and profiles.</description>
             </documentation>
-            <xmcda tag="categoriesProfiles"/>
+            <xmcda tag="alternativesValues"/>
         </input>
 
         <input id="input7" name="method_parameters" displayName="method parameters"
