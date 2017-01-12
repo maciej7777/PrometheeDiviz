@@ -437,11 +437,11 @@
                 </entry>
                 <entry id="%3" type="float" displayName="decision maker 1 weight">
                     <documentation>
-                        <description></description>
+                        <description>Weight of decision maker 1.</description>
                     </documentation>
                     <defaultValue>0.0</defaultValue>
                     <constraint>
-                        <description>An integer value.</description>
+                        <description>A float value.</description>
                         <code>
                             <![CDATA[ %3 >= 0 ]]>
                         </code>
@@ -449,11 +449,11 @@
                 </entry>
                 <entry id="%4" type="float" displayName="decision maker 2 weight:">
                     <documentation>
-                        <description></description>
+                        <description>Weight of decision maker 2.</description>
                     </documentation>
                     <defaultValue>0.0</defaultValue>
                     <constraint>
-                        <description>An integer value.</description>
+                        <description>A float value.</description>
                         <code>
                             <![CDATA[ %4 >= 0 ]]>
                         </code>
@@ -461,11 +461,11 @@
                 </entry>
                 <entry id="%5" type="float" displayName="decision maker 3 weight:">
                     <documentation>
-                        <description></description>
+                        <description>Weight of decision maker 3.</description>
                     </documentation>
                     <defaultValue>0.0</defaultValue>
                     <constraint>
-                        <description>An integer value. Choose 0.0 when decision maker does not exist.</description>
+                        <description>A float value. Choose 0.0 when decision maker does not exist.</description>
                         <code>
                             <![CDATA[ %5 >= 0 ]]>
                         </code>
@@ -473,11 +473,11 @@
                 </entry>
                 <entry id="%6" type="float" displayName="decision maker 4 weight">
                     <documentation>
-                        <description></description>
+                        <description>Weight of decision maker 4.</description>
                     </documentation>
                     <defaultValue>0.0</defaultValue>
                     <constraint>
-                        <description>An integer value. Choose 0.0 when decision maker does not exist.</description>
+                        <description>A float value. Choose 0.0 when decision maker does not exist.</description>
                         <code>
                             <![CDATA[ %6 >= 0 ]]>
                         </code>
@@ -485,11 +485,11 @@
                 </entry>
                 <entry id="%7" type="float" displayName="decision maker 5 weight">
                     <documentation>
-                        <description></description>
+                        <description>Weight of decision maker 5.</description>
                     </documentation>
                     <defaultValue>0.0</defaultValue>
                     <constraint>
-                        <description>An integer value. Choose 0.0 when decision maker does not exist.</description>
+                        <description>A float value. Choose 0.0 when decision maker does not exist.</description>
                         <code>
                             <![CDATA[ %7 >= 0 ]]>
                         </code>
@@ -497,11 +497,11 @@
                 </entry>
                 <entry id="%8" type="float" displayName="decision maker 6 weight">
                     <documentation>
-                        <description></description>
+                        <description>Weight of decision maker 6.</description>
                     </documentation>
                     <defaultValue>0.0</defaultValue>
                     <constraint>
-                        <description>An integer value. Choose 0.0 when decision maker does not exist.</description>
+                        <description>A float value. Choose 0.0 when decision maker does not exist.</description>
                         <code>
                             <![CDATA[ %8 >= 0 ]]>
                         </code>
@@ -509,11 +509,11 @@
                 </entry>
                 <entry id="%9" type="float" displayName="decision maker 7 weight">
                     <documentation>
-                        <description></description>
+                        <description>Weight of decision maker 7.</description>
                     </documentation>
                     <defaultValue>0.0</defaultValue>
                     <constraint>
-                        <description>An integer value. Choose 0.0 when decision maker does not exist.</description>
+                        <description>A float value. Choose 0.0 when decision maker does not exist.</description>
                         <code>
                             <![CDATA[ %9 >= 0 ]]>
                         </code>
@@ -521,11 +521,11 @@
                 </entry>
                 <entry id="%10" type="float" displayName="decision maker 8 weight">
                     <documentation>
-                        <description></description>
+                        <description>Weight of decision maker 8.</description>
                     </documentation>
                     <defaultValue>0.0</defaultValue>
                     <constraint>
-                        <description>An integer value. Choose 0.0 when decision maker does not exist.</description>
+                        <description>A float value. Choose 0.0 when decision maker does not exist.</description>
                         <code>
                             <![CDATA[ %10 >= 0 ]]>
                         </code>
@@ -533,11 +533,11 @@
                 </entry>
                 <entry id="%11" type="float" displayName="decision maker 9 weight">
                     <documentation>
-                        <description></description>
+                        <description>Weight of decision maker 9.</description>
                     </documentation>
                     <defaultValue>0.0</defaultValue>
                     <constraint>
-                        <description>An integer value. Choose 0.0 when decision maker does not exist.</description>
+                        <description>A float value. Choose 0.0 when decision maker does not exist.</description>
                         <code>
                             <![CDATA[ %11 >= 0 ]]>
                         </code>
@@ -545,11 +545,11 @@
                 </entry>
                 <entry id="%12" type="float" displayName="decision maker 10 weight">
                     <documentation>
-                        <description></description>
+                        <description>Weight of decision maker 10.</description>
                     </documentation>
                     <defaultValue>0.0</defaultValue>
                     <constraint>
-                        <description>An integer value. Choose 0.0 when decision maker does not exist.</description>
+                        <description>A float value. Choose 0.0 when decision maker does not exist.</description>
                         <code>
                             <![CDATA[ %12 >= 0 ]]>
                         </code>
