@@ -408,7 +408,7 @@ public class InputsHandler {
             }
         }
 
-        Double lastFlow = Double.MIN_VALUE;
+        Double lastFlow = -Double.MAX_VALUE;
         for (int i = 0; i < inputs.getProfilesIds().size(); i++) {
             String profileId = inputs.getProfilesIds().get(i);
             if (!inputs.getFlows().containsKey(profileId)) {
