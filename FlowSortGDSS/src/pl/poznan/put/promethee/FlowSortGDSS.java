@@ -106,12 +106,12 @@ public class FlowSortGDSS {
                 BigDecimal profileK;
                 BigDecimal profileK1;
 
-                if (firstClassNumber.intValue() < secondClassNumber.intValue()) {
-                    profileK = countDkForLimitingProfiles(alternativeId, firstClassNumber, secondClassDecisionMakers, inputs);
-                    profileK1 = countDk1ForLimitingProfiles(alternativeId, firstClassNumber, firstClassDecisionMakers, inputs);
-                } else {
+                if (firstClassNumber < secondClassNumber) {
                     profileK = countDkForLimitingProfiles(alternativeId, firstClassNumber, firstClassDecisionMakers, inputs);
-                    profileK1 = countDk1ForLimitingProfiles(alternativeId, firstClassNumber, secondClassDecisionMakers, inputs);
+                    profileK1 = countDk1ForLimitingProfiles(alternativeId, secondClassNumber, secondClassDecisionMakers, inputs);
+                } else {
+                    profileK = countDkForLimitingProfiles(alternativeId, secondClassNumber, secondClassDecisionMakers, inputs);
+                    profileK1 = countDk1ForLimitingProfiles(alternativeId, firstClassNumber, firstClassDecisionMakers, inputs);
                 }
 
                 if (profileK1.compareTo(profileK) > 0) {
@@ -136,7 +136,13 @@ public class FlowSortGDSS {
 
         for (Integer decisionMaker: decisionMakers) {
             String profileId = inputs.getProfilesIds().get(decisionMaker).get(profile);
-            sum = sum.add(inputs.getDecisionMakersWages().get(decisionMaker).multiply((inputs.getAlternativesFlowsAverage().get(alternativeId).subtract(inputs.getProfilesSummaryFlows().get(profileId).get(alternativeId)))));
+
+            BigDecimal phiRk = inputs.getProfilesSummaryFlows().get(profileId).get(alternativeId);
+            BigDecimal phiAi = inputs.getAlternativesFlowsAverage().get(alternativeId);
+            BigDecimal subtractionResult = phiAi.subtract(phiRk);
+            BigDecimal weight = inputs.getDecisionMakersWages().get(decisionMaker);
+
+            sum = sum.add(weight.multiply(subtractionResult));
         }
 
         return sum;
@@ -147,7 +153,13 @@ public class FlowSortGDSS {
 
         for (Integer decisionMaker: decisionMakers) {
             String profileId = inputs.getProfilesIds().get(decisionMaker).get(profile);
-            sum = sum.add(inputs.getDecisionMakersWages().get(decisionMaker).multiply((inputs.getProfilesSummaryFlows().get(profileId).get(alternativeId).subtract(inputs.getAlternativesFlowsAverage().get(alternativeId)))));
+
+            BigDecimal phiRk1 = inputs.getProfilesSummaryFlows().get(profileId).get(alternativeId);
+            BigDecimal phiAi = inputs.getAlternativesFlowsAverage().get(alternativeId);
+            BigDecimal subtractionResult = phiRk1.subtract(phiAi);
+            BigDecimal weight = inputs.getDecisionMakersWages().get(decisionMaker);
+
+            sum = sum.add(weight.multiply(subtractionResult));
         }
 
         return sum;
