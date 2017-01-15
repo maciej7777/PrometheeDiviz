@@ -42,6 +42,8 @@ public class PrometheeTri {
                     distance = distance.add(subtractionResult.multiply(weight));
                 }
 
+                distance = distance.abs();
+
                 if (bestDistance == null || bestDistance.compareTo(distance) > 0 || (bestDistance.compareTo(distance) == 0 && inputs.getAssignToABetterClass())) {
                     bestDistance = distance;
                     bestCategoryNumber = i;
