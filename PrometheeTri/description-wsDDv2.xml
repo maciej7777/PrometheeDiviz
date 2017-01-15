@@ -30,15 +30,29 @@
             <xmcda tag="categoriesProfiles"/>
         </input>
 
-        <input id="input4" name="flows" displayName="flows" isoptional="0">
+        <input id="input4" name="criteria" displayName="criteria" isoptional="0">
             <documentation>
-                <description>Flows of given alternatives and central profiles.</description>
+                <description>Definitions of criteria.</description>
             </documentation>
-            <xmcda tag="alternativesValues"/>
+            <xmcda tag="criteria"/>
+        </input>
+
+        <input id="input5" name="weights" displayName="criteria weights" isoptional="0">
+            <documentation>
+                <description>Weights of given criteria.</description>
+            </documentation>
+            <xmcda tag="criteriaValues"/>
+        </input>
+
+        <input id="input6" name="preferences" displayName="partial preferences" isoptional="0">
+            <documentation>
+                <description>Preferences indices for all pairs of alternatives and profiles and profiles and profiles on each criterion.</description>
+            </documentation>
+            <xmcda tag="alternativesComparisons"/>
         </input>
 
 
-        <input id="input5" name="method_parameters" displayName="method parameters"
+        <input id="input7" name="method_parameters" displayName="method parameters"
                isoptional="0">
             <documentation>
                 <description>A set of parameters provided to tune up the module's operation.</description>
@@ -51,6 +65,11 @@
                             <boolean>%1</boolean>
                         </value>
                     </parameter>
+                    <parameter id="useMarginalValue">
+                        <value>
+                            <boolean>%1</boolean>
+                        </value>
+                    </parameter>
                 </methodParameters>
 	        ]]>
             </xmcda>
@@ -58,6 +77,12 @@
                 <entry id="%1" type="boolean" displayName="assign to a better class">
                     <documentation>
                         <description>Information if alternative will be assigned to a better class when the assignment is not clear.</description>
+                    </documentation>
+                    <defaultValue>true</defaultValue>
+                </entry>
+                <entry id="%2" type="boolean" displayName="use marginal value">
+                    <documentation>
+                        <description>Information if decision maker wants to use a marginal value function (deviation with absolute value instead of simply flows) while calculating assignments.</description>
                     </documentation>
                     <defaultValue>true</defaultValue>
                 </entry>

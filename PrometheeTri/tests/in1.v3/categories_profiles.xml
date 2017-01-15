@@ -19,11 +19,5 @@
 				<alternativeID>b3</alternativeID>
 			</central>
 		</categoryProfile>
-		<categoryProfile>
-			<categoryID>C4</categoryID>
-			<central>
-				<alternativeID>b4</alternativeID>
-			</central>
-		</categoryProfile>
 	</categoriesProfiles>
 </xmcda:XMCDA>

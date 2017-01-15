@@ -9,5 +9,10 @@
 				<boolean>true</boolean>
 			</value>
 		</parameter>
+		<parameter id="useMarginalValue">
+			<value>
+				<boolean>true</boolean>
+			</value>
+		</parameter>
 	</methodParameters>
 </xmcda:XMCDA>

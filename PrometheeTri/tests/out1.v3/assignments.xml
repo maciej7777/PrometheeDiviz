@@ -4,7 +4,7 @@
 <alternativesAssignments>
 		<alternativeAssignment>
 			<alternativeID>a1</alternativeID>
-			<categoryID>C4</categoryID>
+			<categoryID>C1</categoryID>
 		</alternativeAssignment>
 		<alternativeAssignment>
 			<alternativeID>a2</alternativeID>
@@ -13,18 +13,6 @@
 		<alternativeAssignment>
 			<alternativeID>a3</alternativeID>
 			<categoryID>C3</categoryID>
-		</alternativeAssignment>
-		<alternativeAssignment>
-			<alternativeID>a4</alternativeID>
-			<categoryID>C3</categoryID>
-		</alternativeAssignment>
-		<alternativeAssignment>
-			<alternativeID>a5</alternativeID>
-			<categoryID>C1</categoryID>
-		</alternativeAssignment>
-		<alternativeAssignment>
-			<alternativeID>a6</alternativeID>
-			<categoryID>C1</categoryID>
 		</alternativeAssignment>
 	</alternativesAssignments>
 </xmcda:XMCDA>
