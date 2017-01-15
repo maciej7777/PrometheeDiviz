@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<xmcda:XMCDA xmlns:xmcda="http://www.decision-deck.org/2013/XMCDA-3.0.0"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.decision-deck.org/2013/XMCDA-3.0.0 http://www.decision-deck.org/xmcda/_downloads/XMCDA-3.0.0.xsd">
+    <programParameters>
+        <parameter id="assignToABetterClass">
+            <values>
+                <value>
+                    <boolean>false</boolean>
+                </value>
+            </values>
+        </parameter>
+        <parameter id="useMarginalValue">
+            <values>
+                <value>
+                    <boolean>true</boolean>
+                </value>
+            </values>
+        </parameter>
+    </programParameters>
+</xmcda:XMCDA>
