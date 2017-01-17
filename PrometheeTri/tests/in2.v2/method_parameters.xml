@@ -6,7 +6,12 @@
 	<methodParameters>
 		<parameter id="assignToABetterClass">
 			<value>
-				<boolean>false</boolean>
+				<boolean>true</boolean>
+			</value>
+		</parameter>
+		<parameter id="useMarginalValue">
+			<value>
+				<boolean>true</boolean>
 			</value>
 		</parameter>
 	</methodParameters>

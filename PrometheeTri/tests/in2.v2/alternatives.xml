@@ -16,17 +16,5 @@
 			<type>real</type>
 			<active>true</active>
 		</alternative>
-		<alternative id="a4">
-			<type>real</type>
-			<active>true</active>
-		</alternative>
-		<alternative id="a5">
-			<type>real</type>
-			<active>true</active>
-		</alternative>
-		<alternative id="a6">
-			<type>real</type>
-			<active>true</active>
-		</alternative>
 	</alternatives>
 </xmcda:XMCDA>

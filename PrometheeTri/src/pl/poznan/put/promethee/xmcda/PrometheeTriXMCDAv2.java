@@ -46,7 +46,9 @@ public class PrometheeTriXMCDAv2 {
         convertToV3AndMark(new File(indir,  "categories.xml"), "categories", xmcda, "categories");
         convertToV3AndMark(new File(indir,  "categories.xml"), "categoriesValues", xmcda, "categoriesValues");
         convertToV3AndMark(new File(indir,  "categories_profiles.xml"), "categoriesProfiles", xmcda, "categoriesProfiles");
-        convertToV3AndMark(new File(indir,  "flows.xml"), "flows", xmcda, "alternativesValues");
+        convertToV3AndMark(new File(indir,  "criteria.xml"), "criteria", xmcda, "criteria");
+        convertToV3AndMark(new File(indir,  "weights.xml"), "weights", xmcda, "criteriaValues");
+        convertToV3AndMark(new File(indir,  "preferences.xml"), "preferences", xmcda, "alternativesComparisons");
         convertToV3AndMark(new File(indir,  "method_parameters.xml"), "methodParameters", xmcda, "methodParameters");
     }
 

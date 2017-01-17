@@ -12,9 +12,6 @@
         <category id="C3">
             <active>true</active>
         </category>
-        <category id="C4">
-            <active>true</active>
-        </category>
     </categories>
     <categoriesValues mcdaConcept="rank">
         <categoryValue>
@@ -38,14 +35,6 @@
             <values>
                 <value>
                     <integer>3</integer>
-                </value>
-            </values>
-        </categoryValue>
-        <categoryValue>
-            <categoryID>C4</categoryID>
-            <values>
-                <value>
-                    <integer>4</integer>
                 </value>
             </values>
         </categoryValue>

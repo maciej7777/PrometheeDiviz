@@ -1,0 +1,321 @@
+<?xml version="1.0" ?>
+<xmcda:XMCDA xmlns:xmcda="http://www.decision-deck.org/2016/XMCDA-3.0.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.decision-deck.org/2016/XMCDA-3.0.2 http://www.decision-deck.org/xmcda/_downloads/XMCDA-3.0.2.xsd">
+
+    <alternativesMatrix>
+        <row>
+            <alternativeID>a1</alternativeID>
+            <column>
+                <alternativeID>b1</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>0.5</real>
+                    </value>
+                    <value id="cr2">
+                        <real>0.5</real>
+                    </value>
+                </values>
+            </column>
+            <column>
+                <alternativeID>b2</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>0.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>0.0</real>
+                    </value>
+                </values>
+            </column>
+            <column>
+                <alternativeID>b3</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>0.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>0.0</real>
+                    </value>
+                </values>
+            </column>
+        </row>
+        <row>
+            <alternativeID>a2</alternativeID>
+            <column>
+                <alternativeID>b1</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>1.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>1.0</real>
+                    </value>
+                </values>
+            </column>
+            <column>
+                <alternativeID>b2</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>0.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>0.0</real>
+                    </value>
+                </values>
+            </column>
+            <column>
+                <alternativeID>b3</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>0.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>0.0</real>
+                    </value>
+                </values>
+            </column>
+        </row>
+        <row>
+            <alternativeID>a3</alternativeID>
+            <column>
+                <alternativeID>b1</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>1.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>1.0</real>
+                    </value>
+                </values>
+            </column>
+            <column>
+                <alternativeID>b2</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>1.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>1.0</real>
+                    </value>
+                </values>
+            </column>
+            <column>
+                <alternativeID>b3</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>1.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>1.0</real>
+                    </value>
+                </values>
+            </column>
+        </row>
+        <row>
+            <alternativeID>b1</alternativeID>
+            <column>
+                <alternativeID>a1</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>0.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>0.0</real>
+                    </value>
+                </values>
+            </column>
+            <column>
+                <alternativeID>a2</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>0.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>0.0</real>
+                    </value>
+                </values>
+            </column>
+            <column>
+                <alternativeID>a3</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>0.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>0.0</real>
+                    </value>
+                </values>
+            </column>
+            <column>
+                <alternativeID>b1</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>0.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>0.0</real>
+                    </value>
+                </values>
+            </column>
+            <column>
+                <alternativeID>b2</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>0.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>0.0</real>
+                    </value>
+                </values>
+            </column>
+            <column>
+                <alternativeID>b3</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>0.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>0.0</real>
+                    </value>
+                </values>
+            </column>
+        </row>
+        <row>
+            <alternativeID>b2</alternativeID>
+            <column>
+                <alternativeID>a1</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>1.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>1.0</real>
+                    </value>
+                </values>
+            </column>
+            <column>
+                <alternativeID>a2</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>1.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>1.0</real>
+                    </value>
+                </values>
+            </column>
+            <column>
+                <alternativeID>a3</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>0.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>0.0</real>
+                    </value>
+                </values>
+            </column>
+            <column>
+                <alternativeID>b1</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>1.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>1.0</real>
+                    </value>
+                </values>
+            </column>
+            <column>
+                <alternativeID>b2</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>0.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>0.0</real>
+                    </value>
+                </values>
+            </column>
+            <column>
+                <alternativeID>b3</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>0.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>0.0</real>
+                    </value>
+                </values>
+            </column>
+        </row>
+        <row>
+            <alternativeID>b3</alternativeID>
+            <column>
+                <alternativeID>a1</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>1.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>1.0</real>
+                    </value>
+                </values>
+            </column>
+            <column>
+                <alternativeID>a2</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>1.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>1.0</real>
+                    </value>
+                </values>
+            </column>
+            <column>
+                <alternativeID>a3</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>0.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>0.0</real>
+                    </value>
+                </values>
+            </column>
+            <column>
+                <alternativeID>b1</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>1.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>1.0</real>
+                    </value>
+                </values>
+            </column>
+            <column>
+                <alternativeID>b2</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>1.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>1.0</real>
+                    </value>
+                </values>
+            </column>
+            <column>
+                <alternativeID>b3</alternativeID>
+                <values>
+                    <value id="cr1">
+                        <real>0.0</real>
+                    </value>
+                    <value id="cr2">
+                        <real>0.0</real>
+                    </value>
+                </values>
+            </column>
+        </row>
+    </alternativesMatrix>
+</xmcda:XMCDA>
