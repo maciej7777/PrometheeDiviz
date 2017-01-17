@@ -67,7 +67,7 @@
                     </parameter>
                     <parameter id="useMarginalValue">
                         <value>
-                            <boolean>%1</boolean>
+                            <boolean>%2</boolean>
                         </value>
                     </parameter>
                 </methodParameters>
