@@ -64,7 +64,8 @@
                             <label>%1</label>
                         </value>
                     </parameter>
-	        ]]>
+               </methodParameters>
+]]>
             </xmcda>
             <gui status="preferGUI">
                 <entry id="%1" type="enum" displayName="comparison with profiles">
