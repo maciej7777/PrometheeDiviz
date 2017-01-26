@@ -66,8 +66,9 @@
                                 <label>%1</label>
                             </value>
                         </values>
-                    </programParameters>
-	        ]]>
+                    </parameter>
+                </programParameters>
+]]>
             </xmcda>
             <gui status="preferGUI">
                 <entry id="%1" type="enum" displayName="comparison with profiles">
