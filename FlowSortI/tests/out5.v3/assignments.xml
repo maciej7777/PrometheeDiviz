@@ -20,7 +20,7 @@
 					<categoryID>C3</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>
@@ -28,7 +28,7 @@
 			<alternativeID>a3</alternativeID>
 			<categoriesInterval>
 				<lowerBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</lowerBound>
 				<upperBound>
 					<categoryID>C4</categoryID>
@@ -42,7 +42,7 @@
 					<categoryID>C3</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>
@@ -53,7 +53,7 @@
 					<categoryID>C3</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>
@@ -64,7 +64,7 @@
 					<categoryID>C3</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>
@@ -72,7 +72,7 @@
 			<alternativeID>a7</alternativeID>
 			<categoriesInterval>
 				<lowerBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</lowerBound>
 				<upperBound>
 					<categoryID>C4</categoryID>
@@ -97,7 +97,7 @@
 					<categoryID>C3</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>
@@ -105,7 +105,7 @@
 			<alternativeID>a10</alternativeID>
 			<categoriesInterval>
 				<lowerBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</lowerBound>
 				<upperBound>
 					<categoryID>C4</categoryID>
@@ -119,7 +119,7 @@
 					<categoryID>C3</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>
@@ -127,7 +127,7 @@
 			<alternativeID>a12</alternativeID>
 			<categoriesInterval>
 				<lowerBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</lowerBound>
 				<upperBound>
 					<categoryID>C4</categoryID>
@@ -138,7 +138,7 @@
 			<alternativeID>a13</alternativeID>
 			<categoriesInterval>
 				<lowerBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</lowerBound>
 				<upperBound>
 					<categoryID>C4</categoryID>
@@ -149,10 +149,10 @@
 			<alternativeID>a14</alternativeID>
 			<categoriesInterval>
 				<lowerBound>
-					<categoryID>C3</categoryID>
+					<categoryID>C2</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>
@@ -160,7 +160,7 @@
 			<alternativeID>a15</alternativeID>
 			<categoriesInterval>
 				<lowerBound>
-					<categoryID>C3</categoryID>
+					<categoryID>C2</categoryID>
 				</lowerBound>
 				<upperBound>
 					<categoryID>C3</categoryID>
@@ -174,7 +174,7 @@
 					<categoryID>C3</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>
@@ -182,7 +182,7 @@
 			<alternativeID>a17</alternativeID>
 			<categoriesInterval>
 				<lowerBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</lowerBound>
 				<upperBound>
 					<categoryID>C4</categoryID>
@@ -196,7 +196,7 @@
 					<categoryID>C3</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>
@@ -207,7 +207,7 @@
 					<categoryID>C3</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>
@@ -218,7 +218,7 @@
 					<categoryID>C3</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>
@@ -229,45 +229,12 @@
 					<categoryID>C3</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>
 		<alternativeAssignment>
 			<alternativeID>a22</alternativeID>
-			<categoriesInterval>
-				<lowerBound>
-					<categoryID>C3</categoryID>
-				</lowerBound>
-				<upperBound>
-					<categoryID>C3</categoryID>
-				</upperBound>
-			</categoriesInterval>
-		</alternativeAssignment>
-		<alternativeAssignment>
-			<alternativeID>a23</alternativeID>
-			<categoriesInterval>
-				<lowerBound>
-					<categoryID>C3</categoryID>
-				</lowerBound>
-				<upperBound>
-					<categoryID>C4</categoryID>
-				</upperBound>
-			</categoriesInterval>
-		</alternativeAssignment>
-		<alternativeAssignment>
-			<alternativeID>a24</alternativeID>
-			<categoriesInterval>
-				<lowerBound>
-					<categoryID>C3</categoryID>
-				</lowerBound>
-				<upperBound>
-					<categoryID>C4</categoryID>
-				</upperBound>
-			</categoriesInterval>
-		</alternativeAssignment>
-		<alternativeAssignment>
-			<alternativeID>a25</alternativeID>
 			<categoriesInterval>
 				<lowerBound>
 					<categoryID>C2</categoryID>
@@ -278,13 +245,46 @@
 			</categoriesInterval>
 		</alternativeAssignment>
 		<alternativeAssignment>
+			<alternativeID>a23</alternativeID>
+			<categoriesInterval>
+				<lowerBound>
+					<categoryID>C2</categoryID>
+				</lowerBound>
+				<upperBound>
+					<categoryID>C3</categoryID>
+				</upperBound>
+			</categoriesInterval>
+		</alternativeAssignment>
+		<alternativeAssignment>
+			<alternativeID>a24</alternativeID>
+			<categoriesInterval>
+				<lowerBound>
+					<categoryID>C2</categoryID>
+				</lowerBound>
+				<upperBound>
+					<categoryID>C3</categoryID>
+				</upperBound>
+			</categoriesInterval>
+		</alternativeAssignment>
+		<alternativeAssignment>
+			<alternativeID>a25</alternativeID>
+			<categoriesInterval>
+				<lowerBound>
+					<categoryID>C2</categoryID>
+				</lowerBound>
+				<upperBound>
+					<categoryID>C2</categoryID>
+				</upperBound>
+			</categoriesInterval>
+		</alternativeAssignment>
+		<alternativeAssignment>
 			<alternativeID>a26</alternativeID>
 			<categoriesInterval>
 				<lowerBound>
 					<categoryID>C3</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>
@@ -292,7 +292,7 @@
 			<alternativeID>a27</alternativeID>
 			<categoriesInterval>
 				<lowerBound>
-					<categoryID>C3</categoryID>
+					<categoryID>C2</categoryID>
 				</lowerBound>
 				<upperBound>
 					<categoryID>C3</categoryID>
@@ -306,7 +306,7 @@
 					<categoryID>C3</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>
@@ -317,7 +317,7 @@
 					<categoryID>C3</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>
@@ -325,7 +325,7 @@
 			<alternativeID>a30</alternativeID>
 			<categoriesInterval>
 				<lowerBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</lowerBound>
 				<upperBound>
 					<categoryID>C4</categoryID>
@@ -339,7 +339,7 @@
 					<categoryID>C3</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>
@@ -350,7 +350,7 @@
 					<categoryID>C2</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C3</categoryID>
+					<categoryID>C2</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>
@@ -361,7 +361,7 @@
 					<categoryID>C3</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>
@@ -369,7 +369,7 @@
 			<alternativeID>a34</alternativeID>
 			<categoriesInterval>
 				<lowerBound>
-					<categoryID>C3</categoryID>
+					<categoryID>C2</categoryID>
 				</lowerBound>
 				<upperBound>
 					<categoryID>C3</categoryID>
@@ -383,7 +383,7 @@
 					<categoryID>C2</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C3</categoryID>
+					<categoryID>C2</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>
@@ -394,7 +394,7 @@
 					<categoryID>C2</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C3</categoryID>
+					<categoryID>C2</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>
@@ -402,10 +402,10 @@
 			<alternativeID>a37</alternativeID>
 			<categoriesInterval>
 				<lowerBound>
-					<categoryID>C3</categoryID>
+					<categoryID>C2</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C3</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>
@@ -416,7 +416,7 @@
 					<categoryID>C2</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C2</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>
@@ -427,7 +427,7 @@
 					<categoryID>C2</categoryID>
 				</lowerBound>
 				<upperBound>
-					<categoryID>C4</categoryID>
+					<categoryID>C2</categoryID>
 				</upperBound>
 			</categoriesInterval>
 		</alternativeAssignment>
@@ -435,7 +435,7 @@
 			<alternativeID>a40</alternativeID>
 			<categoriesInterval>
 				<lowerBound>
-					<categoryID>C3</categoryID>
+					<categoryID>C2</categoryID>
 				</lowerBound>
 				<upperBound>
 					<categoryID>C3</categoryID>

@@ -1,12 +1,14 @@
 <?xml version="1.0" ?>
-<xmcda:XMCDA xmlns:xmcda="http://www.decision-deck.org/2016/XMCDA-3.0.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.decision-deck.org/2016/XMCDA-3.0.2 http://www.decision-deck.org/xmcda/_downloads/XMCDA-3.0.2.xsd">
+<xmcda:XMCDA xmlns:xmcda="http://www.decision-deck.org/2016/XMCDA-3.0.2"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.decision-deck.org/2016/XMCDA-3.0.2 http://www.decision-deck.org/xmcda/_downloads/XMCDA-3.0.2.xsd">
 
     <alternativesValues>
         <alternativeValue>
             <alternativeID>a1</alternativeID>
             <values>
                 <value>
-                    <real>0.9719475419033592</real>
+                    <real>0.9231024024730167</real>
                 </value>
             </values>
         </alternativeValue>
@@ -14,7 +16,7 @@
             <alternativeID>a10</alternativeID>
             <values>
                 <value>
-                    <real>0.778428028834974</real>
+                    <real>0.5692473390960159</real>
                 </value>
             </values>
         </alternativeValue>
@@ -22,7 +24,7 @@
             <alternativeID>a11</alternativeID>
             <values>
                 <value>
-                    <real>0.7111253049251708</real>
+                    <real>0.46751253132832077</real>
                 </value>
             </values>
         </alternativeValue>
@@ -30,7 +32,7 @@
             <alternativeID>a12</alternativeID>
             <values>
                 <value>
-                    <real>0.7225216160269311</real>
+                    <real>0.4991164706762265</real>
                 </value>
             </values>
         </alternativeValue>
@@ -38,7 +40,7 @@
             <alternativeID>a13</alternativeID>
             <values>
                 <value>
-                    <real>0.8383098763108063</real>
+                    <real>0.6663296933893832</real>
                 </value>
             </values>
         </alternativeValue>
@@ -46,7 +48,7 @@
             <alternativeID>a14</alternativeID>
             <values>
                 <value>
-                    <real>0.7675650774375503</real>
+                    <real>0.241036794451839</real>
                 </value>
             </values>
         </alternativeValue>
@@ -54,7 +56,7 @@
             <alternativeID>a15</alternativeID>
             <values>
                 <value>
-                    <real>0.6444271598536572</real>
+                    <real>0.28800830071895667</real>
                 </value>
             </values>
         </alternativeValue>
@@ -62,7 +64,7 @@
             <alternativeID>a16</alternativeID>
             <values>
                 <value>
-                    <real>0.7843995084279104</real>
+                    <real>0.46469115362022245</real>
                 </value>
             </values>
         </alternativeValue>
@@ -70,7 +72,7 @@
             <alternativeID>a17</alternativeID>
             <values>
                 <value>
-                    <real>0.8383098763108063</real>
+                    <real>0.6642436355985692</real>
                 </value>
             </values>
         </alternativeValue>
@@ -78,7 +80,7 @@
             <alternativeID>a18</alternativeID>
             <values>
                 <value>
-                    <real>0.7898243399367343</real>
+                    <real>0.47615724450699815</real>
                 </value>
             </values>
         </alternativeValue>
@@ -86,7 +88,7 @@
             <alternativeID>a19</alternativeID>
             <values>
                 <value>
-                    <real>0.7662379900413774</real>
+                    <real>0.3775404094197816</real>
                 </value>
             </values>
         </alternativeValue>
@@ -94,7 +96,7 @@
             <alternativeID>a2</alternativeID>
             <values>
                 <value>
-                    <real>0.7319276451999563</real>
+                    <real>0.46860652336535985</real>
                 </value>
             </values>
         </alternativeValue>
@@ -102,7 +104,7 @@
             <alternativeID>a20</alternativeID>
             <values>
                 <value>
-                    <real>0.7181955256329337</real>
+                    <real>0.3547064457904702</real>
                 </value>
             </values>
         </alternativeValue>
@@ -110,7 +112,7 @@
             <alternativeID>a21</alternativeID>
             <values>
                 <value>
-                    <real>0.778428028834974</real>
+                    <real>0.3911111080351837</real>
                 </value>
             </values>
         </alternativeValue>
@@ -118,7 +120,7 @@
             <alternativeID>a22</alternativeID>
             <values>
                 <value>
-                    <real>0.6456329658300102</real>
+                    <real>0.29592834714042904</real>
                 </value>
             </values>
         </alternativeValue>
@@ -126,7 +128,7 @@
             <alternativeID>a23</alternativeID>
             <values>
                 <value>
-                    <real>0.7723060885063016</real>
+                    <real>0.30498003549245783</real>
                 </value>
             </values>
         </alternativeValue>
@@ -134,7 +136,7 @@
             <alternativeID>a24</alternativeID>
             <values>
                 <value>
-                    <real>0.7050717413402143</real>
+                    <real>0.15855710705334766</real>
                 </value>
             </values>
         </alternativeValue>
@@ -142,7 +144,7 @@
             <alternativeID>a25</alternativeID>
             <values>
                 <value>
-                    <real>0.5054899623968143</real>
+                    <real>0.08839002267573695</real>
                 </value>
             </values>
         </alternativeValue>
@@ -150,7 +152,7 @@
             <alternativeID>a26</alternativeID>
             <values>
                 <value>
-                    <real>0.7181955256329337</real>
+                    <real>0.3754449176177067</real>
                 </value>
             </values>
         </alternativeValue>
@@ -158,7 +160,7 @@
             <alternativeID>a27</alternativeID>
             <values>
                 <value>
-                    <real>0.6586130536984909</real>
+                    <real>0.2815405920383882</real>
                 </value>
             </values>
         </alternativeValue>
@@ -166,7 +168,7 @@
             <alternativeID>a28</alternativeID>
             <values>
                 <value>
-                    <real>0.7129356897398135</real>
+                    <real>0.3538075307041784</real>
                 </value>
             </values>
         </alternativeValue>
@@ -174,7 +176,7 @@
             <alternativeID>a29</alternativeID>
             <values>
                 <value>
-                    <real>0.6693522647154099</real>
+                    <real>0.43061903404076196</real>
                 </value>
             </values>
         </alternativeValue>
@@ -182,7 +184,7 @@
             <alternativeID>a3</alternativeID>
             <values>
                 <value>
-                    <real>0.7475410611915667</real>
+                    <real>0.459605113450494</real>
                 </value>
             </values>
         </alternativeValue>
@@ -190,7 +192,7 @@
             <alternativeID>a30</alternativeID>
             <values>
                 <value>
-                    <real>0.8197652636746505</real>
+                    <real>0.6440222910470029</real>
                 </value>
             </values>
         </alternativeValue>
@@ -198,7 +200,7 @@
             <alternativeID>a31</alternativeID>
             <values>
                 <value>
-                    <real>0.80371953447684</real>
+                    <real>0.43858719412266106</real>
                 </value>
             </values>
         </alternativeValue>
@@ -206,7 +208,7 @@
             <alternativeID>a32</alternativeID>
             <values>
                 <value>
-                    <real>0.3500080984774855</real>
+                    <real>0.06232993197278911</real>
                 </value>
             </values>
         </alternativeValue>
@@ -214,7 +216,7 @@
             <alternativeID>a33</alternativeID>
             <values>
                 <value>
-                    <real>0.6936754268005677</real>
+                    <real>0.442806876813088</real>
                 </value>
             </values>
         </alternativeValue>
@@ -222,7 +224,7 @@
             <alternativeID>a34</alternativeID>
             <values>
                 <value>
-                    <real>0.6470230116442542</real>
+                    <real>0.2625518023301274</real>
                 </value>
             </values>
         </alternativeValue>
@@ -230,7 +232,7 @@
             <alternativeID>a35</alternativeID>
             <values>
                 <value>
-                    <real>0.6211128689898116</real>
+                    <real>0.1310289333124554</real>
                 </value>
             </values>
         </alternativeValue>
@@ -238,7 +240,7 @@
             <alternativeID>a36</alternativeID>
             <values>
                 <value>
-                    <real>0.43482607116690275</real>
+                    <real>0.0718452380952381</real>
                 </value>
             </values>
         </alternativeValue>
@@ -246,7 +248,7 @@
             <alternativeID>a37</alternativeID>
             <values>
                 <value>
-                    <real>0.7536624748058224</real>
+                    <real>0.19437361793352578</real>
                 </value>
             </values>
         </alternativeValue>
@@ -254,7 +256,7 @@
             <alternativeID>a38</alternativeID>
             <values>
                 <value>
-                    <real>0.6753588188762366</real>
+                    <real>0.09403628117913833</real>
                 </value>
             </values>
         </alternativeValue>
@@ -262,7 +264,7 @@
             <alternativeID>a39</alternativeID>
             <values>
                 <value>
-                    <real>0.7092561358815108</real>
+                    <real>0.1667091836734694</real>
                 </value>
             </values>
         </alternativeValue>
@@ -270,7 +272,7 @@
             <alternativeID>a4</alternativeID>
             <values>
                 <value>
-                    <real>0.758981530684054</real>
+                    <real>0.5477558839627805</real>
                 </value>
             </values>
         </alternativeValue>
@@ -278,7 +280,7 @@
             <alternativeID>a40</alternativeID>
             <values>
                 <value>
-                    <real>0.6051889547083052</real>
+                    <real>0.1944147728343415</real>
                 </value>
             </values>
         </alternativeValue>
@@ -286,7 +288,7 @@
             <alternativeID>a5</alternativeID>
             <values>
                 <value>
-                    <real>0.7539401140384713</real>
+                    <real>0.45940476795055024</real>
                 </value>
             </values>
         </alternativeValue>
@@ -294,7 +296,7 @@
             <alternativeID>a6</alternativeID>
             <values>
                 <value>
-                    <real>0.7950841758298545</real>
+                    <real>0.5331799976826229</real>
                 </value>
             </values>
         </alternativeValue>
@@ -302,7 +304,7 @@
             <alternativeID>a7</alternativeID>
             <values>
                 <value>
-                    <real>0.8837284054515276</real>
+                    <real>0.614454029034294</real>
                 </value>
             </values>
         </alternativeValue>
@@ -310,7 +312,7 @@
             <alternativeID>a8</alternativeID>
             <values>
                 <value>
-                    <real>0.8748970673039331</real>
+                    <real>0.6929609596449877</real>
                 </value>
             </values>
         </alternativeValue>
@@ -318,7 +320,7 @@
             <alternativeID>a9</alternativeID>
             <values>
                 <value>
-                    <real>0.8241747594317161</real>
+                    <real>0.5334658442867108</real>
                 </value>
             </values>
         </alternativeValue>
@@ -350,7 +352,7 @@
             <alternativeID>b45</alternativeID>
             <values>
                 <value>
-                    <real>0.9999999992074194</real>
+                    <real>1.0</real>
                 </value>
             </values>
         </alternativeValue>
