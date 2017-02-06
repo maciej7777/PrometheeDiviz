@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <program_description xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                      xsi:schemaLocation="http://www.decision-deck.org/2009/XMCDA-2.0.0 http://www.decision-deck.org/ws/_downloads/description.xsd">
-    <program provider="PUT" name="PrometheeTri" displayName="PrometheeTri" version="1.0.0"/>
+    <program provider="PUT" name="PROMETHEE-II-FlowSort_assignments" displayName="PROMETHEE-II-FlowSort_assignments" version="1.0.0"/>
     <documentation>
-        <description>Computes class assignment for given alternatives using Promethee Tri method.</description>
+        <description>Computes class assignment for given alternatives using FlowSort method based on Promethee II.</description>
         <contact><![CDATA[Maciej Uniejewski <maciej.uniejewski@gmail.com>]]></contact>
         <url>https://github.com/maciej7777/PrometheeDiviz</url>
     </documentation>
@@ -25,82 +25,82 @@
 
         <input id="input3" name="categories_profiles" displayName="categories profiles" isoptional="0">
             <documentation>
-                <description>Definitions of central profiles which should be used for classes (categories) representation.</description>
+                <description>Definitions of profiles which should be used for classes (categories) representation.</description>
             </documentation>
             <xmcda tag="categoriesProfiles"/>
         </input>
 
-        <input id="input4" name="criteria" displayName="criteria" isoptional="0">
+        <input id="input4" name="performance_table" displayName="profiles performances" isoptional="0">
             <documentation>
-                <description>Definitions of criteria.</description>
+                <description>The performances of profiles.</description>
+            </documentation>
+            <xmcda tag="performanceTable"/>
+        </input>
+
+        <input id="input5" name="criteria" displayName="criteria" isoptional="0">
+            <documentation>
+                <description>Definitions of criteria, their scales and preference thresholds. </description>
             </documentation>
             <xmcda tag="criteria"/>
+            <xmcda tag="criteriaScales"/>
         </input>
 
-        <input id="input5" name="weights" displayName="criteria weights" isoptional="0">
+        <input id="input6" name="flows" displayName="flows" isoptional="0">
             <documentation>
-                <description>Weights of given criteria.</description>
+                <description>Flows of given alternatives and profiles.</description>
             </documentation>
-            <xmcda tag="criteriaValues"/>
+            <xmcda tag="alternativesValues"/>
         </input>
-
-        <input id="input6" name="preferences" displayName="partial preferences" isoptional="0">
-            <documentation>
-                <description>Preferences indices for all pairs of alternatives and profiles and profiles and profiles on each criterion.</description>
-            </documentation>
-            <xmcda tag="alternativesComparisons"/>
-        </input>
-
 
         <input id="input7" name="method_parameters" displayName="method parameters"
                isoptional="0">
             <documentation>
                 <description>A set of parameters provided to tune up the module's operation.</description>
             </documentation>
-            <xmcda tag="methodParameters">
+            <xmcda tag="programParameters">
                 <![CDATA[
-                <methodParameters>
-                    <parameter id="assignToABetterClass">
-                        <value>
-                            <boolean>%1</boolean>
-                        </value>
+                <programParameters>
+                    <parameter id="comparisonWithProfiles">
+                        <values>
+                            <value>
+                                <label>%1</label>
+                            </value>
+                        </values>
                     </parameter>
-                    <parameter id="useMarginalValue">
-                        <value>
-                            <boolean>%2</boolean>
-                        </value>
-                    </parameter>
-                </methodParameters>
-	        ]]>
+                </programParameters>
+]]>
             </xmcda>
-            <gui status="preferFile">
-                <entry id="%1" type="boolean" displayName="assign to a better class">
+            <gui status="preferGUI">
+                <entry id="%1" type="enum" displayName="comparison with profiles">
                     <documentation>
-                        <description>Information if alternative will be assigned to a better class when the assignment is not clear.</description>
+                        <description>Information if we are using central or boundary profiles.</description>
                     </documentation>
-                    <defaultValue>true</defaultValue>
-                </entry>
-                <entry id="%2" type="boolean" displayName="use marginal value">
-                    <documentation>
-                        <description>Information if decision maker wants to use a marginal value function (deviation with absolute value instead of simply flows) while calculating assignments.</description>
-                    </documentation>
-                    <defaultValue>true</defaultValue>
+                    <items>
+                        <item id="central">
+                            <description>central profiles</description>
+                            <value>central</value>
+                        </item>
+                        <item id="bounding">
+                            <description>boundary profiles</description>
+                            <value>bounding</value>
+                        </item>
+                    </items>
                 </entry>
             </gui>
         </input>
 
         <output id="output1" name="assignments" displayName="assignments">
             <documentation>
-                <description>Final assignments made in a Promethee Tri process.</description>
+                <description>Final assignments made in a FlowSort (Promethee II) process.</description>
             </documentation>
-            <xmcda tag="alternativesAffectations"/>
+            <xmcda tag="alternativesAssignments"/>
         </output>
 
         <output id="output2" name="messages" displayName="messages">
             <documentation>
                 <description>Messages or errors generated by this module.</description>
             </documentation>
-            <xmcda tag="methodMessages"/>
+            <xmcda tag="programExecutionResult"/>
         </output>
 
     </parameters>
