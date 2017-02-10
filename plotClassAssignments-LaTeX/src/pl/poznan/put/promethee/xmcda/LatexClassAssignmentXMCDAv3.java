@@ -29,26 +29,6 @@ public class LatexClassAssignmentXMCDAv3 {
         Utils.loadXMCDAv3(xmcda, new File(indir, "assignments.xml"), true, executionResult, "alternativesAssignments");
     }
 
-/*    private static void handleResults(String outdir, Map<String, XMCDA> resultsMap, ProgramExecutionResult executionResult) {
-
-        final org.xmcda.parsers.xml.xmcda_v3.XMCDAParser parser = new org.xmcda.parsers.xml.xmcda_v3.XMCDAParser();
-
-        for ( Map.Entry<String, XMCDA> entry : resultsMap.entrySet() )
-        {
-            File outputFile = new File(outdir, String.format("%s.xml", entry.getKey()));
-            try
-            {
-                parser.writeXMCDA(entry.getValue(), outputFile, OutputsHandler.xmcdaV3Tag(entry.getKey()));
-            }
-            catch (Exception exception)
-            {
-                final String err = String.format("Error while writing %s.xml, reason: ", entry.getKey());
-                executionResult.addError(Utils.getMessage(err, exception));
-                outputFile.delete();
-            }
-        }
-    }*/
-
     public static void main(String[] args) throws Utils.InvalidCommandLineException {
         final Utils.Arguments params = Utils.parseCmdLineArguments(args);
 
@@ -84,17 +64,12 @@ public class LatexClassAssignmentXMCDAv3 {
             return;
         }
 
-        try(  PrintWriter out = new PrintWriter( outdir+"/latex.txt" )  ){
+        try(  PrintWriter out = new PrintWriter( outdir+"/classAssignments.tex" )  ){
             out.println( results.getLatexTable() );
         } catch (FileNotFoundException e) {
             executionResult.addError("Output file cannot be created. Reason: " + e);
         }
 
-
-/*
-        Map<String, XMCDA> resultsMap = OutputsHandler.convert(results.getFirstStepAssignments(), results.getAssignments());
-
-        handleResults(outdir, resultsMap, executionResult);*/
         Utils.writeProgramExecutionResultsAndExit(prgExecResults, executionResult, Utils.XMCDA_VERSION.v3);
     }
 }

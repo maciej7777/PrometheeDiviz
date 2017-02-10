@@ -50,36 +50,6 @@ public class LatexClassAssignmentXMCDAv2 {
         convertToV3AndMark(xmcda, new File(indir, "assignments.xml"), true, "alternativesAssignments", "alternativesAffectations");
     }
 
-/*    private static void handleResults(String outdir, Map<String, XMCDA> resultsMap) {
-        org.xmcda.v2.XMCDA resultsV2;
-        for ( Map.Entry<String, XMCDA> outputNameEntry : resultsMap.entrySet() )
-        {
-            File outputFile = new File(outdir, String.format("%s.xml", outputNameEntry.getKey()));
-            try
-            {
-                resultsV2 = XMCDAConverter.convertTo_v2(outputNameEntry.getValue());
-                if ( resultsV2 == null )
-                    throw new IllegalStateException("Conversion from v3 to v2 returned a null value");
-            }
-            catch (Exception e)
-            {
-                final String err = String.format("Could not convert %s into XMCDA_v2, reason: ", outputNameEntry.getKey());
-                executionResult.addError(Utils.getMessage(err, e));
-                continue;
-            }
-            try
-            {
-                XMCDAParser.writeXMCDA(resultsV2, outputFile, OutputsHandler.xmcdaV2Tag(outputNameEntry.getKey()));
-            }
-            catch (Exception e)
-            {
-                final String err = String.format("Error while writing %s.xml, reason: ", outputNameEntry.getKey());
-                executionResult.addError(Utils.getMessage(err, e));
-                outputFile.delete();
-            }
-        }
-    }*/
-
     public static void main(String[] args) throws Utils.InvalidCommandLineException {
         final Utils.Arguments params = Utils.parseCmdLineArguments(args);
         final String indir = params.inputDirectory;
@@ -111,15 +81,12 @@ public class LatexClassAssignmentXMCDAv2 {
             Utils.writeProgramExecutionResultsAndExit(prgExecResultsFile, executionResult, Utils.XMCDA_VERSION.v2);
             return;
         }
-        try(  PrintWriter out = new PrintWriter( outdir+"/latex.txt" )  ){
+        try(  PrintWriter out = new PrintWriter( outdir+"/classAssignments.tex" )  ){
             out.println( results.getLatexTable() );
         } catch (FileNotFoundException e) {
             executionResult.addError("Output file cannot be created. Reason: " + e);
         }
-/*
-        final Map<String, XMCDA> resultsMap = OutputsHandler.convert(results.getFirstStepAssignments(), results.getAssignments());
 
-        handleResults(outdir, resultsMap);*/
         if (!executionResult.isError()) {
             executionResult.addDebug("Success");
         }

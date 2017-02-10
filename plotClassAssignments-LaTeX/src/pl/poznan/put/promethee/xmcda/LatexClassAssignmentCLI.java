@@ -17,11 +17,11 @@ public class LatexClassAssignmentCLI {
         final ArrayList<String> argsList = new ArrayList<>(Arrays.asList(args));
         if ( argsList.remove("--v2") )
         {
-            LatexClassAssignmentXMCDAv2.main((String[]) argsList.toArray(new String[]{}));
+            LatexClassAssignmentXMCDAv2.main(argsList.toArray(new String[]{}));
         }
         else if ( argsList.remove("--v3") )
         {
-            LatexClassAssignmentXMCDAv3.main((String[]) argsList.toArray(new String[]{}));
+            LatexClassAssignmentXMCDAv3.main(argsList.toArray(new String[]{}));
         }
         else
         {

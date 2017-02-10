@@ -30,7 +30,7 @@
             <xmcda tag="alternativesAffectations"/>
         </input>
 
-        <output id="output1" name="latex_table" displayName="latex table">
+        <output id="latex_table" name="classAssignments.tex" displayName="latex table">
             <documentation>
                 <description>Visualization of assignments as a latex table.</description>
             </documentation>
