@@ -3,7 +3,7 @@
                      xsi:schemaLocation="http://www.decision-deck.org/2009/XMCDA-2.0.0 http://www.decision-deck.org/ws/_downloads/description.xsd">
     <program provider="PUT" name="PROMETHEE-PROMSORT_assignments" displayName="PROMETHEE-PROMSORT_assignments" version="1.0.0"/>
     <documentation>
-        <description>Computes class assignment for given alternatives using Promsort method.</description>
+        <description>Computes class assignment for given alternatives using PromSort method.</description>
         <contact><![CDATA[Maciej Uniejewski <maciej.uniejewski@gmail.com>]]></contact>
         <url>https://github.com/maciej7777/PrometheeDiviz</url>
     </documentation>
@@ -111,7 +111,7 @@
 
         <output id="output1" name="first_step_assignments" displayName="first step assignments">
             <documentation>
-                <description>Assignments made in a first step of PromSort process.</description>
+                <description>Assignments made in a first step of PromSort process. The assignment is imprecise, as some of alternatives can need next steps of PromSort method to return the final (precise) assignment.</description>
             </documentation>
             <xmcda tag="alternativesAssignments"/>
         </output>
