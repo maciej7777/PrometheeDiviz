@@ -103,14 +103,14 @@
 
         <output id="output1" name="first_step_assignments" displayName="first step assignments">
             <documentation>
-                <description>Assignments made in a first step of PromSort process. The assignment is imprecise, as some of alternatives can need next steps of PromSort method to return the final (precise) assignment.</description>
+                <description>Assignments made in a first step of PromSort method. The assignment is imprecise, as some of alternatives can need next steps of PromSort method to return the final (precise) assignment.</description>
             </documentation>
             <xmcda tag="alternativesAffectations"/>
         </output>
 
         <output id="output2" name="final_assignments" displayName="final assignments">
             <documentation>
-                <description>Final assignments made in a PromSort process.</description>
+                <description>Final assignments made in a PromSort method.</description>
             </documentation>
             <xmcda tag="alternativesAffectations"/>
         </output>

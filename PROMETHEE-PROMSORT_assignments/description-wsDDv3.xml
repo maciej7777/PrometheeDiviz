@@ -101,8 +101,7 @@
                 </entry>
                 <entry id="%2" type="boolean" displayName="assign to a better class">
                     <documentation>
-                        <description>Information if alternative will be assigned to a better class when the assignment is not
-                            clear. Works only if cut point does unclear output for alternative.</description>
+                        <description>Information if alternative will be assigned to a better class when the assignment is not clear. Works only if cut point does unclear output for alternative.</description>
                     </documentation>
                     <defaultValue>true</defaultValue>
                 </entry>
@@ -111,14 +110,14 @@
 
         <output id="output1" name="first_step_assignments" displayName="first step assignments">
             <documentation>
-                <description>Assignments made in a first step of PromSort process. The assignment is imprecise, as some of alternatives can need next steps of PromSort method to return the final (precise) assignment.</description>
+                <description>Assignments made in a first step of PromSort method. The assignment is imprecise, as some of alternatives can need next steps of PromSort method to return the final (precise) assignment.</description>
             </documentation>
             <xmcda tag="alternativesAssignments"/>
         </output>
 
         <output id="output2" name="final_assignments" displayName="final assignments">
             <documentation>
-                <description>Final assignments made in a PromSort process.</description>
+                <description>Final assignments made in a PromSort method.</description>
             </documentation>
             <xmcda tag="alternativesAssignments"/>
         </output>
