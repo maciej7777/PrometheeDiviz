@@ -24,7 +24,7 @@ public class LatexClassAssignmentXMCDAv3 {
         Referenceable.DefaultCreationObserver.currentMarker = "categories";
         Utils.loadXMCDAv3(xmcda, new File(indir, "categories.xml"), true, executionResult, "categories");
         Referenceable.DefaultCreationObserver.currentMarker = "categoriesValues";
-        Utils.loadXMCDAv3(xmcda, new File(indir, "categories.xml"), true, executionResult, "categoriesValues");
+        Utils.loadXMCDAv3(xmcda, new File(indir, "categories_values.xml"), true, executionResult, "categoriesValues");
         Referenceable.DefaultCreationObserver.currentMarker = "alternativesAssignments";
         Utils.loadXMCDAv3(xmcda, new File(indir, "assignments.xml"), true, executionResult, "alternativesAssignments");
     }
