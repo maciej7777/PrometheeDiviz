@@ -45,7 +45,7 @@ public class FlowSortIXMCDAv2 {
     private static void readFiles(XMCDA xmcda, String indir) {
         convertToV3AndMark(new File(indir, "alternatives.xml"), "alternatives", xmcda, "alternatives");
         convertToV3AndMark(new File(indir, "categories.xml"), "categories", xmcda, "categories");
-        convertToV3AndMark(new File(indir, "categories.xml"), "categoriesValues", xmcda, "categoriesValues");
+        convertToV3AndMark(new File(indir, "categories_values.xml"), "categoriesValues", xmcda, "categoriesValues");
         convertToV3AndMark(new File(indir, "categories_profiles.xml"), "categoriesProfiles", xmcda, "categoriesProfiles");
         convertToV3AndMark(new File(indir, "criteria.xml"), "criteria", xmcda, "criteria");
         convertToV3AndMark(new File(indir, "criteria.xml"), "criteriaScales", xmcda, "criteriaScales");

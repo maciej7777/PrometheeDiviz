@@ -23,7 +23,7 @@ public class FlowSortIXMCDAv3 {
         Referenceable.DefaultCreationObserver.currentMarker="categories";
         Utils.loadXMCDAv3(xmcda, new File(indir, "categories.xml"), true, executionResult, "categories");
         Referenceable.DefaultCreationObserver.currentMarker="categoriesValues";
-        Utils.loadXMCDAv3(xmcda, new File(indir, "categories.xml"), true, executionResult, "categoriesValues");
+        Utils.loadXMCDAv3(xmcda, new File(indir, "categories_values.xml"), true, executionResult, "categoriesValues");
         Referenceable.DefaultCreationObserver.currentMarker="categoriesProfiles";
         Utils.loadXMCDAv3(xmcda, new File(indir, "categories_profiles.xml"), true, executionResult, "categoriesProfiles");
         Referenceable.DefaultCreationObserver.currentMarker = "criteria";
