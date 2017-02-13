@@ -67,7 +67,7 @@
             </gui>
         </input>
 
-        <output id="output1" name="visualization" displayName="visualization">
+        <output id="assignments_png" name="assignments.png" displayName="visualization">
             <documentation>
                 <description>Visualization of assignments as an image.</description>
             </documentation>
