@@ -11,12 +11,12 @@ import java.io.*;
 /**
  * Created by Maciej Uniejewski on 2016-12-30.
  */
-public class DrawClassAssignment {
+public class PaintComponent {
 
     private static int width = 1;
     private static int height = 1;
 
-    private DrawClassAssignment() {
+    private PaintComponent() {
 
     }
 

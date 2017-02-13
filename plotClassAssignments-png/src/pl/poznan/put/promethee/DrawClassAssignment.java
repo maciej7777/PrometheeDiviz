@@ -1,5 +1,6 @@
 package pl.poznan.put.promethee;
 
+import pl.poznan.put.promethee.components.PaintComponent;
 import pl.poznan.put.promethee.xmcda.InputsHandler;
 import pl.poznan.put.promethee.xmcda.OutputsHandler;
 
@@ -16,9 +17,9 @@ public class DrawClassAssignment {
         OutputsHandler.Output output = new OutputsHandler.Output();
 
         if ("normal".equalsIgnoreCase(inputs.getVisualizationType().toString())) {
-            output.setAssignmentsImage(pl.poznan.put.promethee.components.DrawClassAssignment.drawImage(inputs));
+            output.setAssignmentsImage(PaintComponent.drawImage(inputs));
         } else {
-            output.setAssignmentsImage(pl.poznan.put.promethee.components.DrawClassAssignment.drawImageVersion2(inputs));
+            output.setAssignmentsImage(PaintComponent.drawImageVersion2(inputs));
         }
 
         return output;

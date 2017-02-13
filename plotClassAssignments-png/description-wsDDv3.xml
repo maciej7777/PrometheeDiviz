@@ -17,20 +17,26 @@
 
         <input id="input2" name="categories" displayName="categories" isoptional="0">
             <documentation>
-                <description>Definitions of classes and their marks (higher mark means better class). Each class need to have unique mark from 1 to C, where C is a number of classes. </description>
+                <description>Definitions of categories.</description>
             </documentation>
             <xmcda tag="categories"/>
+        </input>
+
+        <input id="input3" name="categories_values" displayName="categories marks" isoptional="0">
+            <documentation>
+                <description>Marks of categories (higher mark means better category). Each category need to have unique mark from 1 to C, where C is a number of categories. </description>
+            </documentation>
             <xmcda tag="categoriesValues"/>
         </input>
 
-        <input id="input3" name="assignments" displayName="assignments">
+        <input id="input4" name="assignments" displayName="assignments">
             <documentation>
                 <description>Assignments of alternatives to given classes.</description>
             </documentation>
             <xmcda tag="alternativesAssignments"/>
         </input>
 
-        <input id="input4" name="method_parameters" displayName="method parameters"
+        <input id="input5" name="method_parameters" displayName="method parameters"
                isoptional="0">
             <documentation>
                 <description>A set of parameters provided to tune up the module's operation.</description>
