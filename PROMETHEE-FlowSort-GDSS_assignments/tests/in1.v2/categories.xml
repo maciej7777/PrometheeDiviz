@@ -14,30 +14,4 @@
             <active>true</active>
         </category>
     </categories>
-    <categoriesValues mcdaConcept="rank">
-        <categoryValue>
-            <categoryID>C1</categoryID>
-            <values>
-                <value>
-                    <integer>1</integer>
-                </value>
-            </values>
-        </categoryValue>
-        <categoryValue>
-            <categoryID>C2</categoryID>
-            <values>
-                <value>
-                    <integer>2</integer>
-                </value>
-            </values>
-        </categoryValue>
-        <categoryValue>
-            <categoryID>C3</categoryID>
-            <values>
-                <value>
-                    <integer>3</integer>
-                </value>
-            </values>
-        </categoryValue>
-    </categoriesValues>
 </xmcda:XMCDA>

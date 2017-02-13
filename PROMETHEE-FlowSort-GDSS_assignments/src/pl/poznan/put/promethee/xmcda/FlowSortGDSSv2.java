@@ -64,7 +64,7 @@ public class FlowSortGDSSv2 {
     private static void readFiles(XMCDA xmcda, String indir) {
         convertToV3AndMark(xmcda, new File(indir, "alternatives.xml"), true, ALTERNATIVES, ALTERNATIVES);
         convertToV3AndMark(xmcda, new File(indir, "categories.xml"), true, CATEGORIES, CATEGORIES);
-        convertToV3AndMark(xmcda, new File(indir, "categories.xml"), true, CATEGORIES_VALUES, CATEGORIES_VALUES);
+        convertToV3AndMark(xmcda, new File(indir, "categories_values.xml"), true, CATEGORIES_VALUES, CATEGORIES_VALUES);
         convertToV3AndMark(xmcda, new File(indir, "method_parameters.xml"), true, METHOD_PARAMETERS, METHOD_PARAMETERS);
         convertToV3AndMark(xmcda, new File(indir, "criteria.xml"), true, CRITERIA, CRITERIA);
         convertToV3AndMark(xmcda, new File(indir, "criteria.xml"), true, CRITERIA_SCALES, CRITERIA_SCALES);

@@ -41,7 +41,7 @@ public class FlowSortGDSSv3 {
         Referenceable.DefaultCreationObserver.currentMarker = CATEGORIES;
         Utils.loadXMCDAv3(xmcda, new File(indir, "categories.xml"), true, executionResult, CATEGORIES);
         Referenceable.DefaultCreationObserver.currentMarker = CATEGORIES_VALUES;
-        Utils.loadXMCDAv3(xmcda, new File(indir, "categories.xml"), true, executionResult, CATEGORIES_VALUES);
+        Utils.loadXMCDAv3(xmcda, new File(indir, "categories_values.xml"), true, executionResult, CATEGORIES_VALUES);
         Referenceable.DefaultCreationObserver.currentMarker = METHOD_PARAMETERS;
         Utils.loadXMCDAv3(xmcda, new File(indir, "method_parameters.xml"), true, executionResult, PROGRAM_PARAMETERS);
         Referenceable.DefaultCreationObserver.currentMarker = CRITERIA;
