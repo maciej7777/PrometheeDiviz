@@ -48,7 +48,7 @@ public class PromsortXMCDAv2 {
     private static void readFiles(XMCDA xmcda, String indir) {
         convertToV3AndMark(xmcda, new File(indir,  "alternatives.xml"), true, "alternatives", "alternatives");
         convertToV3AndMark(xmcda, new File(indir,  "categories.xml"), true, "categories", "categories");
-        convertToV3AndMark(xmcda, new File(indir,  "categoriesValues.xml"), true, "categoriesValues", "categoriesValues");
+        convertToV3AndMark(xmcda, new File(indir,  "categories_values.xml"), true, "categoriesValues", "categoriesValues");
         convertToV3AndMark(xmcda, new File(indir,  "categories_profiles.xml"), true, "categoriesProfiles", "categoriesProfiles");
         convertToV3AndMark(xmcda, new File(indir, "criteria.xml"), true, "criteria", "criteria");
         convertToV3AndMark(xmcda, new File(indir, "criteria.xml"), true, "criteriaScales", "criteriaScales");

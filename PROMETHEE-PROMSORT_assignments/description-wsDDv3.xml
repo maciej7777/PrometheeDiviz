@@ -29,7 +29,7 @@
             <xmcda tag="categoriesProfiles"/>
         </input>
 
-        <input id="input4" name="categories" displayName="categories" isoptional="0">
+        <input id="input4" name="categories_values" displayName="categories marks" isoptional="0">
             <documentation>
                 <description>Marks of categories (higher mark means better category). Each category need to have unique mark from 1 to C, where C is a number of categories. </description>
             </documentation>
