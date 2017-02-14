@@ -84,7 +84,7 @@
                 </methodParameters>
 	        ]]>
             </xmcda>
-            <gui status="preferFile">
+            <gui status="preferGUI">
                 <entry id="%1" type="float" displayName="cut point">
                     <documentation>
                         <description>Parameter used in a second phase of PromSort method. Determines the impact of assigning alternatives to better/worse categories.</description>

@@ -79,7 +79,7 @@
                 </methodParameters>
 	        ]]>
             </xmcda>
-            <gui status="preferFile">
+            <gui status="preferGUI">
                 <entry id="%1" type="boolean" displayName="assign to a better class">
                     <documentation>
                         <description>Information if alternative will be assigned to a better class when the assignment is not clear.</description>

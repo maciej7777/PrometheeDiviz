@@ -29,7 +29,7 @@
             <xmcda tag="categoriesValues"/>
         </input>
 
-        <input id="input4" name="assignments" displayName="assignments">
+        <input id="input4" name="assignments" displayName="assignments" isoptional="0">
             <documentation>
                 <description>Assignments of alternatives to given classes.</description>
             </documentation>
