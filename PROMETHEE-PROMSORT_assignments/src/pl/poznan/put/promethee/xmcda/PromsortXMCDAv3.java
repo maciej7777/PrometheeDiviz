@@ -40,9 +40,9 @@ public class PromsortXMCDAv3 {
         Referenceable.DefaultCreationObserver.currentMarker = "criteria";
         Utils.loadXMCDAv3(xmcda, new File(indir, "criteria.xml"), true, executionResult, "criteria");
         Referenceable.DefaultCreationObserver.currentMarker = "criteriaScales";
-        Utils.loadXMCDAv3(xmcda, new File(indir, "criteria.xml"), true, executionResult, "criteriaScales");
+        Utils.loadXMCDAv3(xmcda, new File(indir, "criteria_scales.xml"), true, executionResult, "criteriaScales");
         Referenceable.DefaultCreationObserver.currentMarker = "criteriaThresholds";
-        Utils.loadXMCDAv3(xmcda, new File(indir, "criteria.xml"), true, executionResult, "criteriaThresholds");
+        Utils.loadXMCDAv3(xmcda, new File(indir, "criteria_thresholds.xml"), true, executionResult, "criteriaThresholds");
         Referenceable.DefaultCreationObserver.currentMarker="positiveFlows";
         Utils.loadXMCDAv3(xmcda, new File(indir, "positive_flows.xml"), true, executionResult, "alternativesValues");
         Referenceable.DefaultCreationObserver.currentMarker="negativeFlows";
