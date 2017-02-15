@@ -10,26 +10,4 @@
             <active>true</active>
         </criterion>
     </criteria>
-    <criteriaScales>
-        <criterionScale>
-            <criterionID>cr1</criterionID>
-            <scales>
-                <scale>
-                    <quantitative>
-                        <preferenceDirection>max</preferenceDirection>
-                    </quantitative>
-                </scale>
-            </scales>
-        </criterionScale>
-        <criterionScale>
-            <criterionID>cr2</criterionID>
-            <scales>
-                <scale>
-                    <quantitative>
-                        <preferenceDirection>max</preferenceDirection>
-                    </quantitative>
-                </scale>
-            </scales>
-        </criterionScale>
-    </criteriaScales>
 </xmcda:XMCDA>
