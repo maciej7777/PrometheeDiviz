@@ -45,20 +45,26 @@
 
         <input id="input6" name="criteria" displayName="criteria" isoptional="0">
             <documentation>
-                <description>Definitions of criteria, their scales and preference thresholds. </description>
+                <description>Criteria to consider.</description>
             </documentation>
             <xmcda tag="criteria"/>
+        </input>
+
+        <input id="input7" name="criteria_scales" displayName="criteria scales" isoptional="0">
+            <documentation>
+                <description>Scales of considered criteria.</description>
+            </documentation>
             <xmcda tag="criteriaScales"/>
         </input>
 
-        <input id="input7" name="flows" displayName="flows" isoptional="0">
+        <input id="input8" name="flows" displayName="flows" isoptional="0">
             <documentation>
                 <description>Flows of given alternatives and profiles.</description>
             </documentation>
             <xmcda tag="alternativesValues"/>
         </input>
 
-        <input id="input8" name="method_parameters" displayName="method parameters"
+        <input id="input9" name="method_parameters" displayName="method parameters"
                isoptional="0">
             <documentation>
                 <description>A set of parameters provided to tune up the module's operation.</description>
