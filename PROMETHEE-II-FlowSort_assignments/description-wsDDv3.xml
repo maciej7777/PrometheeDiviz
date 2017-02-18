@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<program_description xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     xsi:schemaLocation="http://www.decision-deck.org/2009/XMCDA-2.0.0 http://www.decision-deck.org/ws/_downloads/description.xsd">
+    <program provider="PUT" name="PROMETHEE-II-FlowSort_assignments" displayName="PROMETHEE-II-FlowSort_assignments" version="1.0.0"/>
+    <documentation>
+        <description>Computes class assignment for given alternatives using FlowSort method based on Promethee II.</description>
+        <contact><![CDATA[Maciej Uniejewski <maciej.uniejewski@gmail.com>]]></contact>
+        <url>https://github.com/maciej7777/PrometheeDiviz</url>
+    </documentation>
+    <parameters>
+        <input id="input1" name="alternatives" displayName="alternatives" isoptional="0">
+            <documentation>
+                <description>Alternatives to consider.</description>
+            </documentation>
+            <xmcda tag="alternatives"/>
+        </input>
+
+        <input id="input2" name="categories" displayName="categories" isoptional="0">
+            <documentation>
+                <description>Definitions of categories.</description>
+            </documentation>
+            <xmcda tag="categories"/>
+        </input>
+
+        <input id="input3" name="categories_profiles" displayName="categories profiles" isoptional="0">
+            <documentation>
+                <description>Definitions of profiles which should be used for classes (categories) representation.</description>
+            </documentation>
+            <xmcda tag="categoriesProfiles"/>
+        </input>
+
+        <input id="input4" name="categories_values" displayName="categories marks" isoptional="0">
+            <documentation>
+                <description>Marks of categories (higher mark means better category). Each category need to have unique mark from 1 to C, where C is a number of categories. </description>
+            </documentation>
+            <xmcda tag="categoriesValues"/>
+        </input>
+
+        <input id="input5" name="performance_table" displayName="profiles performances" isoptional="0">
+            <documentation>
+                <description>The performances of profiles.</description>
+            </documentation>
+            <xmcda tag="performanceTable"/>
+        </input>
+
+        <input id="input6" name="criteria" displayName="criteria" isoptional="0">
+            <documentation>
+                <description>Criteria to consider.</description>
+            </documentation>
+            <xmcda tag="criteria"/>
+        </input>
+
+        <input id="input7" name="criteria_scales" displayName="criteria scales" isoptional="0">
+            <documentation>
+                <description>Scales of considered criteria.</description>
+            </documentation>
+            <xmcda tag="criteriaScales"/>
+        </input>
+
+        <input id="input8" name="flows" displayName="flows" isoptional="0">
+            <documentation>
+                <description>Flows of given alternatives and profiles.</description>
+            </documentation>
+            <xmcda tag="alternativesValues"/>
+        </input>
+
+        <input id="input9" name="method_parameters" displayName="method parameters"
+               isoptional="0">
+            <documentation>
+                <description>A set of parameters provided to tune up the module's operation.</description>
+            </documentation>
+            <xmcda tag="programParameters">
+                <![CDATA[
+                <programParameters>
+                    <parameter id="comparisonWithProfiles">
+                        <values>
+                            <value>
+                                <label>%1</label>
+                            </value>
+                        </values>
+                    </parameter>
+                </programParameters>
+]]>
+            </xmcda>
+            <gui status="preferGUI">
+                <entry id="%1" type="enum" displayName="comparison with profiles">
+                    <documentation>
+                        <description>Information if we are using central or boundary profiles.</description>
+                    </documentation>
+                    <items>
+                        <item id="central">
+                            <description>central profiles</description>
+                            <value>central</value>
+                        </item>
+                        <item id="bounding">
+                            <description>boundary profiles</description>
+                            <value>bounding</value>
+                        </item>
+                    </items>
+                </entry>
+            </gui>
+        </input>
+
+        <output id="output1" name="assignments" displayName="assignments">
+            <documentation>
+                <description>Final assignments made in a FlowSort (Promethee II) process.</description>
+            </documentation>
+            <xmcda tag="alternativesAssignments"/>
+        </output>
+
+        <output id="output2" name="messages" displayName="messages">
+            <documentation>
+                <description>Messages or errors generated by this module.</description>
+            </documentation>
+            <xmcda tag="programExecutionResult"/>
+        </output>
+
+    </parameters>
+</program_description>

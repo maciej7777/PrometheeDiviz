@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<program_description xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     xsi:schemaLocation="http://www.decision-deck.org/2009/XMCDA-2.0.0 http://www.decision-deck.org/ws/_downloads/description.xsd">
+    <program provider="PUT" name="PROMETHEE-FlowSort-GDSS_assignments" displayName="PROMETHEE-FlowSort-GDSS_assignments" version="1.0.0"/>
+    <documentation>
+        <description>Computes group class assignment for given data using FlowSortGDSS method.</description>
+        <contact><![CDATA[Maciej Uniejewski <maciej.uniejewski@gmail.com>]]></contact>
+        <url>https://github.com/maciej7777/PrometheeDiviz</url>
+    </documentation>
+    <parameters>
+        <input id="input1" name="alternatives" displayName="alternatives" isoptional="0">
+            <documentation>
+                <description>Alternatives to consider.</description>
+            </documentation>
+            <xmcda tag="alternatives"/>
+        </input>
+
+        <input id="input2" name="categories" displayName="categories" isoptional="0">
+            <documentation>
+                <description>Definitions of categories.</description>
+            </documentation>
+            <xmcda tag="categories"/>
+        </input>
+
+        <input id="input3" name="categories_profiles1" displayName="categories profiles 1" isoptional="0">
+            <documentation>
+                <description>Definitions of boundary profiles for decision maker 1, which should be used for classes (categories) representation.</description>
+            </documentation>
+            <xmcda tag="categoriesProfiles"/>
+        </input>
+
+        <input id="input4" name="categories_profiles2" displayName="categories profiles 2" isoptional="0">
+            <documentation>
+                <description>Definitions of boundary profiles for decision maker 2, which should be used for classes (categories) representation.</description>
+            </documentation>
+            <xmcda tag="categoriesProfiles"/>
+        </input>
+
+        <input id="input5" name="categories_profiles3" displayName="categories profiles 3" isoptional="1">
+            <documentation>
+                <description>Definitions of boundary profiles for decision maker 3, which should be used for classes (categories) representation.</description>
+            </documentation>
+            <xmcda tag="categoriesProfiles"/>
+        </input>
+
+        <input id="input6" name="categories_profiles4" displayName="categories profiles 4" isoptional="1">
+            <documentation>
+                <description>Definitions of boundary profiles for decision maker 4, which should be used for classes (categories) representation.</description>
+            </documentation>
+            <xmcda tag="categoriesProfiles"/>
+        </input>
+
+        <input id="input7" name="categories_profiles5" displayName="categories profiles 5" isoptional="1">
+            <documentation>
+                <description>Definitions of boundary profiles for decision maker 5, which should be used for classes (categories) representation.</description>
+            </documentation>
+            <xmcda tag="categoriesProfiles"/>
+        </input>
+
+        <input id="input8" name="categories_profiles6" displayName="categories profiles 6" isoptional="1">
+            <documentation>
+                <description>Definitions of boundary profiles for decision maker 6, which should be used for classes (categories) representation.</description>
+            </documentation>
+            <xmcda tag="categoriesProfiles"/>
+        </input>
+
+        <input id="input9" name="categories_profiles7" displayName="categories profiles 7" isoptional="1">
+            <documentation>
+                <description>Definitions of boundary profiles for decision maker 7, which should be used for classes (categories) representation.</description>
+            </documentation>
+            <xmcda tag="categoriesProfiles"/>
+        </input>
+
+        <input id="input10" name="categories_profiles8" displayName="categories profiles 8" isoptional="1">
+            <documentation>
+                <description>Definitions of boundary profiles for decision maker 8, which should be used for classes (categories) representation.</description>
+            </documentation>
+            <xmcda tag="categoriesProfiles"/>
+        </input>
+
+        <input id="input11" name="categories_profiles9" displayName="categories profiles 9" isoptional="1">
+            <documentation>
+                <description>Definitions of boundary profiles for decision maker 9, which should be used for classes (categories) representation.</description>
+            </documentation>
+            <xmcda tag="categoriesProfiles"/>
+        </input>
+
+        <input id="input12" name="categories_profiles10" displayName="categories profiles 10" isoptional="1">
+            <documentation>
+                <description>Definitions of boundary profiles for decision maker 10, which should be used for classes (categories) representation.</description>
+            </documentation>
+            <xmcda tag="categoriesProfiles"/>
+        </input>
+
+        <input id="input13" name="categories_values" displayName="categories marks" isoptional="0">
+            <documentation>
+                <description>Marks of categories (higher mark means better category). Each category need to have unique mark from 1 to C, where C is a number of categories. </description>
+            </documentation>
+            <xmcda tag="categoriesValues"/>
+        </input>
+
+        <input id="input14" name="criteria" displayName="criteria" isoptional="0">
+            <documentation>
+                <description>Criteria to consider and their scales</description>
+            </documentation>
+            <xmcda tag="criteria"/>
+        </input>
+
+        <input id="input15" name="flows1" displayName="alternatives flows 1" isoptional="0">
+            <documentation>
+                <description>Normalised flows of given alternatives for decision maker 1.</description>
+            </documentation>
+            <xmcda tag="alternativesValues"/>
+        </input>
+
+        <input id="input16" name="flows2" displayName="alternatives flows 2" isoptional="0">
+            <documentation>
+                <description>Normalised flows of given alternatives for decision maker 2.</description>
+            </documentation>
+            <xmcda tag="alternativesValues"/>
+        </input>
+
+        <input id="input17" name="flows3" displayName="alternatives flows 3" isoptional="1">
+            <documentation>
+                <description>Normalised flows of given alternatives for decision maker 3.</description>
+            </documentation>
+            <xmcda tag="alternativesValues"/>
+        </input>
+
+        <input id="input18" name="flows4" displayName="alternatives flows 4" isoptional="1">
+            <documentation>
+                <description>Normalised flows of given alternatives for decision maker 4.</description>
+            </documentation>
+            <xmcda tag="alternativesValues"/>
+        </input>
+
+        <input id="input19" name="flows5" displayName="alternatives flows 5" isoptional="1">
+            <documentation>
+                <description>Normalised flows of given alternatives for decision maker 5.</description>
+            </documentation>
+            <xmcda tag="alternativesValues"/>
+        </input>
+
+        <input id="input20" name="flows6" displayName="alternatives flows 6" isoptional="1">
+            <documentation>
+                <description>Normalised flows of given alternatives for decision maker 6.</description>
+            </documentation>
+            <xmcda tag="alternativesValues"/>
+        </input>
+
+        <input id="input21" name="flows7" displayName="alternatives flows 7" isoptional="1">
+            <documentation>
+                <description>Normalised flows of given alternatives for decision maker 7.</description>
+            </documentation>
+            <xmcda tag="alternativesValues"/>
+        </input>
+
+        <input id="input22" name="flows8" displayName="alternatives flows 8" isoptional="1">
+            <documentation>
+                <description>Normalised flows of given alternatives for decision maker 8.</description>
+            </documentation>
+            <xmcda tag="alternativesValues"/>
+        </input>
+
+        <input id="input23" name="flows9" displayName="alternatives flows 9" isoptional="1">
+            <documentation>
+                <description>Normalised flows of given alternatives for decision maker 9.</description>
+            </documentation>
+            <xmcda tag="alternativesValues"/>
+        </input>
+
+        <input id="input24" name="flows10" displayName="alternatives flows 10" isoptional="1">
+            <documentation>
+                <description>Normalised flows of given alternatives for decision maker 10.</description>
+            </documentation>
+            <xmcda tag="alternativesValues"/>
+        </input>
+
+        <input id="input25" name="performance_table1" displayName="profiles performances 1" isoptional="0">
+            <documentation>
+                <description>The performances of profiles for decision maker 1.</description>
+            </documentation>
+            <xmcda tag="performanceTable"/>
+        </input>
+
+        <input id="input26" name="performance_table2" displayName="profiles performances 2" isoptional="0">
+            <documentation>
+                <description>The performances of profiles for decision maker 2.</description>
+            </documentation>
+            <xmcda tag="performanceTable"/>
+        </input>
+
+        <input id="input27" name="performance_table3" displayName="profiles performances 3" isoptional="1">
+            <documentation>
+                <description>The performances of profiles for decision maker 3.</description>
+            </documentation>
+            <xmcda tag="performanceTable"/>
+        </input>
+
+        <input id="input28" name="performance_table4" displayName="profiles performances 4" isoptional="1">
+            <documentation>
+                <description>The performances of profiles for decision maker 4.</description>
+            </documentation>
+            <xmcda tag="performanceTable"/>
+        </input>
+
+        <input id="input29" name="performance_table5" displayName="profiles performances 5" isoptional="1">
+            <documentation>
+                <description>The performances of profiles for decision maker 5.</description>
+            </documentation>
+            <xmcda tag="performanceTable"/>
+        </input>
+
+        <input id="input30" name="performance_table6" displayName="profiles performances 6" isoptional="1">
+            <documentation>
+                <description>The performances of profiles for decision maker 6.</description>
+            </documentation>
+            <xmcda tag="performanceTable"/>
+        </input>
+
+        <input id="input31" name="performance_table7" displayName="profiles performances 7" isoptional="1">
+            <documentation>
+                <description>The performances of profiles for decision maker 7.</description>
+            </documentation>
+            <xmcda tag="performanceTable"/>
+        </input>
+
+        <input id="input32" name="performance_table8" displayName="profiles performances 8" isoptional="1">
+            <documentation>
+                <description>The performances of profiles for decision maker 8.</description>
+            </documentation>
+            <xmcda tag="performanceTable"/>
+        </input>
+
+        <input id="input33" name="performance_table9" displayName="profiles performances 9" isoptional="1">
+            <documentation>
+                <description>The performances of profiles for decision maker 9.</description>
+            </documentation>
+            <xmcda tag="performanceTable"/>
+        </input>
+
+        <input id="input34" name="performance_table10" displayName="profiles performances 10" isoptional="1">
+            <documentation>
+                <description>The performances of profiles for decision maker 10.</description>
+            </documentation>
+            <xmcda tag="performanceTable"/>
+        </input>
+
+        <input id="input35" name="preferences1" displayName="preferences 1" isoptional="0">
+            <documentation>
+                <description>The preference matrix computed for profiles and alternatives given by decision maker 1.</description>
+            </documentation>
+            <xmcda tag="alternativesComparisons"/>
+        </input>
+
+        <input id="input36" name="preferences2" displayName="preferences 2" isoptional="0">
+            <documentation>
+                <description>The preference matrix computed for profiles and alternatives given by decision maker 2.</description>
+            </documentation>
+            <xmcda tag="alternativesComparisons"/>
+        </input>
+
+        <input id="input37" name="preferences3" displayName="preferences 3" isoptional="1">
+            <documentation>
+                <description>The preference matrix computed for profiles and alternatives given by decision maker 3.</description>
+            </documentation>
+            <xmcda tag="alternativesComparisons"/>
+        </input>
+
+        <input id="input38" name="preferences4" displayName="preferences 4" isoptional="1">
+            <documentation>
+                <description>The preference matrix computed for profiles and alternatives given by decision maker 4.</description>
+            </documentation>
+            <xmcda tag="alternativesComparisons"/>
+        </input>
+
+        <input id="input39" name="preferences5" displayName="preferences 5" isoptional="1">
+            <documentation>
+                <description>The preference matrix computed for profiles and alternatives given by decision maker 5.</description>
+            </documentation>
+            <xmcda tag="alternativesComparisons"/>
+        </input>
+
+        <input id="input40" name="preferences6" displayName="preferences 6" isoptional="1">
+            <documentation>
+                <description>The preference matrix computed for profiles and alternatives given by decision maker 6.</description>
+            </documentation>
+            <xmcda tag="alternativesComparisons"/>
+        </input>
+
+        <input id="input41" name="preferences7" displayName="preferences 7" isoptional="1">
+            <documentation>
+                <description>The preference matrix computed for profiles and alternatives given by decision maker 7.</description>
+            </documentation>
+            <xmcda tag="alternativesComparisons"/>
+        </input>
+
+        <input id="input42" name="preferences8" displayName="preferences 8" isoptional="1">
+            <documentation>
+                <description>The preference matrix computed for profiles and alternatives given by decision maker 8.</description>
+            </documentation>
+            <xmcda tag="alternativesComparisons"/>
+        </input>
+
+        <input id="input43" name="preferences9" displayName="preferences 9" isoptional="1">
+            <documentation>
+                <description>The preference matrix computed for profiles and alternatives given by decision maker 9.</description>
+            </documentation>
+            <xmcda tag="alternativesComparisons"/>
+        </input>
+
+        <input id="input44" name="preferences10" displayName="preferences 10" isoptional="1">
+            <documentation>
+                <description>The preference matrix computed for profiles and alternatives given by decision maker 10.</description>
+            </documentation>
+            <xmcda tag="alternativesComparisons"/>
+        </input>
+
+        <input id="input45" name="profiles_flows" displayName="profiles flows" isoptional="0">
+            <documentation>
+                <description>Normalised flows of given profiles counted for all decision makers together.</description>
+            </documentation>
+            <xmcda tag="alternativesValues"/>
+        </input>
+
+
+        <input id="input46" name="method_parameters" displayName="method parameters" isoptional="0">
+            <documentation>
+                <description>A set of parameters provided to tune up the module's operation.</description>
+            </documentation>
+            <xmcda tag="methodParameters">
+                <![CDATA[
+                <methodParameters>
+                    <parameter id="comparisonWithProfiles">
+                        <value>
+                            <label>%1</label>
+                        </value>
+                    </parameter>
+                    <parameter id="assignToABetterClass">
+                        <value>
+                            <boolean>%2</boolean>
+                        </value>
+                    </parameter>
+                    <parameter id="decisionMaker1">
+                        <value>
+                            <real>%3</real>
+                        </value>
+                    </parameter>
+                    <parameter id="decisionMaker2">
+                        <value>
+                            <real>%4</real>
+                        </value>
+                    </parameter>
+                    <parameter id="decisionMaker3">
+                        <value>
+                            <real>%5</real>
+                        </value>
+                    </parameter>
+                    <parameter id="decisionMaker4">
+                        <value>
+                            <real>%6</real>
+                        </value>
+                    </parameter>
+                    <parameter id="decisionMaker5">
+                        <value>
+                            <real>%7</real>
+                        </value>
+                    </parameter>
+                    <parameter id="decisionMaker6">
+                        <value>
+                            <real>%8</real>
+                        </value>
+                    </parameter>
+                    <parameter id="decisionMaker7">
+                        <value>
+                            <real>%9</real>
+                        </value>
+                    </parameter>
+                    <parameter id="decisionMaker8">
+                        <value>
+                            <real>%10</real>
+                        </value>
+                    </parameter>
+                    <parameter id="decisionMaker9">
+                        <value>
+                            <real>%11</real>
+                        </value>
+                    </parameter>
+                    <parameter id="decisionMaker10">
+                        <value>
+                            <real>%12</real>
+                        </value>
+                    </parameter>
+                </methodParameters>
+	        ]]>
+            </xmcda>
+            <gui status="preferGUI">
+                <entry id="%1" type="enum" displayName="comparison with profiles">
+                    <documentation>
+                        <description>Information if we are using central or boundary profiles.</description>
+                    </documentation>
+                    <items>
+                        <item id="central">
+                            <description>central profiles</description>
+                            <value>central</value>
+                        </item>
+                        <item id="bounding">
+                            <description>boundary profiles</description>
+                            <value>bounding</value>
+                        </item>
+                    </items>
+                </entry>
+                <entry id="%2" type="boolean" displayName="assign to a better class">
+                    <documentation>
+                        <description>Information if alternative will be assigned to a better class when the assignment is not clear. Works only if cutPoint does unclear output for alternative.</description>
+                    </documentation>
+                    <defaultValue>true</defaultValue>
+                </entry>
+                <entry id="%3" type="float" displayName="decision maker 1 weight">
+                    <documentation>
+                        <description>Weight of decision maker 1.</description>
+                    </documentation>
+                    <constraint>
+                        <description>A float value.</description>
+                        <code>
+                            <![CDATA[ %3 >= 0 ]]>
+                        </code>
+                    </constraint>
+                    <defaultValue>0.0</defaultValue>
+                </entry>
+                <entry id="%4" type="float" displayName="decision maker 2 weight">
+                    <documentation>
+                        <description>Weight of decision maker 2.</description>
+                    </documentation>
+                    <constraint>
+                        <description>A float value.</description>
+                        <code>
+                            <![CDATA[ %4 >= 0 ]]>
+                        </code>
+                    </constraint>
+                    <defaultValue>0.0</defaultValue>
+                </entry>
+                <entry id="%5" type="float" displayName="decision maker 3 weight">
+                    <documentation>
+                        <description>Weight of decision maker 3.</description>
+                    </documentation>
+                    <constraint>
+                        <description>A float value. Choose 0.0 when decision maker does not exist.</description>
+                        <code>
+                            <![CDATA[ %5 >= 0 ]]>
+                        </code>
+                    </constraint>
+                    <defaultValue>0.0</defaultValue>
+                </entry>
+                <entry id="%6" type="float" displayName="decision maker 4 weight">
+                    <documentation>
+                        <description>Weight of decision maker 4.</description>
+                    </documentation>
+                    <constraint>
+                        <description>A float value. Choose 0.0 when decision maker does not exist.</description>
+                        <code>
+                            <![CDATA[ %6 >= 0 ]]>
+                        </code>
+                    </constraint>
+                    <defaultValue>0.0</defaultValue>
+                </entry>
+                <entry id="%7" type="float" displayName="decision maker 5 weight">
+                    <documentation>
+                        <description>Weight of decision maker 5.</description>
+                    </documentation>
+                    <constraint>
+                        <description>A float value. Choose 0.0 when decision maker does not exist.</description>
+                        <code>
+                            <![CDATA[ %7 >= 0 ]]>
+                        </code>
+                    </constraint>
+                    <defaultValue>0.0</defaultValue>
+                </entry>
+                <entry id="%8" type="float" displayName="decision maker 6 weight">
+                    <documentation>
+                        <description>Weight of decision maker 6.</description>
+                    </documentation>
+                    <constraint>
+                        <description>A float value. Choose 0.0 when decision maker does not exist.</description>
+                        <code>
+                            <![CDATA[ %8 >= 0 ]]>
+                        </code>
+                    </constraint>
+                    <defaultValue>0.0</defaultValue>
+                </entry>
+                <entry id="%9" type="float" displayName="decision maker 7 weight">
+                    <documentation>
+                        <description>Weight of decision maker 7.</description>
+                    </documentation>
+                    <constraint>
+                        <description>A float value. Choose 0.0 when decision maker does not exist.</description>
+                        <code>
+                            <![CDATA[ %9 >= 0 ]]>
+                        </code>
+                    </constraint>
+                    <defaultValue>0.0</defaultValue>
+                </entry>
+                <entry id="%10" type="float" displayName="decision maker 8 weight">
+                    <documentation>
+                        <description>Weight of decision maker 8.</description>
+                    </documentation>
+                    <constraint>
+                        <description>A float value. Choose 0.0 when decision maker does not exist.</description>
+                        <code>
+                            <![CDATA[ %10 >= 0 ]]>
+                        </code>
+                    </constraint>
+                    <defaultValue>0.0</defaultValue>
+                </entry>
+                <entry id="%11" type="float" displayName="decision maker 9 weight">
+                    <documentation>
+                        <description>Weight of decision maker 9.</description>
+                    </documentation>
+                    <constraint>
+                        <description>A float value. Choose 0.0 when decision maker does not exist.</description>
+                        <code>
+                            <![CDATA[ %11 >= 0 ]]>
+                        </code>
+                    </constraint>
+                    <defaultValue>0.0</defaultValue>
+                </entry>
+                <entry id="%12" type="float" displayName="decision maker 10 weight">
+                    <documentation>
+                        <description>Weight of decision maker 10.</description>
+                    </documentation>
+                    <constraint>
+                        <description>A float value. Choose 0.0 when decision maker does not exist.</description>
+                        <code>
+                            <![CDATA[ %12 >= 0 ]]>
+                        </code>
+                    </constraint>
+                    <defaultValue>0.0</defaultValue>
+                </entry>
+            </gui>
+        </input>
+
+        <output id="output1" name="first_step_assignments" displayName="first step assignments">
+            <documentation>
+                <description>Assignments made in a first step of FlowSortGDSS process. They shows for which alternatives decision makers were not able to make an unanimous assignment.</description>
+            </documentation>
+            <xmcda tag="alternativesAffectations"/>
+        </output>
+
+        <output id="output2" name="final_assignments" displayName="final assignments">
+            <documentation>
+                <description>Final assignments made in a FlowSortGDSS process.</description>
+            </documentation>
+            <xmcda tag="alternativesAffectations"/>
+        </output>
+
+        <output id="output3" name="messages" displayName="messages">
+            <documentation>
+                <description>Messages or errors generated by this module.</description>
+            </documentation>
+            <xmcda tag="methodMessages"/>
+        </output>
+
+    </parameters>
+</program_description>
