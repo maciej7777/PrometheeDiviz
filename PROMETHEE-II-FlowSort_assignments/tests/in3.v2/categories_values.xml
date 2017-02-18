@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmcda:XMCDA
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xmcda="http://www.decision-deck.org/2016/XMCDA-2.2.2"
+        xsi:schemaLocation="http://www.decision-deck.org/2016/XMCDA-2.2.2 http://www.decision-deck.org/xmcda/_downloads/XMCDA-2.2.2.xsd">
+    <categoriesValues>
+        <categoryValue>
+            <categoryID>C6</categoryID>
+            <values>
+                <value>
+                    <integer>1</integer>
+                </value>
+            </values>
+        </categoryValue>
+        <categoryValue>
+            <categoryID>C5</categoryID>
+            <values>
+                <value>
+                    <integer>2</integer>
+                </value>
+            </values>
+        </categoryValue>
+        <categoryValue>
+            <categoryID>C4</categoryID>
+            <values>
+                <value>
+                    <integer>3</integer>
+                </value>
+            </values>
+        </categoryValue>
+        <categoryValue>
+            <categoryID>C3</categoryID>
+            <values>
+                <value>
+                    <integer>4</integer>
+                </value>
+            </values>
+        </categoryValue>
+        <categoryValue>
+            <categoryID>C2</categoryID>
+            <values>
+                <value>
+                    <integer>5</integer>
+                </value>
+            </values>
+        </categoryValue>
+        <categoryValue>
+            <categoryID>C1</categoryID>
+            <values>
+                <value>
+                    <integer>6</integer>
+                </value>
+            </values>
+        </categoryValue>
+    </categoriesValues>
+</xmcda:XMCDA>

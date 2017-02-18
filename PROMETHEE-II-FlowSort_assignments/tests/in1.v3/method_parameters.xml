@@ -1,12 +1,21 @@
 <?xml version="1.0" ?>
-<xmcda:XMCDA xmlns:xmcda="http://www.decision-deck.org/2013/XMCDA-3.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.decision-deck.org/2013/XMCDA-3.0.0 http://www.decision-deck.org/xmcda/_downloads/XMCDA-3.0.0.xsd">
-<programParameters>
-		<parameter id="comparisonWithProfiles">
-			<values>
-				<value>
-					<label>central</label>
-				</value>
-			</values>
-		</parameter>
-	</programParameters>
+<xmcda:XMCDA xmlns:xmcda="http://www.decision-deck.org/2013/XMCDA-3.0.0"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.decision-deck.org/2013/XMCDA-3.0.0 http://www.decision-deck.org/xmcda/_downloads/XMCDA-3.0.0.xsd">
+    <programParameters>
+        <parameter id="comparisonWithProfiles">
+            <values>
+                <value>
+                    <label>central</label>
+                </value>
+            </values>
+        </parameter>
+        <parameter id="categories_marks_ordering">
+            <values>
+                <value>
+                    <label>higher_mark_better_category</label>
+                </value>
+            </values>
+        </parameter>
+    </programParameters>
 </xmcda:XMCDA>

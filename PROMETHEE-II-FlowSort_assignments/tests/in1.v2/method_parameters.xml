@@ -9,5 +9,10 @@
 				<label>central</label>
 			</value>
 		</parameter>
+		<parameter id="categories_marks_ordering">
+			<value>
+				<label>higher_mark_better_category</label>
+			</value>
+		</parameter>
 	</methodParameters>
 </xmcda:XMCDA>

@@ -22,8 +22,7 @@ public class InputsHandler {
 
     }
 
-    public enum ComparisonWithProfiles
-    {
+    public enum ComparisonWithProfiles {
         CENTRAL("central"),
         BOUNDING("bounding");
         private String label;
@@ -56,6 +55,39 @@ public class InputsHandler {
         }
     }
 
+    public enum CategoriesMarksOrdering {
+        HIGHER_MARK_BETTER_CATEGORY("higher_mark_better_category"),
+        HIGHER_MARK_WORSE_CATEGORY("higher_mark_worse_category");
+        private String label;
+        private CategoriesMarksOrdering(String operatorLabel)
+        {
+            label = operatorLabel;
+        }
+
+        public final String getLabel()
+        {
+            return label;
+        }
+
+        @Override
+        public String toString()
+        {
+            return label;
+        }
+
+        public static CategoriesMarksOrdering fromString(String operatorLabel)
+        {
+            if ( operatorLabel == null )
+                throw new NullPointerException("operatorLabel is null");
+            for ( CategoriesMarksOrdering op : CategoriesMarksOrdering.values() )
+            {
+                if ( op.toString().equals(operatorLabel) )
+                    return op;
+            }
+            throw new IllegalArgumentException("No enum CategoriesMarksOrdering with label " + operatorLabel);
+        }
+    }
+
     public static class Inputs {
         private List<String> alternativesIds;
         private List<String> categoriesIds;
@@ -64,6 +96,7 @@ public class InputsHandler {
         private Map<String, Integer> categoriesRanking;
         private List<CategoryProfile> categoryProfiles;
         private ComparisonWithProfiles profilesType;
+        private CategoriesMarksOrdering categoriesMarksOrdering;
         private List<String> criteriaIds;
         private Map<String, String> criteriaPreferencesDirection;
         private Map<String, Map<String, Double>> profilesPerformance;
@@ -147,6 +180,14 @@ public class InputsHandler {
         private void setProfilesPerformance(Map<String, Map<String, Double>> profilesPerformance) {
             this.profilesPerformance = profilesPerformance;
         }
+
+        public CategoriesMarksOrdering getCategoriesMarksOrdering() {
+            return categoriesMarksOrdering;
+        }
+
+        public void setCategoriesMarksOrdering(CategoriesMarksOrdering categoriesMarksOrdering) {
+            this.categoriesMarksOrdering = categoriesMarksOrdering;
+        }
     }
 
     public static Inputs checkAndExtractInputs(XMCDA xmcda, ProgramExecutionResult xmcdaExecResults)
@@ -163,9 +204,13 @@ public class InputsHandler {
 
         checkAndExtractAlternatives(inputs, xmcda, errors);
         checkAndExtractParameters(inputs, xmcda, errors);
+        if (errors.size() != 0) {
+            return inputs;
+        }
         checkAndExtractCategories(inputs, xmcda, errors);
         checkCategoriesRanking(inputs, xmcda, errors);
         checkAndExtractProfilesIds(inputs, xmcda, errors);
+        reverseCollections(inputs, errors);
         checkAndExtractAlternativesFlows(inputs, xmcda, errors);
         checkAndExtractCriteria(inputs, xmcda, errors);
         checkAndExtractProfilesPerformance(inputs, xmcda, errors);
@@ -197,12 +242,13 @@ public class InputsHandler {
             errors.addError("No programParameter found.");
             return;
         }
-        if (xmcda.programParametersList.get(0).size() != 1) {
-            errors.addError("Parameter's list must contain exactly one element.");
+        if (xmcda.programParametersList.get(0).size() != 2) {
+            errors.addError("Parameter's list must contain exactly two elements.");
             return;
         }
 
         checkAndExtractProfilesType(inputs, xmcda, errors);
+        checkAndExtractCategoriesMarksOrdering(inputs, xmcda, errors);
     }
 
     protected static void checkAndExtractProfilesType(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
@@ -231,6 +277,34 @@ public class InputsHandler {
             profilesType = null;
         }
         inputs.setProfilesType(profilesType);
+    }
+
+    protected static void checkAndExtractCategoriesMarksOrdering(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+        CategoriesMarksOrdering ordering;
+
+        final ProgramParameter<?> prgParam = xmcda.programParametersList.get(0).get(1);
+        if (!"categories_marks_ordering".equalsIgnoreCase(prgParam.id())) {
+            errors.addError(String.format("Invalid parameter w/ id '%s'", prgParam.id()));
+            return;
+        }
+        if (prgParam.getValues() == null || (prgParam.getValues() != null && prgParam.getValues().size() != 1)) {
+            errors.addError("Parameter categories_marks_ordering must have a single (label) value only");
+            return;
+        }
+        try {
+            final String operatorValue = (String) prgParam.getValues().get(0).getValue();
+            ordering = CategoriesMarksOrdering.fromString(operatorValue);
+        } catch (Exception exception) {
+            StringBuilder validValues = new StringBuilder();
+            for (CategoriesMarksOrdering op : CategoriesMarksOrdering.values()) {
+                validValues.append(op.getLabel()).append(", ");
+            }
+            String err = "Invalid value for parameter categories_marks_ordering, it must be a label, ";
+            err += "possible values are: " + validValues.substring(0, validValues.length() - 2);
+            errors.addError(err);
+            ordering = null;
+        }
+        inputs.setCategoriesMarksOrdering(ordering);
     }
 
     protected static void checkAndExtractCategories(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
@@ -540,6 +614,45 @@ public class InputsHandler {
                     errors.addError("Profiles need to fulfill the dominance condition on each criterion.");
                     return;
                 }
+            }
+        }
+    }
+
+    protected static void reverseCollections(Inputs inputs, ProgramExecutionResult errors) {
+        if (inputs.getCategoriesMarksOrdering().equals(CategoriesMarksOrdering.HIGHER_MARK_WORSE_CATEGORY)) {
+            Collections.reverse(inputs.getProfilesIds());
+            Collections.reverse(inputs.getCategoriesIds());
+            Collections.reverse(inputs.getCategoryProfiles());
+
+            if (inputs.profilesType.equals(ComparisonWithProfiles.CENTRAL)) {
+                return;
+            }
+
+            for (CategoryProfile profile: inputs.getCategoryProfiles()) {
+                String upperBound = null;
+                String lowerBound = null;
+
+                CategoryProfile.Profile lower = profile.getUpperBound();
+                if (lower != null && lower.getAlternative() != null) {
+                    lowerBound = lower.getAlternative().id();
+                }
+
+                CategoryProfile.Profile upper = profile.getLowerBound();
+                if (upper != null && upper.getAlternative() != null) {
+                    upperBound = upper.getAlternative().id();
+                }
+
+                CategoryProfile.Profile lowerProfile = new CategoryProfile.Profile();
+                lowerProfile.setAlternative(new Alternative(lowerBound));
+                profile.setLowerBound(lowerProfile);
+
+                CategoryProfile.Profile upperProfile = new CategoryProfile.Profile();
+                upperProfile.setAlternative(new Alternative(upperBound));
+                profile.setUpperBound(upperProfile);
+
+
+/*                profile.getLowerBound().setAlternative(new Alternative(lowerBound));
+                profile.getUpperBound().setAlternative(new Alternative(upperBound));*/
             }
         }
     }

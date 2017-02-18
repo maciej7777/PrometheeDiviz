@@ -11,7 +11,7 @@
 		</parameter>
 		<parameter id="categories_marks_ordering">
 			<value>
-				<label>higher_mark_better_category</label>
+				<label>higher_mark_worse_category</label>
 			</value>
 		</parameter>
 	</methodParameters>
