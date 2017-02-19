@@ -3,7 +3,7 @@
                      xsi:schemaLocation="http://www.decision-deck.org/2009/XMCDA-2.0.0 http://www.decision-deck.org/ws/_downloads/description.xsd">
     <program provider="PUT" name="plotClassAssignments-png" displayName="plotClassAssignments-png" version="1.0.0"/>
     <documentation>
-        <description>Visualizes class assignments for given alternatives as an image.</description>
+        <description>Visualizes class assignments for given alternatives as an image. Input classes (categories) need to be ordered.</description>
         <contact><![CDATA[Maciej Uniejewski <maciej.uniejewski@gmail.com>]]></contact>
         <url>https://github.com/maciej7777/PrometheeDiviz</url>
     </documentation>
@@ -24,7 +24,7 @@
 
         <input id="input3" name="categories_values" displayName="categories marks" isoptional="0">
             <documentation>
-                <description>Marks of categories (higher mark means better category). Each category need to have unique mark from 1 to C, where C is a number of categories. </description>
+                <description>Marks of categories. Each category need to have unique mark from 1 to C, where C is a number of categories. The order of categories (higher mark means better category or higher mark means lower category) need to be same as in previous steps of calculations.</description>
             </documentation>
             <xmcda tag="categoriesValues"/>
         </input>
