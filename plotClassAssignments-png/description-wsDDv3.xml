@@ -40,7 +40,7 @@
             <documentation>
                 <description>A set of parameters provided to tune up the module's operation.</description>
             </documentation>
-            <xmcda tag="methodParameters">
+            <xmcda tag="programParameters">
                 <![CDATA[
                 <programParameters>
                     <parameter id="visualizationType">
