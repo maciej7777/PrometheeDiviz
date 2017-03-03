@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:XMCDA xmlns:ns2="http://www.decision-deck.org/2016/XMCDA-2.2.2">
+<xmcda:XMCDA xmlns:xmcda="http://www.decision-deck.org/2017/XMCDA-2.2.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance">
     <alternativesAffectations>
         <alternativeAffectation>
             <alternativeID>a1</alternativeID>
@@ -10,4 +10,4 @@
             <categoryID>C2</categoryID>
         </alternativeAffectation>
     </alternativesAffectations>
-</ns2:XMCDA>
+</xmcda:XMCDA>
