@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmcda:XMCDA
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns:xmcda="http://www.decision-deck.org/2016/XMCDA-2.2.2"
-		xsi:schemaLocation="http://www.decision-deck.org/2016/XMCDA-2.2.2 http://www.decision-deck.org/xmcda/_downloads/XMCDA-2.2.2.xsd">
-	<categoriesProfiles>
-		<categoryProfile>
-			<alternativeID>b1d2</alternativeID>
-			<limits>
-				<lowerCategory>
-					<categoryID>C1</categoryID>
-				</lowerCategory>
-				<upperCategory>
-					<categoryID>C2</categoryID>
-				</upperCategory>
-			</limits>
-		</categoryProfile>
-		<categoryProfile>
-			<alternativeID>b2d2</alternativeID>
-			<limits>
-				<lowerCategory>
-					<categoryID>C2</categoryID>
-				</lowerCategory>
-				<upperCategory>
-					<categoryID>C3</categoryID>
-				</upperCategory>
-			</limits>
-		</categoryProfile>
-	</categoriesProfiles>
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xmcda="http://www.decision-deck.org/2017/XMCDA-2.2.2"
+        xsi:schemaLocation="http://www.decision-deck.org/2017/XMCDA-2.2.2 http://www.decision-deck.org/xmcda/_downloads/XMCDA-2.2.2.xsd">
+    <categoriesProfiles>
+        <categoryProfile>
+            <alternativeID>b1d2</alternativeID>
+            <limits>
+                <lowerCategory>
+                    <categoryID>C1</categoryID>
+                </lowerCategory>
+                <upperCategory>
+                    <categoryID>C2</categoryID>
+                </upperCategory>
+            </limits>
+        </categoryProfile>
+        <categoryProfile>
+            <alternativeID>b2d2</alternativeID>
+            <limits>
+                <lowerCategory>
+                    <categoryID>C2</categoryID>
+                </lowerCategory>
+                <upperCategory>
+                    <categoryID>C3</categoryID>
+                </upperCategory>
+            </limits>
+        </categoryProfile>
+    </categoriesProfiles>
 </xmcda:XMCDA>
