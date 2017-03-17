@@ -251,13 +251,18 @@ public class InputsHandler {
     protected static void checkCategoriesRanking(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
         if (xmcda.categoriesValuesList.isEmpty()) {
             errors.addError("No categories values list has been supplied");
+            return;
         } else if (xmcda.categoriesValuesList.size() > 1) {
             errors.addError("More than one categories values list has been supplied");
+            return;
         }
+
         CategoriesValues categoriesValuesList = xmcda.categoriesValuesList.get(0);
+
         if (!categoriesValuesList.isNumeric()) {
             errors.addError("Each of the categories ranks must be integer");
         }
+
         Map<String, Integer> categoriesValues = new LinkedHashMap<>();
         try {
             CategoriesValues<Integer> categoriesValuesClass = categoriesValuesList.convertTo(Integer.class);

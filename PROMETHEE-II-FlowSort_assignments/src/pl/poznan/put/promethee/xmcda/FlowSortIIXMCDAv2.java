@@ -82,7 +82,6 @@ public class FlowSortIIXMCDAv2 {
         final String indir = params.inputDirectory;
         final String outdir = params.outputDirectory;
         final File prgExecResultsFile = new File(outdir, "messages.xml");
-        final ProgramExecutionResult executionResult = new ProgramExecutionResult();
 
         final org.xmcda.XMCDA xmcda = new org.xmcda.XMCDA();
 
