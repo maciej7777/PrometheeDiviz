@@ -31,7 +31,7 @@
 
         <input id="input4" name="categories_values" displayName="categories marks" isoptional="0">
             <documentation>
-                <description>Marks of categories (higher mark means better or worse category according to categories_marks_ordering parameter). Each category need to have unique mark from 1 to C, where C is a number of categories. </description>
+                <description>Marks of categories (higher mark means better category). Each category need to have unique mark from 1 to C, where C is a number of categories. </description>
             </documentation>
             <xmcda tag="categoriesValues"/>
         </input>
@@ -70,16 +70,11 @@
                             <label>%1</label>
                         </value>
                     </parameter>
-                    <parameter id="categories_marks_ordering">
-                        <value>
-                            <label>%2</label>
-                        </value>
-                    </parameter>
                </methodParameters>
 ]]>
             </xmcda>
             <gui status="preferGUI">
-                <entry id="%1" type="enum" displayName="Profiles type:">
+                <entry id="%1" type="enum" displayName="comparison with profiles">
                     <documentation>
                         <description>Information if we are using central or boundary profiles.</description>
                     </documentation>
@@ -93,22 +88,6 @@
                             <value>bounding</value>
                         </item>
                     </items>
-                </entry>
-                <entry id="%2" type="enum" displayName="Higher category mark means:">
-                    <documentation>
-                        <description>Definition of categories marks.</description>
-                    </documentation>
-                    <items>
-                        <item id="higher_mark_better_category">
-                            <description>better category</description>
-                            <value>higher_mark_better_category</value>
-                        </item>
-                        <item id="higher_mark_worse_category">
-                            <description>worse category</description>
-                            <value>higher_mark_worse_category</value>
-                        </item>
-                    </items>
-                    <defaultValue>higher_mark_better_category</defaultValue>
                 </entry>
             </gui>
         </input>

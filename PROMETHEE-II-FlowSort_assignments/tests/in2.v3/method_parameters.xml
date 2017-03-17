@@ -8,12 +8,5 @@
 				</value>
 			</values>
 		</parameter>
-	<parameter id="categories_marks_ordering">
-		<values>
-			<value>
-				<label>higher_mark_better_category</label>
-			</value>
-		</values>
-	</parameter>
-</programParameters>
+	</programParameters>
 </xmcda:XMCDA>
