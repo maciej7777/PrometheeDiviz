@@ -3,7 +3,7 @@
                      xsi:schemaLocation="http://www.decision-deck.org/2009/XMCDA-2.0.0 http://www.decision-deck.org/ws/_downloads/description.xsd">
     <program provider="PUT" name="plotClassAssignments-LaTeX" displayName="plotClassAssignments-LaTeX" version="1.0.0"/>
     <documentation>
-        <description>Visualizes class assignments for given alternatives as a single latex table. Input classes (categories) need to be ordered.</description>
+        <description>Visualizes class assignments for given alternatives as a single latex table.</description>
         <contact><![CDATA[Maciej Uniejewski <maciej.uniejewski@gmail.com>]]></contact>
         <url>https://github.com/maciej7777/PrometheeDiviz</url>
     </documentation>
