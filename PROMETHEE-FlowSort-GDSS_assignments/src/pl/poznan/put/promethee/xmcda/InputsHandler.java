@@ -330,7 +330,7 @@ public class InputsHandler {
             inputs.setCategoriesRanking(categoriesValues);
         } catch (Exception e) {
             if (errors.isEmpty()) {
-                errors.addError("An error occurred: " + e + ". Remember that each rank has to be integer.");
+                errors.addError("An error occurred while reading the categories ranking. Each rank has to be integer.");
             }
             throw new InputDataException("An error occurred while reading the categories ranking.");
         }
