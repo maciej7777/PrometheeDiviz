@@ -219,19 +219,61 @@ public class InputsHandler {
         Inputs inputs = new Inputs();
 
         checkAndExtractAlternatives(inputs, xmcda, errors);
+        if (!errors.isEmpty()) {
+            return inputs;
+        }
         checkAndExtractCategories(inputs, xmcda, errors);
+        if (!errors.isEmpty()) {
+            return inputs;
+        }
         checkCategoriesRanking(inputs, xmcda, errors);
+        if (!errors.isEmpty()) {
+            return inputs;
+        }
         checkAndExtractParameters(inputs, xmcda, errors);
+        if (!errors.isEmpty()) {
+            return inputs;
+        }
         checkAndExtractNumberOfDecisionMakers(inputs, xmcda, errors);
+        if (!errors.isEmpty()) {
+            return inputs;
+        }
         checkAndExtractProfilesIds(inputs, xmcda, errors);
+        if (!errors.isEmpty()) {
+            return inputs;
+        }
         checkAndExtractCriteria(inputs, xmcda, errors);
+        if (!errors.isEmpty()) {
+            return inputs;
+        }
         checkAndExtractCriteriaPreferencesDirection(inputs, xmcda, errors);
+        if (!errors.isEmpty()) {
+            return inputs;
+        }
         checkAndExtractProfilesPerformance(inputs, xmcda, errors);
+        if (!errors.isEmpty()) {
+            return inputs;
+        }
         checkDominanceCondition(inputs, errors);
+        if (!errors.isEmpty()) {
+            return inputs;
+        }
         checkAndExtractAlternativesFlows(inputs, xmcda, errors);
+        if (!errors.isEmpty()) {
+            return inputs;
+        }
         extractFlowsAverage(inputs);
+        if (!errors.isEmpty()) {
+            return inputs;
+        }
         checkAndExtractProfilesFlows(inputs, xmcda, errors);
+        if (!errors.isEmpty()) {
+            return inputs;
+        }
         checkAndExtractPreferences(inputs, xmcda, errors);
+        if (!errors.isEmpty()) {
+            return inputs;
+        }
 
         return inputs;
     }
