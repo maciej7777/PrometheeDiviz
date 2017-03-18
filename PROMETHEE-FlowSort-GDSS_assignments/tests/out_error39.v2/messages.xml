@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xmcda:XMCDA xmlns:xmcda="http://www.decision-deck.org/2017/XMCDA-2.2.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance">
+    <methodMessages>
+        <errorMessage>
+            <text>There is a problem with categories rank list or categories profiles list for decision maker1. Each category has to be added to categories profiles list for each decision maker and to global categories ranks list.</text>
+        </errorMessage>
+    </methodMessages>
+</xmcda:XMCDA>
