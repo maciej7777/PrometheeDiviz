@@ -495,16 +495,6 @@ public class InputsHandler {
             throw new InputDataException(errorMessage);
         }
 
-        //TODO - check if following conditions is still possible
-        if (inputs.getCategoriesRanking() == null) {
-            return;
-        }
-
-        //TODO - check if following conditions is still possible
-        if (inputs.getDecisionMakers() == null) {
-            return;
-        }
-
         inputs.setCategoryProfiles(new ArrayList<>());
         for (int i = 0; i < inputs.getDecisionMakers(); i++) {
             List<CategoryProfile> categoriesProfilesList = new ArrayList<>();
