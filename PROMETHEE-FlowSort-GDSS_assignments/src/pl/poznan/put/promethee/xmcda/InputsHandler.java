@@ -365,7 +365,7 @@ public class InputsHandler {
             errors.addError(errorMessage);
             throw new InputDataException(errorMessage);
         }
-        if (prgParam.getValues() == null || (prgParam.getValues() != null && prgParam.getValues().size() != 1)) {
+        if (prgParam.getValues() == null || prgParam.getValues().size() != 1) {
             String errorMessage = "Parameter comparisonWithProfiles must have a single (label) value only";
             errors.addError(errorMessage);
             throw new InputDataException(errorMessage);
@@ -395,7 +395,7 @@ public class InputsHandler {
             errors.addError(errorMessage);
             throw new InputDataException(errorMessage);
         }
-        if (prgParam2.getValues() == null || (prgParam2.getValues() != null && prgParam2.getValues().size() != 1)) {
+        if (prgParam2.getValues() == null || prgParam2.getValues().size() != 1) {
             String errorMessage = "Parameter assignToABetterClass must have a single (boolean) value only";
             errors.addError(errorMessage);
             throw new InputDataException(errorMessage);
@@ -432,7 +432,7 @@ public class InputsHandler {
                 errors.addError(errorMessage);
                 throw new InputDataException(errorMessage);
             }
-            if (tmpPrgParam.getValues() == null || (tmpPrgParam.getValues() != null && tmpPrgParam.getValues().size() != 1)) {
+            if (tmpPrgParam.getValues() == null || tmpPrgParam.getValues().size() != 1) {
                 String errorMessage = "Parameter decisionMaker" + i + " must have a single (real) value only";
                 errors.addError(errorMessage);
                 throw new InputDataException(errorMessage);
