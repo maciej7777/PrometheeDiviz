@@ -47,3 +47,5 @@ for i in $(seq 1 ${NB_ERROR_TESTS}); do
         rm -r ${OUT}
     fi
 done
+
+rm -r tests_tmp

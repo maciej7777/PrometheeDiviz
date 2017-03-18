@@ -1,66 +1,8 @@
-<?xml version="1.0" ?>
-<xmcda:XMCDA xmlns:xmcda="http://www.decision-deck.org/2016/XMCDA-3.0.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.decision-deck.org/2016/XMCDA-3.0.2 http://www.decision-deck.org/xmcda/_downloads/XMCDA-3.0.2.xsd">
-
-<programExecutionResult>
-		<status>error</status>
-		<messages>
-			<message level="error">
-				<text>Unable to read &amp; parse the file alternatives.xml, reason: cvc-elt.1: Cannot find the declaration of element 'xmcda:XMCDA'.</text>
-			</message>
-			<message level="error">
-				<text>Unable to read &amp; parse the file categories.xml, reason: cvc-elt.1: Cannot find the declaration of element 'xmcda:XMCDA'.</text>
-			</message>
-			<message level="error">
-				<text>Unable to read &amp; parse the file categories_values.xml, reason: cvc-elt.1: Cannot find the declaration of element 'xmcda:XMCDA'.</text>
-			</message>
-			<message level="error">
-				<text>Unable to read &amp; parse the file method_parameters.xml, reason: cvc-elt.1: Cannot find the declaration of element 'xmcda:XMCDA'.</text>
-			</message>
-			<message level="error">
-				<text>Unable to read &amp; parse the file criteria.xml, reason: cvc-elt.1: Cannot find the declaration of element 'xmcda:XMCDA'.</text>
-			</message>
-			<message level="error">
-				<text>Could not find the mandatory file criteria_scales.xml</text>
-			</message>
-			<message level="error">
-				<text>Unable to read &amp; parse the file profiles_flows.xml, reason: cvc-elt.1: Cannot find the declaration of element 'xmcda:XMCDA'.</text>
-			</message>
-			<message level="error">
-				<text>Unable to read &amp; parse the file categories_profiles1.xml, reason: cvc-elt.1: Cannot find the declaration of element 'xmcda:XMCDA'.</text>
-			</message>
-			<message level="error">
-				<text>Unable to read &amp; parse the file categories_profiles2.xml, reason: cvc-elt.1: Cannot find the declaration of element 'xmcda:XMCDA'.</text>
-			</message>
-			<message level="error">
-				<text>Unable to read &amp; parse the file performance_table1.xml, reason: cvc-elt.1: Cannot find the declaration of element 'xmcda:XMCDA'.</text>
-			</message>
-			<message level="error">
-				<text>Unable to read &amp; parse the file performance_table2.xml, reason: cvc-elt.1: Cannot find the declaration of element 'xmcda:XMCDA'.</text>
-			</message>
-			<message level="error">
-				<text>Unable to read &amp; parse the file flows1.xml, reason: cvc-elt.1: Cannot find the declaration of element 'xmcda:XMCDA'.</text>
-			</message>
-			<message level="error">
-				<text>Unable to read &amp; parse the file flows2.xml, reason: cvc-elt.1: Cannot find the declaration of element 'xmcda:XMCDA'.</text>
-			</message>
-			<message level="error">
-				<text>Unable to read &amp; parse the file preferences1.xml, reason: cvc-elt.1: Cannot find the declaration of element 'xmcda:XMCDA'.</text>
-			</message>
-			<message level="error">
-				<text>Unable to read &amp; parse the file preferences2.xml, reason: cvc-elt.1: Cannot find the declaration of element 'xmcda:XMCDA'.</text>
-			</message>
-			<message level="error">
-				<text>Unable to read &amp; parse the file categories_profiles3.xml, reason: cvc-elt.1: Cannot find the declaration of element 'xmcda:XMCDA'.</text>
-			</message>
-			<message level="error">
-				<text>Unable to read &amp; parse the file performance_table3.xml, reason: cvc-elt.1: Cannot find the declaration of element 'xmcda:XMCDA'.</text>
-			</message>
-			<message level="error">
-				<text>Unable to read &amp; parse the file flows3.xml, reason: cvc-elt.1: Cannot find the declaration of element 'xmcda:XMCDA'.</text>
-			</message>
-			<message level="error">
-				<text>Unable to read &amp; parse the file preferences3.xml, reason: cvc-elt.1: Cannot find the declaration of element 'xmcda:XMCDA'.</text>
-			</message>
-		</messages>
-	</programExecutionResult>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xmcda:XMCDA xmlns:xmcda="http://www.decision-deck.org/2017/XMCDA-2.2.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance">
+    <methodMessages>
+        <errorMessage>
+            <text>The alternatives list can not be empty.</text>
+        </errorMessage>
+    </methodMessages>
 </xmcda:XMCDA>
