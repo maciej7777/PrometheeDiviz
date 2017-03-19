@@ -1,5 +1,5 @@
 # Adapt the two following lines -- NB: Java 8 is required
-JAVA_HOME="/usr/jdk/jdk1.8.0_112"
+JAVA_HOME="/usr/lib/jvm/java-8-oracle"
 XMCDA_LIB="libs/XMCDA-java-0.2.0-73-g5ceb908.jar"
 CLASSPATH="out/production/plotClassAssignments-png"
 
