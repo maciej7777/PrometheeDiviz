@@ -416,8 +416,7 @@ public class InputsHandler {
         }
 
         try {
-            Map<Criterion, LabelledQValues<Double>> criteriaWeightsMap = criteriaWeights;
-            for (Map.Entry<Criterion, LabelledQValues<Double>> weight : criteriaWeightsMap.entrySet()) {
+            for (Map.Entry<Criterion, LabelledQValues<Double>> weight : ((Map<Criterion, LabelledQValues<Double>>) criteriaWeights).entrySet()) {
                 Double tmpValue = weight.getValue().get(0).convertToDouble().getValue();
                 BigDecimal bigDecimalValue = BigDecimal.valueOf(tmpValue);
                 inputs.getCriteriaWeights().put(weight.getKey().id(), bigDecimalValue);
