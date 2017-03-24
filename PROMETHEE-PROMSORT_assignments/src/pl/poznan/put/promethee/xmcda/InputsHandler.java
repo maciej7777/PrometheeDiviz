@@ -8,6 +8,7 @@ import org.xmcda.CategoriesValues;
 import org.xmcda.Category;
 import org.xmcda.CategoryProfile;
 import org.xmcda.XMCDA;
+import pl.poznan.put.promethee.exceptions.InputDataException;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -152,56 +153,84 @@ public class InputsHandler {
     protected static Inputs checkInputs(XMCDA xmcda, ProgramExecutionResult errors) {
         Inputs inputs = new Inputs();
 
-        checkAndExtractAlternatives(inputs, xmcda, errors);
-        checkAndExtractCategories(inputs, xmcda, errors);
-        checkAndExtractParameters(inputs, xmcda, errors);
-        checkCategoriesRanking(inputs, xmcda, errors);
-        checkAndExtractProfilesIds(inputs, xmcda, errors);
-        checkAndExtractAlternativesFlows(inputs, xmcda, errors);
-        checkAndExtractCriteria(inputs, xmcda, errors);
-        checkAndExtractProfilesPerformance(inputs, xmcda, errors);
-        checkDominanceProperty(inputs, errors);
+        try {
+            checkAndExtractAlternatives(inputs, xmcda, errors);
+            checkAndExtractCategories(inputs, xmcda, errors);
+            checkAndExtractParameters(inputs, xmcda, errors);
+            checkCategoriesRanking(inputs, xmcda, errors);
+            checkAndExtractProfilesIds(inputs, xmcda, errors);
+            checkAndExtractAlternativesFlows(inputs, xmcda, errors);
+            checkAndExtractCriteria(inputs, xmcda, errors);
+            checkAndExtractProfilesPerformance(inputs, xmcda, errors);
+            checkDominanceProperty(inputs, errors);
+        } catch (InputDataException exception) {
+            //Just catch the exceptions and skip other functions
+        }
 
         return inputs;
     }
 
-    protected static void checkAndExtractAlternatives(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+    protected static void checkAndExtractAlternatives(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) throws InputDataException {
         if (xmcda.alternatives.isEmpty()) {
-            errors.addError("No alternatives list has been supplied");
-        } else {
-            List<String> alternativesIds = xmcda.alternatives.getActiveAlternatives().stream().filter(a -> "alternatives".equals(a.getMarker())).map(
-                    Alternative::id).collect(Collectors.toList());
-            if (alternativesIds.isEmpty())
-                errors.addError("The alternatives list can not be empty");
-
-            inputs.setAlternativesIds(alternativesIds);
+            String errorMessage = "No alternatives list has been supplied";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
+        List<String> alternativesIds = xmcda.alternatives.getActiveAlternatives().stream().filter(a -> "alternatives".equals(a.getMarker())).map(
+                Alternative::id).collect(Collectors.toList());
+        if (alternativesIds.isEmpty()) {
+            String errorMessage = "The alternatives list can not be empty";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
+        }
+
+        inputs.setAlternativesIds(alternativesIds);
     }
 
-    protected static void checkAndExtractCategories(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+    protected static void checkAndExtractCategories(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) throws InputDataException {
         if (xmcda.categories.isEmpty()) {
-            errors.addError("No categories has been supplied.");
-        } else if (xmcda.categories.size() == 1) {
-            errors.addError("You should supply at least 2 categories.");
-        } else {
-            List<String> categories = xmcda.categories.getActiveCategories().stream().filter(a -> "categories".equals(a.getMarker())).map(
-                    Category::id).collect(Collectors.toList());
-            inputs.setCategoriesIds(categories);
-            if (categories.isEmpty())
-                errors.addError("The category list can not be empty.");
+            String errorMessage = "No categories has been supplied.";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
+        }
+
+        if (xmcda.categories.size() == 1) {
+            String errorMessage = "You should supply at least 2 categories.";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
+        }
+
+        List<String> categories = xmcda.categories.getActiveCategories().stream().filter(a -> "categories".equals(a.getMarker())).map(
+                Category::id).collect(Collectors.toList());
+
+        inputs.setCategoriesIds(categories);
+        if (categories.isEmpty()) {
+            String errorMessage = "The category list can not be empty.";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
     }
 
-    protected static void checkCategoriesRanking(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+    protected static void checkCategoriesRanking(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) throws InputDataException {
         if (xmcda.categoriesValuesList.isEmpty()) {
-            errors.addError("No categories values list has been supplied");
-        } else if (xmcda.categoriesValuesList.size() > 1) {
-            errors.addError("More than one categories values list has been supplied");
+            String errorMessage = "No categories values list has been supplied";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
+
+        if (xmcda.categoriesValuesList.size() > 1) {
+            String errorMessage = "More than one categories values list has been supplied";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
+        }
+
         CategoriesValues categoriesValuesList = xmcda.categoriesValuesList.get(0);
         if (!categoriesValuesList.isNumeric()) {
-            errors.addError("Each of the categories ranks must be integer");
+            String errorMessage = "Each of the categories ranks must be integer";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
+
         Map<String, Integer> categoriesValues = new LinkedHashMap<>();
         try {
             CategoriesValues<Integer> categoriesValuesClass = categoriesValuesList.convertTo(Integer.class);
@@ -219,178 +248,222 @@ public class InputsHandler {
                 }
                 categoriesValues.put(a.getKey().id(), a.getValue().get(0).getValue());
             }
+
             if (min != 1) {
-                errors.addError("Minimal rank should be equal to 1.");
-                return;
+                String errorMessage = "Minimal rank should be equal to 1.";
+                errors.addError(errorMessage);
+                throw new InputDataException(errorMessage);
             }
+
             if (max != inputs.getCategoriesIds().size()) {
-                errors.addError("Maximal rank should be equal to number of categories.");
-                return;
+                String errorMessage = "Maximal rank should be equal to number of categories.";
+                errors.addError(errorMessage);
+                throw new InputDataException(errorMessage);
             }
 
             for (Map.Entry<String, Integer> categoryA : categoriesValues.entrySet()) {
                 for (Map.Entry<String, Integer> categoryB : categoriesValues.entrySet()) {
-                    if (categoryA.getValue() == categoryB.getValue() && categoryA.getKey() != categoryB.getKey()) {
-                        errors.addError("There can not be two categories with the same rank.");
-                        return;
+                    if (categoryA.getValue().intValue() == categoryB.getValue() && !categoryA.getKey().equals(categoryB.getKey())) {
+                        String errorMessage = "There can not be two categories with the same rank.";
+                        errors.addError(errorMessage);
+                        throw new InputDataException(errorMessage);
                     }
                 }
             }
 
             inputs.setCategoriesRanking(categoriesValues);
+        } catch (InputDataException e) {
+            throw e;
         } catch (Exception e) {
-            errors.addError("An error occurred: " + e + ". Remember that each rank has to be integer.");
+            String errorMessage = "An error occurred. Remember that each rank has to be integer.";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
     }
 
-    protected static void checkAndExtractParameters(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+    protected static void checkAndExtractParameters(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) throws InputDataException {
 
         if (xmcda.programParametersList.size() > 1) {
-            errors.addError("Only one programParameter is expected");
-            return;
+            String errorMessage = "Only one programParameter is expected";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
+
         if (xmcda.programParametersList.isEmpty()) {
-            errors.addError("No programParameter found");
-            return;
+            String errorMessage = "No programParameter found";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
+
         if (xmcda.programParametersList.get(0).size() != 2) {
-            errors.addError("Parameter's list must contain exactly two elements");
-            return;
+            String errorMessage = "Parameter's list must contain exactly two elements";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
 
         checkAndExtractCutPoint(inputs, xmcda, errors);
         checkAndExtractAssignToABetterClass(inputs, xmcda, errors);
     }
 
-    protected static void checkAndExtractCutPoint(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+    protected static void checkAndExtractCutPoint(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) throws InputDataException {
         Double cutPoint;
 
         final ProgramParameter<?> prgParam1 = xmcda.programParametersList.get(0).get(0);
         if (!"cutPoint".equalsIgnoreCase(prgParam1.id())) {
-            errors.addError(String.format("Invalid parameter w/ id '%s'", prgParam1.id()));
-            return;
+            String errorMessage = String.format("Invalid parameter w/ id '%s'", prgParam1.id());
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
+
         if (prgParam1.getValues() == null || (prgParam1.getValues() != null && prgParam1.getValues().size() != 1)) {
-            errors.addError("Parameter cutPoint must have a single (real) value only");
-            return;
+            String errorMessage = "Parameter cutPoint must have a single (real) value only";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
+
         if (!prgParam1.getValues().get(0).isNumeric()) {
-            errors.addError("Invalid value for parameter cutPoint, it must be a numeric value");
-            return;
+            String errorMessage = "Invalid value for parameter cutPoint, it must be a numeric value";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
+
         try {
             cutPoint = (Double) prgParam1.getValues().get(0).getValue();
             BigDecimal bigDecimalCutPoint = BigDecimal.valueOf(cutPoint);
+
             if (cutPoint > 1 || cutPoint < -1) {
-                errors.addError("Invalid value for parameter cutPoint, it must be a numeric value greater or equal to -1 and lower or equal to 1");
-                return;
+                String errorMessage = "Invalid value for parameter cutPoint, it must be a numeric value greater or equal to -1 and lower or equal to 1";
+                errors.addError(errorMessage);
+                throw new InputDataException(errorMessage);
             }
+
             inputs.setCutPoint(bigDecimalCutPoint);
+
+        } catch (InputDataException e) {
+            throw e;
         } catch (Exception exception) {
-            String err = "Invalid value for parameter cut point, it must be a real number.";
-            errors.addError(err);
-            return;
+            String errorMessage = "Invalid value for parameter cut point, it must be a real number.";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
     }
 
-    protected static void checkAndExtractAssignToABetterClass(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+    protected static void checkAndExtractAssignToABetterClass(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) throws InputDataException {
         Boolean assignToABetterClass;
 
         final ProgramParameter<?> prgParam2 = xmcda.programParametersList.get(0).get(1);
         if (!"assignToABetterClass".equalsIgnoreCase(prgParam2.id())) {
-            errors.addError(String.format("Invalid parameter w/ id '%s'", prgParam2.id()));
-            return;
+            String errorMessage = String.format("Invalid parameter w/ id '%s'", prgParam2.id());
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
+
         if (prgParam2.getValues() == null || (prgParam2.getValues() != null && prgParam2.getValues().size() != 1)) {
-            errors.addError("Parameter assignToABetterClass must have a single (boolean) value only");
-            return;
+            String errorMessage = "Parameter assignToABetterClass must have a single (boolean) value only";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
+
         try {
             assignToABetterClass = (Boolean) prgParam2.getValues().get(0).getValue();
             if (assignToABetterClass == null) {
-                errors.addError("Invalid value for parameter assignToABetterClass, it must be true or false.");
-                return;
+                String errorMessage = "Invalid value for parameter assignToABetterClass, it must be true or false.";
+                errors.addError(errorMessage);
+                throw new InputDataException(errorMessage);
             }
+
             inputs.setAssignToABetterClass(assignToABetterClass);
+
+        } catch (InputDataException e) {
+            throw e;
         } catch (Exception exception) {
-            String err = "Invalid value for parameter assignToABetterClass, it must be true or false.";
-            errors.addError(err);
+            String errorMessage = "Invalid value for parameter assignToABetterClass, it must be true or false.";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
     }
 
-    protected static void checkAndExtractProfilesIds(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+    protected static void checkAndExtractProfilesIds(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) throws InputDataException {
         inputs.setProfilesIds(new ArrayList<>());
 
         if (xmcda.categoriesProfilesList.isEmpty()) {
-            errors.addError("No categories profiles list has been supplied");
-        }
-        if (xmcda.categoriesProfilesList.size() > 1) {
-            errors.addError("You can not supply more then 1 categories profiles list");
+            String errorMessage = "No categories profiles list has been supplied";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
 
-        if (inputs.getCategoriesRanking() == null) {
-            return;
+        if (xmcda.categoriesProfilesList.size() > 1) {
+            String errorMessage = "You can not supply more then 1 categories profiles list";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
 
         inputs.setCategoryProfiles(new ArrayList<>());
 
         CategoriesProfiles categoriesProfiles = xmcda.categoriesProfilesList.get(0);
         if (inputs.getCategoriesRanking().size() != categoriesProfiles.size()) {
-            errors.addError("There is a problem with categories rank list or categories profiles list. Each category has to be added to categories profiles list.");
-            return;
+            String errorMessage = "There is a problem with categories rank list or categories profiles list. Each " +
+                    "category has to be added to categories profiles list.";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
 
         for (Object profile : categoriesProfiles) {
             CategoryProfile tmpProfile = (CategoryProfile) profile;
             if (!"bounding".equalsIgnoreCase(tmpProfile.getType().name())) {
-                errors.addError("There is a problem with categories rank list or categories profiles list. You need to provide boundary profiles for categories.");
-                return;
-            } else {
-                inputs.getCategoryProfiles().add(tmpProfile);
+                String errorMessage = "There is a problem with categories rank list or categories profiles list. " +
+                        "You need to provide boundary profiles for categories.";
+                errors.addError(errorMessage);
+                throw new InputDataException(errorMessage);
             }
+
+            inputs.getCategoryProfiles().add(tmpProfile);
         }
 
         Collections.sort(inputs.getCategoryProfiles(), (left, right) -> Integer.compare(inputs.getCategoriesRanking().get(left.getCategory().id()), inputs.getCategoriesRanking().get(right.getCategory().id())));
-
 
         inputs.setProfilesIds(new ArrayList<>());
         checkAndExtractBoundaryProfilesIds(errors, inputs);
     }
 
-    protected static void checkAndExtractBoundaryProfilesIds(ProgramExecutionResult errors, Inputs inputs) {
+    protected static void checkAndExtractBoundaryProfilesIds(ProgramExecutionResult errors, Inputs inputs) throws InputDataException {
         for (int j = 0; j < inputs.getCategoryProfiles().size() - 1; j++) {
-            if (inputs.getCategoryProfiles().get(j).getUpperBound() != null && inputs.getCategoryProfiles().get(j + 1).getLowerBound() != null) {
-                inputs.getProfilesIds().add(inputs.getCategoryProfiles().get(j).getUpperBound().getAlternative().id());
-                if (!inputs.getCategoryProfiles().get(j).getUpperBound().getAlternative().id().equals(inputs.getCategoryProfiles().get(j + 1).getLowerBound().getAlternative().id())) {
-                    errors.addError("Each two closest categories have to be separated by same boundary profile.");
-                    return;
-                }
-            } else {
-                errors.addError("There is a problem with categories profiles. You need to provide boundary profiles for categories");
-                return;
+            if (inputs.getCategoryProfiles().get(j).getUpperBound() == null || inputs.getCategoryProfiles().get(j + 1).getLowerBound() == null) {
+                String errorMessage = "There is a problem with categories profiles. You need to provide boundary profiles for categories";
+                errors.addError(errorMessage);
+                throw new InputDataException(errorMessage);
+            }
+            inputs.getProfilesIds().add(inputs.getCategoryProfiles().get(j).getUpperBound().getAlternative().id());
+
+            if (!inputs.getCategoryProfiles().get(j).getUpperBound().getAlternative().id().
+                    equals(inputs.getCategoryProfiles().get(j + 1).getLowerBound().getAlternative().id())) {
+                String errorMessage = "Each two closest categories have to be separated by same boundary profile.";
+                errors.addError(errorMessage);
+                throw new InputDataException(errorMessage);
             }
         }
     }
 
-    protected static void checkAndExtractAlternativesFlows(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+    protected static void checkAndExtractAlternativesFlows(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) throws InputDataException {
         if (xmcda.alternativesValuesList.size() != 2) {
-            errors.addError("You need to provide 2 alternatives values lists - one for positive flows  and one for negative flows.");
-            return;
+            String errorMessage = "You need to provide 2 alternatives values lists - one for positive flows  and one for negative flows.";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
+
         checkAndExtractPositiveFlows(inputs, xmcda, errors);
         checkAndExtractNegativeFlows(inputs, xmcda, errors);
         checkProfilesFlows(inputs, errors);
-
     }
 
-    protected static void checkAndExtractPositiveFlows(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
-
+    protected static void checkAndExtractPositiveFlows(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) throws InputDataException {
         inputs.setPositiveFlows(new LinkedHashMap<>());
 
         AlternativesValues positiveFlows = xmcda.alternativesValuesList.get(0);
         if (!positiveFlows.isNumeric()) {
-            errors.addError("Each flow must have numeric type.");
-            return;
+            String errorMessage = "Each flow must have numeric type.";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
 
         try {
@@ -401,84 +474,87 @@ public class InputsHandler {
                 inputs.getPositiveFlows().put(flow.getKey().id(), bigDecimalTmpValue);
             }
         } catch (Exception exception) {
-            errors.addError("An error occurred: " + exception + ". Each flow must have numeric type.");
-            return;
+            String errorMessage = "An error occurred. Each flow must have numeric type.";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
 
         checkMissingValuesInPositiveFlows(inputs, errors);
     }
 
-    protected static void checkMissingValuesInPositiveFlows(Inputs inputs, ProgramExecutionResult errors) {
+    protected static void checkMissingValuesInPositiveFlows(Inputs inputs, ProgramExecutionResult errors) throws InputDataException {
         for (int j = 0; j < inputs.getAlternativesIds().size(); j++) {
             String alternativeId = inputs.getAlternativesIds().get(j);
             if (!inputs.getPositiveFlows().containsKey(alternativeId)) {
-                errors.addError("There are some missing values in positive flows.");
-                return;
+                String errorMessage = "There are some missing values in positive flows.";
+                errors.addError(errorMessage);
+                throw new InputDataException(errorMessage);
             }
         }
 
         for (int i = 0; i < inputs.getProfilesIds().size(); i++) {
             String profileId = inputs.getProfilesIds().get(i);
             if (!inputs.getPositiveFlows().containsKey(profileId)) {
-                errors.addError("There are some missing values in positive flows.");
-                return;
+                String errorMessage = "There are some missing values in positive flows.";
+                errors.addError(errorMessage);
+                throw new InputDataException(errorMessage);
             }
         }
     }
 
-    protected static void checkAndExtractNegativeFlows(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
-
+    protected static void checkAndExtractNegativeFlows(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) throws InputDataException {
         inputs.setNegativeFlows(new LinkedHashMap<>());
 
         AlternativesValues negativeFlows = xmcda.alternativesValuesList.get(1);
         if (!negativeFlows.isNumeric()) {
-            errors.addError("Each flow must have numeric type.");
-            return;
+            String errorMessage = "Each flow must have numeric type.";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
 
         try {
-            Map<Alternative, LabelledQValues<Double>> negativeFlowsMap = negativeFlows;
-            for (Map.Entry<Alternative, LabelledQValues<Double>> flow : negativeFlowsMap.entrySet()) {
+            for (Map.Entry<Alternative, LabelledQValues<Double>> flow : ((Map<Alternative, LabelledQValues<Double>>) negativeFlows).entrySet()) {
                 Double tmpValue = flow.getValue().get(0).convertToDouble().getValue();
                 BigDecimal bigDecimalTmpValue = BigDecimal.valueOf(tmpValue);
                 inputs.getNegativeFlows().put(flow.getKey().id(), bigDecimalTmpValue);
             }
         } catch (Exception exception) {
-            errors.addError("An error occurred: " + exception + ". Each flow must have numeric type.");
-            return;
+            String errorMessage = "An error occurred:. Each flow must have numeric type.";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
 
         checkMissingValuesInNegativeFlows(inputs, errors);
     }
 
-    protected static void checkMissingValuesInNegativeFlows(Inputs inputs, ProgramExecutionResult errors) {
+    protected static void checkMissingValuesInNegativeFlows(Inputs inputs, ProgramExecutionResult errors) throws InputDataException {
         for (int j = 0; j < inputs.getAlternativesIds().size(); j++) {
             String alternativeId = inputs.getAlternativesIds().get(j);
             if (!inputs.getNegativeFlows().containsKey(alternativeId)) {
-                errors.addError("There are some missing values in negative flows.");
-                return;
+                String errorMessage = "There are some missing values in negative flows.";
+                errors.addError(errorMessage);
+                throw new InputDataException(errorMessage);
             }
         }
 
         for (int i = 0; i < inputs.getProfilesIds().size(); i++) {
             String profileId = inputs.getProfilesIds().get(i);
             if (!inputs.getNegativeFlows().containsKey(profileId)) {
-                errors.addError("There are some missing values in negative flows.");
-                return;
+                String errorMessage = "There are some missing values in negative flows.";
+                errors.addError(errorMessage);
+                throw new InputDataException(errorMessage);
             }
         }
     }
 
-    protected static void checkProfilesFlows(Inputs inputs, ProgramExecutionResult errors) {
-        if (errors.size() != 0) {
-            return;
-        }
+    protected static void checkProfilesFlows(Inputs inputs, ProgramExecutionResult errors) throws InputDataException {
         for (int i = 1; i < inputs.profilesIds.size(); i++) {
-            String profile1 = inputs.profilesIds.get(i-1);
+            String profile1 = inputs.profilesIds.get(i - 1);
             String profile2 = inputs.profilesIds.get(i);
             if (!isPreffered(profile2, profile1, inputs)) {
-                errors.addError("There are some errors in profiles flows. Better profiles need to be preferred to the worse ones.");
-                return;
+                String errorMessage = "There are some errors in profiles flows. Better profiles need to be preferred to the worse ones.";
+                errors.addError(errorMessage);
+                throw new InputDataException(errorMessage);
             }
         }
 
@@ -512,10 +588,11 @@ public class InputsHandler {
         return false;
     }
 
-    protected static void checkAndExtractCriteria(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
+    protected static void checkAndExtractCriteria(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) throws InputDataException {
         if (xmcda.criteria.getActiveCriteria().isEmpty()) {
-            errors.addError("You need to provide a not empty criteria list.");
-            return;
+            String errorMessage = "You need to provide a not empty criteria list.";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
         inputs.setCriteriaIds(xmcda.criteria.getActiveCriteria().stream().filter(a -> "criteria".equals(a.getMarker())).map(
                 Criterion::id).collect(Collectors.toList()));
@@ -524,14 +601,11 @@ public class InputsHandler {
         checkAndExtractCriteriaPreferenceThresholds(inputs, xmcda, errors);
     }
 
-    protected static void checkAndExtractCriteriaPreferencesDirection(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
-        if (inputs.getCriteriaIds() == null || inputs.getCriteriaIds().isEmpty()) {
-            return;
-        }
-
+    protected static void checkAndExtractCriteriaPreferencesDirection(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) throws InputDataException {
         if (xmcda.criteriaScalesList.size() != 1) {
-            errors.addError("You need to provide one not empty criteria scales list.");
-            return;
+            String errorMessage = "You need to provide one not empty criteria scales list.";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
 
         inputs.setCriteriaPreferencesDirection(new HashMap<>());
@@ -543,24 +617,26 @@ public class InputsHandler {
                 QuantitativeScale<String> scale = (QuantitativeScale<String>) criterionEntry.getValue().get(0);
                 String scaleDirection = scale.getPreferenceDirection().name();
                 if (!"min".equalsIgnoreCase(scaleDirection) && !"max".equalsIgnoreCase((scaleDirection))) {
-                    errors.addError("Each criterion scale must be a label \"min\" or \"max\".");
+                    String errorMessage = "Each criterion scale must be a label \"min\" or \"max\".";
+                    errors.addError(errorMessage);
+                    throw new InputDataException(errorMessage);
                 }
                 inputs.getCriteriaPreferencesDirection().put(criterionEntry.getKey().id(), scaleDirection);
+            } catch (InputDataException e) {
+                throw e;
             } catch (Exception e) {
-                errors.addError("Each criterion scale must be a label \"min\" or \"max\".");
-                return;
+                String errorMessage = "Each criterion scale must be a label \"min\" or \"max\".";
+                errors.addError(errorMessage);
+                throw new InputDataException(errorMessage);
             }
         }
     }
 
-    protected static void checkAndExtractCriteriaPreferenceThresholds(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
-        if (inputs.getCriteriaIds() == null || inputs.getCriteriaIds().isEmpty()) {
-            return;
-        }
-
+    protected static void checkAndExtractCriteriaPreferenceThresholds(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) throws InputDataException {
         if (xmcda.criteriaThresholdsList.size() != 1) {
-            errors.addError("You need to provide one not empty criteria thresholds list.");
-            return;
+            String errorMessage = "You need to provide one not empty criteria thresholds list.";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
 
         inputs.setCriteriaPreferenceThresholds(new HashMap<>());
@@ -572,21 +648,20 @@ public class InputsHandler {
                         Threshold<Double> threshold = (Threshold<Double>) criterionEntry.getValue().get(i);
                         inputs.getCriteriaPreferenceThresholds().put(criterionEntry.getKey().id(), BigDecimal.valueOf(threshold.getConstant().getValue()));
                     } catch (Exception e) {
-                        errors.addError("Each threshold must be a real value");
-                        return;
+                        String errorMessage = "Each threshold must be a real value";
+                        errors.addError(errorMessage);
+                        throw new InputDataException(errorMessage);
                     }
                 }
             }
         }
     }
 
-    protected static void checkAndExtractProfilesPerformance(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) {
-        if (inputs.getProfilesIds() == null || inputs.getProfilesIds().isEmpty() || inputs.getProfilesIds().get(0).isEmpty()) {
-            return;
-        }
+    protected static void checkAndExtractProfilesPerformance(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) throws InputDataException {
         if (xmcda.performanceTablesList.size() != 1) {
-            errors.addError("You need to provide exactly 1 profile performances lists.");
-            return;
+            String errorMessage = "You need to provide exactly 1 profile performances lists.";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
 
         inputs.setProfilesPerformance(new HashMap<>());
@@ -595,12 +670,15 @@ public class InputsHandler {
         PerformanceTable p = xmcda.performanceTablesList.get(0);
 
         if (p.hasMissingValues()) {
-            errors.addError("The performance table has missing values.");
-            return;
+            String errorMessage = "The performance table has missing values.";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
+
         if (!p.isNumeric()) {
-            errors.addError("The performance table must contain numeric values only");
-            return;
+            String errorMessage = "The performance table must contain numeric values only";
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
 
         try {
@@ -609,8 +687,9 @@ public class InputsHandler {
             xmcda.performanceTablesList.set(0, perfTable);
         } catch (Exception e) {
             final String msg = "Error when converting the performance table's value to Double, reason:";
-            errors.addError(Utils.getMessage(msg, e));
-            return;
+            String errorMessage = Utils.getMessage(msg, e);
+            errors.addError(errorMessage);
+            throw new InputDataException(errorMessage);
         }
 
         @SuppressWarnings("unchecked")
@@ -632,7 +711,7 @@ public class InputsHandler {
         }
     }
 
-    protected static void checkDominanceProperty(Inputs inputs, ProgramExecutionResult errors) {
+    protected static void checkDominanceProperty(Inputs inputs, ProgramExecutionResult errors) throws InputDataException {
 
         for (String criterionId : inputs.getCriteriaIds()) {
             for (int i = 0; i < inputs.getProfilesIds().size() - 1; i++) {
@@ -643,20 +722,29 @@ public class InputsHandler {
                 Map<String, BigDecimal> secondProfilePerformance = inputs.getProfilesPerformance().get(nextProfileId);
                 BigDecimal preferenceThreshold = inputs.getCriteriaPreferenceThresholds().get(criterionId);
                 String preferenceDirection = inputs.getCriteriaPreferencesDirection().get(criterionId);
+
                 if (firstProfilePerformance == null || secondProfilePerformance == null || preferenceThreshold == null || preferenceDirection == null) {
-                    errors.addError("There was a problem when checking profiles preferences. Profiles need to fulfill the dominance condition on each criterion.");
-                    return;
+                    String errorMessage = "There was a problem when checking profiles preferences. Profiles need to " +
+                            "fulfill the dominance condition on each criterion.";
+                    errors.addError(errorMessage);
+                    throw new InputDataException(errorMessage);
                 }
+
                 BigDecimal firstProfileCriterionPerformance = firstProfilePerformance.get(criterionId);
                 BigDecimal secondProfileCriterionPerformance = secondProfilePerformance.get(criterionId);
+
                 if (firstProfileCriterionPerformance == null || secondProfileCriterionPerformance == null) {
-                    errors.addError("There was a problem when checking profiles preferences. Profiles need to fulfill the dominance condition on each criterion.");
-                    return;
+                    String errorMessage = "There was a problem when checking profiles preferences. " +
+                            "Profiles need to fulfill the dominance condition on each criterion.";
+                    errors.addError(errorMessage);
+                    throw new InputDataException(errorMessage);
                 }
+
                 if (("max".equalsIgnoreCase(preferenceDirection) && firstProfileCriterionPerformance.add(preferenceThreshold).compareTo(secondProfileCriterionPerformance) > 0) ||
                         ("min".equalsIgnoreCase(preferenceDirection) && firstProfileCriterionPerformance.subtract(preferenceThreshold).compareTo(secondProfileCriterionPerformance) < 0)) {
-                    errors.addError("Profiles need to fulfill the dominance condition on each criterion.");
-                    return;
+                    String errorMessage = "Profiles need to fulfill the dominance condition on each criterion.";
+                    errors.addError(errorMessage);
+                    throw new InputDataException(errorMessage);
                 }
             }
         }
