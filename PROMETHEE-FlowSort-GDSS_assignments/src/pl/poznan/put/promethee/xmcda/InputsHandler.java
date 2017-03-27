@@ -602,11 +602,6 @@ public class InputsHandler {
     }
 
     protected static void checkAndExtractCriteriaPreferencesDirection(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) throws InputDataException {
-        //TODO - check if this condition is still needed
-        if (inputs.getCriteriaIds() == null || inputs.getCriteriaIds().isEmpty()) {
-            return;
-        }
-
         if (xmcda.criteriaScalesList.size() != 1) {
             String errorMessage = "You need to provide one not empty criteria scales list.";
             errors.addError(errorMessage);
@@ -637,11 +632,6 @@ public class InputsHandler {
     }
 
     protected static void checkAndExtractProfilesPerformance(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) throws InputDataException {
-        //TODO - check if this condition is still needed
-        if (inputs.getProfilesIds() == null || inputs.getProfilesIds().isEmpty() || inputs.getProfilesIds().get(0).isEmpty()) {
-            return;
-        }
-
         if (xmcda.performanceTablesList.size() < 2 || xmcda.performanceTablesList.size() > 10) {
             String errorMessage = "You need to provide 2 - 10 profile performances lists.";
             errors.addError(errorMessage);
@@ -735,11 +725,6 @@ public class InputsHandler {
 
         inputs.setAlternativesFlows(new ArrayList<>());
 
-        //TODO - check if this condition is still needed
-        if (inputs.getDecisionMakers() == null) {
-            return;
-        }
-
         for (int i = 0; i < inputs.getDecisionMakers(); i++) {
             AlternativesValues flows = xmcda.alternativesValuesList.get(i + 1);
             if (!flows.isNumeric()) {
@@ -804,8 +789,8 @@ public class InputsHandler {
     }
 
     protected static void checkAndExtractProfilesFlows(Inputs inputs, XMCDA xmcda, ProgramExecutionResult errors) throws InputDataException {
+        //TODO check this condition - probably it is checked before
         if (xmcda.alternativesValuesList.isEmpty() || xmcda.alternativesValuesList.size() > 11) {
-            //TODO - check this message
             String errorMessage = "You need to provide 1 profiles flows lists.";
             errors.addError(errorMessage);
             throw new InputDataException(errorMessage);
