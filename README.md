@@ -12,8 +12,17 @@ The main idea of the project is to provide a wide range of programs that enable 
 All the programs are available to use on the diviz platform. 
 
 ## Implemented methods
-To be continued
+In this repository there are presented 7 modules, which are following:
+- PROMETHEE-FlowSort-GDSS_assignments - the module prepared for calculating Flowsort GDSS assignments.
+- PROMETHEE-I-FlowSort_assignments - the module prepared for calculating Flowsort I assignments.
+- PROMETHEE-II-FlowSort_assignments - the module prepared for calculating Flowsort II assignments.
+- PROMETHEE-PROMSORT_assignments - the module prepared for calculating Promsort assignments.
+- PROMETHEE-TRI_assignments - the module prepared for calculating Promethee TRI assignments.
+- plotClassAssignments-LaTeX - the module prepared for generating latex table with the result assignements.
+- plotClassAssignments-png - the module prepared for visualization of the final assignements.
 
 ## Diviz
 Diviz is an open source tool for creating and executing algorithms from predefined modlues. You can find more about the project at:
 https://www.diviz.org/.
+
+## Examples
