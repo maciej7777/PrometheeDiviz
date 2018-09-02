@@ -8,10 +8,11 @@ The main idea of the project is to provide a wide range of programs that enable 
 - https://github.com/Yamadads/PrometheeDiviz
 - https://github.com/MagdalenaDziecielska/PrometheeDiviz
 - https://github.com/dohko93/mcdm
-
-## Diviz software
-Diviz is an open source tool for creating and executing algorithms from predefined modlues. You can find more about the project at:
-https://www.diviz.org/.
+All the programs are available to use on the diviz platform. 
 
 ## Implemented methods
 To be continued
+
+## Diviz
+Diviz is an open source tool for creating and executing algorithms from predefined modlues. You can find more about the project at:
+https://www.diviz.org/.
