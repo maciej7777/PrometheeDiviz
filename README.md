@@ -11,4 +11,4 @@ The main idea of the project is to provide a wide range of programs that enable 
 
 ## Diviz software
 Diviz is an open source tool for creating and executing algorithms from predefined modlues. You can find more about the project at:
-https://www.diviz.org/
+https://www.diviz.org/.
